@@ -9,36 +9,37 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils.random
+import com.badlogic.gdx.math.Vector3
 import kotlin.math.max
 import kotlin.math.min
 
 class BuySellGame : ApplicationAdapter() {
 
     lateinit var batch: SpriteBatch
-    lateinit var shapeRenderer: ShapeRenderer
+    lateinit var shape: ShapeRenderer
     lateinit var font: BitmapFont
 
     private val MAX = 100000
     val points = Array(MAX, { 0f })
     var i = 2
-    var x = 0
-    var y = 250
+    var x = 0f
+    var y = 250f
     val volatility = 5f  // in %
 
-    var moneyInvested = 0
-    var moneyLeft = 500
+    var moneyInvested = 0f
+    var moneyLeft = 500f
     val moneyTotal get() = moneyLeft + moneyInvested
-    var investAmount = 100
+    var investAmount = 100f
 
     private lateinit var cam: OrthographicCamera
 
     override fun create() {
         batch = SpriteBatch()
-        shapeRenderer = ShapeRenderer()
+        shape = ShapeRenderer()
         font = BitmapFont()
 
-        val w = Gdx.graphics.getWidth()
-        val h = Gdx.graphics.getHeight()
+        val w = Gdx.graphics.width
+        val h = Gdx.graphics.height
 		cam = OrthographicCamera(500f, 500f * h / w)
 		cam.position.set(250f, 250f, 0f)
         cam.update()
@@ -53,19 +54,27 @@ class BuySellGame : ApplicationAdapter() {
         }
     }
 
+    var deltaCumul = 0f
+
     override fun render() {
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
+
+//        deltaCumul += Gdx.graphics.deltaTime
+//        Gdx.app.log("", deltaCumul.toString())
+//        if (deltaCumul < .2f) return
+//        deltaCumul = 0f
+
+        Gdx.gl.glClearColor(.8f, .9f, 1f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         x += 1
-        val delta = random(-volatility, +volatility)
-        moneyInvested += (moneyInvested * delta / 100).toInt()
-        y += (y * delta / 100).toInt()
+        val delta = random(-volatility, +volatility) //+ .2f
+        moneyInvested += moneyInvested * delta / 100
+        y += y * delta / 100
 
-        points[i++] = x.toFloat()
-        points[i++] = y.toFloat()
+        points[i++] = x
+        points[i++] = y
 
-        cam.position.x = x.toFloat() - 200
+        cam.position.x = x - 200
         if (y + 20 > cam.position.y + cam.viewportHeight / 2) {
             cam.position.y++
         } else if (y - 20 < cam.position.y - cam.viewportHeight / 2) {
@@ -73,20 +82,22 @@ class BuySellGame : ApplicationAdapter() {
         }
         cam.update()
 
-        shapeRenderer.projectionMatrix = cam.combined
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line)
+//        Gdx.gl.glEnable(GL20.GL_BLEND);
+//        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-        shapeRenderer.setColor(.31f, .31f, 1f, 1f)
-        shapeRenderer.line(0f, 0f, 10000f, 0f)
-        shapeRenderer.line(0f, 0f, 0f, 10000f)
+        shape.projectionMatrix = cam.combined
+        shape.begin(ShapeRenderer.ShapeType.Line)
 
-        shapeRenderer.setColor(1f, 1f, 1f, 1f)
-        shapeRenderer.polyline(points.toFloatArray(), max(0, i - 500), min(i, 500))
-        shapeRenderer.end()
+        drawAxis()
 
-        batch.projectionMatrix = cam.combined
+        shape.setColor(.1f, .1f, .5f, 1f)
+        shape.polyline(points.toFloatArray(), max(0, i - 600), min(i, 600))
+        shape.end()
+
+//        Gdx.gl.glDisable(GL20.GL_BLEND);
+
         batch.begin()
-        val xText = x - 420f
+        val xText = 20f
         font.draw(batch, "Value \t $y", xText, 450f)
         font.draw(batch, "Total \t $moneyTotal", xText, 400f)
         font.draw(batch, "Amount \t $investAmount", xText, 350f)
@@ -96,6 +107,21 @@ class BuySellGame : ApplicationAdapter() {
 
         if (i == MAX) {
             Gdx.app.exit()
+        }
+    }
+
+    private fun drawAxis() {
+        shape.setColor(.31f, .31f, 1f, 1f)
+        shape.line(0f, 0f, 10000f, 0f)
+        shape.line(0f, 0f, 0f, 10000f)
+
+        shape.setColor(.7f, .8f, 1f, 1f)
+        val start = cam.unproject(Vector3(0f, Gdx.graphics.height.toFloat(), 0f))
+        val end = cam.unproject(Vector3(Gdx.graphics.width.toFloat(), 0f, 0f))
+        var y = start.y
+        while (y < end.y) {
+            shape.line(start.x, y, end.x, y)
+            y += 20
         }
     }
 
@@ -126,6 +152,6 @@ class BuySellGame : ApplicationAdapter() {
     override fun dispose() {
         batch.dispose()
         font.dispose()
-        shapeRenderer.dispose()
+        shape.dispose()
     }
 }
