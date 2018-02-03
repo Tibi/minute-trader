@@ -34,7 +34,7 @@ class BuySellGame : ApplicationAdapter() {
         width = Gdx.graphics.width.toFloat()
         height = Gdx.graphics.height.toFloat()
         cam = OrthographicCamera(500f, 500f * height / width)
-        cam.position.set(100f, 100f, 0f)
+        cam.position.set(220f, 160f, 0f)
         cam.update()
 
         Gdx.input.inputProcessor = object : InputAdapter() {
@@ -59,7 +59,9 @@ class BuySellGame : ApplicationAdapter() {
         if (model.values.size < 2) return
 
         // Let the camera follow the curve
-        cam.position.x = model.time - 200
+        if (model.time > cam.position.x + cam.viewportWidth / 2 - 50) {
+            cam.position.x++
+        }
         val y = model.value
         if (y + 20 > cam.position.y + cam.viewportHeight / 2) {
             cam.position.y++
@@ -80,19 +82,26 @@ class BuySellGame : ApplicationAdapter() {
         }
         shape.end()
 
-        batch.projectionMatrix.setToOrtho2D(0f, 0f, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
+        shape.projectionMatrix.setToOrtho2D(0f, 0f, width, height)
+        shape.begin(ShapeRenderer.ShapeType.Filled)
+        shape.color = blueLight
+        shape.rect(5f, height - 80, 60f, height - 5)
+        shape.end()
 
         batch.begin()
         val xText = 20f
         font.color = blue
-//        font.draw(batch, format("Value", model.value), xText, 450f)
-        font.draw(batch, format("Total", model.moneyTotal), xText, 400f)
-        font.draw(batch, format("Qty", model.qty.toFloat()), xText, 350f)
-        font.draw(batch, format("Left", model.moneyLeft), xText, 150f)
+        font.draw(batch, "Qty:", xText, height - 30, 30f, Align.right, false)
+        font.draw(batch, "Total:", xText, height - 50, 30f, Align.right, false)
+        font.draw(batch, "Left:", xText, height - 70, 30f, Align.right, false)
+        val xValues = 70f
+        font.draw(batch, "${model.qty}", xValues, height - 30, 30f, Align.right, false)
+        font.draw(batch, "%5d $".format(model.moneyTotal.toInt()), xValues, height - 50, 30f, Align.right, false)
+        font.draw(batch, "%5d $".format(model.moneyLeft.toInt()), xValues, height - 70, 30f, Align.right, false)
         batch.end()
     }
 
-    fun format(txt: String, f: Float) = "$txt:\t%5d".format(f.toInt())
+    fun format(txt: String, f: Float) = "$txt: %5d".format(f.toInt())
 
     val blue = Color(.31f, .31f, 1f, 1f)
     val blueLight = Color(.7f, .8f, 1f, 1f)
@@ -100,8 +109,8 @@ class BuySellGame : ApplicationAdapter() {
 
     private fun drawAxis() {
 
-        batch.projectionMatrix = cam.combined
         batch.begin()
+        font.color = blueLight
 
         // World coordinates of the screen viewport
         val start = cam.unproject(Vector3(0f, width, 0f))
@@ -113,7 +122,8 @@ class BuySellGame : ApplicationAdapter() {
             val thick = y.toInt() % 100 == 0
             shape.drawThick(start.x, y, end.x, y, y == 0f, if (thick) blue else blueLight)
             if (thick) {
-                font.draw(batch, y.toInt().toString(), end.x - 30, y+15, 20f, Align.right, false)
+                val p = cam.project(Vector3(end.x - 25, y + 12, 0f))
+                font.draw(batch, y.toInt().toString(), p.x, p.y, 20f, Align.right, false)
             }
             y += 20
         }

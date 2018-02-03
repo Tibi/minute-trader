@@ -1,0 +1,2 @@
+ - nicer looking curve: thick but anti-alias
+ - countdown from 1 minute then stop, show score etc..
