@@ -16,14 +16,13 @@ class Model {
     private val SIZE = 1000
 
     var time = 0f
-    val values = CircularFifoQueue<Float>(SIZE).apply { add(10f) }
-    var value = 10f
+    var value = 100f
+    val values = CircularFifoQueue<Float>(SIZE).apply { add(value) }
 
     var boughtValue = 0f
 
     fun update() {
         time++
-//        val delta = value * random(-volatility, +volatility*1.01f) / 100
         val delta = random(-volatility, +volatility)
         value = max(1f, value + delta)
         values.add(value)

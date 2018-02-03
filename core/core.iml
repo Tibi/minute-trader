@@ -24,7 +24,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.20/1ce9e25c74aade0aa039cce459f2906a8c8ffc8e/kotlin-stdlib-1.2.20.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.20/1ce9e25c74aade0aa039cce459f2906a8c8ffc8e/kotlin-stdlib.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
