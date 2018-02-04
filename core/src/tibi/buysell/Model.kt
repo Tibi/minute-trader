@@ -5,22 +5,20 @@ import org.apache.commons.collections4.queue.CircularFifoQueue
 import kotlin.math.ceil
 import kotlin.math.max
 
+
 class Model {
 
+    var value = 200f
+    val values = CircularFifoQueue<Float>(2000).apply { add(value) }
     val volatility = 10f
+    var time = 0f
 
     var qty = 0
     val moneyInvested get() = qty * value
     var moneyLeft = 1000f
     val moneyTotal get() = moneyLeft + moneyInvested
-
-    private val SIZE = 1000
-
-    var time = 0f
-    var value = 100f
-    val values = CircularFifoQueue<Float>(SIZE).apply { add(value) }
-
     var boughtValue = 0f
+
 
     fun update() {
         time++
@@ -35,7 +33,6 @@ class Model {
         }
         values.add(value)
     }
-
 
     fun buy() {
         if (moneyLeft < value) return

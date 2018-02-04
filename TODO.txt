@@ -1,5 +1,5 @@
  - Android version with Buy & Sell buttons
- - nicer looking curve: thick but anti-alias
+ - nicer looking curve: thick but anti-alias -> ok, test on android
  - countdown from 1 minute then stop, show score etc..
  - bigger font for the numbers
  - start screen (overlay) choice between 1 minute, 5 minutes
