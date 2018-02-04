@@ -31,8 +31,7 @@ class BuySellGame : ApplicationAdapter() {
         shape = ShapeRenderer()
         font = BitmapFont()
 
-        width = Gdx.graphics.width.toFloat()
-        height = Gdx.graphics.height.toFloat()
+        resize(Gdx.graphics.width, Gdx.graphics.height)
         cam = OrthographicCamera(500f, 500f * height / width)
         cam.position.set(220f, 160f, 0f)
         cam.update()
@@ -50,6 +49,11 @@ class BuySellGame : ApplicationAdapter() {
         }
     }
 
+    override fun resize(width: Int, height: Int) {
+        this.width = width.toFloat()
+        this.height = height.toFloat()
+    }
+
     override fun render() {
 
         Gdx.gl.glClearColor(.9f, .95f, 1f, 1f)
@@ -63,9 +67,9 @@ class BuySellGame : ApplicationAdapter() {
             cam.position.x++
         }
         val y = model.value
-        if (y + 20 > cam.position.y + cam.viewportHeight / 2) {
+        if (y + 50 > cam.position.y + cam.viewportHeight / 2) {
             cam.position.y++
-        } else if (y - 20 < cam.position.y - cam.viewportHeight / 2) {
+        } else if (y - 50 < cam.position.y - cam.viewportHeight / 2) {
             cam.position.y--
         }
         cam.update()
@@ -77,11 +81,12 @@ class BuySellGame : ApplicationAdapter() {
         shape.setColor(.1f, .1f, .5f, 1f)
         var x = model.time - model.values.size
         model.values.windowed(2).forEach { vals ->
-            shape.drawThick(x, vals[0], x+1, vals[1], true)
+            draw(x, vals[0], x+1, vals[1], true, blue)
             x++
         }
         shape.end()
 
+        // Attempt to draw a text background, TODO!
         shape.projectionMatrix.setToOrtho2D(0f, 0f, width, height)
         shape.begin(ShapeRenderer.ShapeType.Filled)
         shape.color = blueLight
@@ -101,55 +106,55 @@ class BuySellGame : ApplicationAdapter() {
         batch.end()
     }
 
-    fun format(txt: String, f: Float) = "$txt: %5d".format(f.toInt())
-
     val blue = Color(.31f, .31f, 1f, 1f)
     val blueLight = Color(.7f, .8f, 1f, 1f)
     val red = Color.valueOf("FF6666")
 
     private fun drawAxis() {
 
-        batch.begin()
         font.color = blueLight
 
         // World coordinates of the screen viewport
         val start = cam.unproject(Vector3(0f, width, 0f))
         val end = cam.unproject(Vector3(width, 0f, 0f))
-
-        // Horizontal lines
-        var y = 0f
-        while (y < end.y) {
-            val thick = y.toInt() % 100 == 0
-            shape.drawThick(start.x, y, end.x, y, y == 0f, if (thick) blue else blueLight)
-            if (thick) {
-                val p = cam.project(Vector3(end.x - 25, y + 12, 0f))
-                font.draw(batch, y.toInt().toString(), p.x, p.y, 20f, Align.right, false)
-            }
-            y += 20
-        }
-
-        batch.end()
+        val coarseGrid = 100
+        val fineGrid = 25
 
         // Vertical lines
-        var x = 0f
+        var x = start.x - start.x % fineGrid
         while (x < end.x) {
-            val thick = x.toInt() % 100 == 0
-            shape.drawThick(x, start.y, x, end.y, x == 0f, if (thick) blue else blueLight)
-            x += 20
+            val onCoarseGrid = x.toInt() % coarseGrid == 0
+            draw(x, start.y, x, end.y, x == 0f, if (onCoarseGrid) blue else blueLight)
+            x += fineGrid
         }
+
+        // Horizontal lines
+        batch.begin()
+        var y = start.y - start.y % fineGrid
+        while (y < end.y) {
+            val onCoarseGrid = y.toInt() % coarseGrid == 0
+            draw(start.x, y, end.x, y, y == 0f, if (onCoarseGrid) blue else blueLight)
+            if (onCoarseGrid) {
+                // Label
+                val p = cam.project(Vector3(end.x, y, 0f))
+                font.draw(batch, y.toInt().toString(), p.x - 10, p.y + 16, 0f, Align.right, false)
+            }
+            y += fineGrid
+        }
+        batch.end()
 
         // Bought value line
         if (model.qty > 0) {
-            shape.drawThick(start.x, model.boughtValue, end.x, model.boughtValue, true, red)
+            draw(start.x, model.boughtValue, end.x, model.boughtValue, true, red)
         }
     }
 
-    fun ShapeRenderer.drawThick(x1: Float, y1: Float, x2: Float, y2: Float, thick: Boolean = false, color: Color = blue) {
+    fun draw(x1: Float, y1: Float, x2: Float, y2: Float, thick: Boolean, color: Color) {
+        shape.color = color
+        shape.line(x1, y1, x2, y2)
         if (thick) {
-            rectLine(x1, y1, x2, y2, 1f, color, color)
+            shape.line(x1+1, y1+1, x2+1, y2+1)
         } else {
-            this.color = color
-            line(x1, y1, x2, y2)
         }
     }
 
