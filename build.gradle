@@ -45,9 +45,10 @@ project(":desktop") {
 project(":core") {
     apply plugin: "kotlin"
 
-
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+        compile "io.github.libktx:ktx-app:$ktxVersion"
+        compile "io.github.libktx:ktx-actors:$ktxVersion"
     }
 }
