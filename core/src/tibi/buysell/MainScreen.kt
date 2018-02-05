@@ -9,45 +9,31 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.math.Vector3
-import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
-import ktx.actors.onClick
 import ktx.app.KtxScreen
+import ktx.app.copy
 
-/**
- *
- * @author YCHT
- */
-class MainScreen(val game: BuySellGame) : KtxScreen {
+
+class MainScreen : KtxScreen {
+
+    val model = Model()
 
     val batch = SpriteBatch()
     val shape = ShapeRenderer()
     val font  = BitmapFont()
     val viewport: Viewport = ScreenViewport()
     val cam = viewport.camera
-
-    val skin = createBasicSkin()
-
-    val buyButton = TextButton("BUY", skin).apply {
-        setPosition(10f, 200f)
-        onClick { model.buy() }
-    }
-    val sellButton = TextButton("SELL", skin).apply {
-        setPosition(10f, 250f)
-        onClick { model.sell() }
-    }
-    val stage = Stage().apply { addActor(buyButton); addActor(sellButton) }
+    val ui = UI(model, viewport)
 
     private var width = 0f
     private var height = 0f
 
     var paused = false
-    val model = Model()
 
     init {
         resize(Gdx.graphics.width, Gdx.graphics.height)
@@ -65,7 +51,7 @@ class MainScreen(val game: BuySellGame) : KtxScreen {
                 return true
             }
         }
-        Gdx.input.inputProcessor = InputMultiplexer(stage, keyProcessor)
+        Gdx.input.inputProcessor = InputMultiplexer(ui, keyProcessor)
     }
 
     override fun resize(newWidth: Int, newHeight: Int) {
@@ -84,8 +70,14 @@ class MainScreen(val game: BuySellGame) : KtxScreen {
         if (model.values.size < 2) return
 
         // Let the camera follow the curve
-        if (model.time > cam.position.x + cam.viewportWidth / 2 - 50) {
-            cam.position.x++
+        val diffX = model.time - (cam.position.x + cam.viewportWidth / 2 - 50)
+        if (diffX > 0) {
+            if (diffX > 50) {
+                cam.position.x += diffX
+            } else {
+                // smooth scrolling
+                cam.position.x++
+            }
         }
         val y = model.value
         if (y + 50 > cam.position.y + cam.viewportHeight / 2) {
@@ -96,7 +88,7 @@ class MainScreen(val game: BuySellGame) : KtxScreen {
         cam.update()
 
         shape.projectionMatrix = cam.combined
-        shape.begin(ShapeRenderer.ShapeType.Line)
+        shape.begin(ShapeType.Line)
         drawAxis()
 
         shape.setColor(.1f, .1f, .5f, 1f)
@@ -107,30 +99,31 @@ class MainScreen(val game: BuySellGame) : KtxScreen {
         }
         shape.end()
 
+        Gdx.gl.glEnable(GL20.GL_BLEND)
         // Attempt to draw a text background, TODO!
 //        shape.projectionMatrix.setToOrtho2D(0f, 0f, width, height)
-//        shape.begin(ShapeRenderer.ShapeType.Filled)
-//        shape.color = blueLight
-//        shape.rect(5f, height - 80, 60f, height - 5)
-//        shape.end()
+        shape.begin(ShapeType.Filled)
+        shape.color = blueLight.copy(alpha = 0.5f)
+        val p1 = cam.unproject(Vector3(10f, 100f, 0f))
+        shape.rect(p1.x, p1.y, 160f, 80f)
+        shape.end()
+        Gdx.gl.glDisable(GL20.GL_BLEND)
 
         batch.begin()
-        val xText = 20f
-        val xValues = 90f
+        val xText = 100f
         font.color = blue
-        font.draw(batch, "Value:", xText, height - 10, 30f, Align.right, false)
-        font.draw(batch, "%,5d $".format(model.value.toInt()), xValues, height - 10, 30f, Align.right, false)
-        font.draw(batch, "Qty:", xText, height - 30, 30f, Align.right, false)
-        font.draw(batch, "${model.qty}", xValues, height - 30, 30f, Align.right, false)
-        font.draw(batch, "Total:", xText, height - 50, 30f, Align.right, false)
-        font.draw(batch, "%,d $".format(model.moneyTotal.toInt()), xValues, height - 50, 30f, Align.right, false)
-        font.draw(batch, "Left:", xText, height - 70, 30f, Align.right, false)
-        font.draw(batch, "%,d $".format(model.moneyLeft.toInt()), xValues, height - 70, 30f, Align.right, false)
-
-        buyButton.draw(batch, 1f)
-        sellButton.draw(batch, 1f)
-
+//        font.draw(batch, "Value:", xText, height - 10, 30f, Align.right, false)
+//        font.draw(batch, "%,5d $".format(model.value.toInt()), xValues, height - 10, 30f, Align.right, false)
+        font.draw(batch, "${model.qty}", xText, height - 30, 0f, Align.right, false)
+        font.draw(batch, "Owned", xText+10, height - 30)
+//        font.draw(batch, "Total:", xText, height - 50, 30f, Align.right, false)
+//        font.draw(batch, "%,d $".format(model.moneyTotal.toInt()), xValues, height - 50, 30f, Align.right, false)
+        font.draw(batch, "%,d $".format(model.moneyLeft.toInt()), xText, height - 70, 0f, Align.right, false)
+        font.draw(batch, "Left", xText+10, height - 70)
         batch.end()
+
+        ui.draw()
+
     }
 
     val blue = Color(.31f, .31f, 1f, 1f)

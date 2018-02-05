@@ -1,6 +1,12 @@
  - Android version with Buy & Sell buttons
  - nicer looking curve: thick but anti-alias -> ok, test on android
  - countdown from 1 minute then stop, show score etc..
- - bigger font for the numbers
+ - vertical axis labels
+ - bigger font for the numbers, try this:
+    put ttf in assets
+    FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/timesBold.ttf"));
+    FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+    fontParameter.size = 18;
+    BitmapFont font = fontGenerator.generateFont(fontParameter);
  - start screen (overlay) choice between 1 minute, 5 minutes
  - high scores

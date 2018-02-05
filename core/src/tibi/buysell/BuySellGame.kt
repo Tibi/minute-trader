@@ -14,7 +14,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
 //        batch = SpriteBatch()
 //        shape = ShapeRenderer()
 //        font = BitmapFont()
-        addScreen(MainScreen(this))
+        addScreen(MainScreen())
         setScreen<MainScreen>()
     }
 
