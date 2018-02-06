@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import ktx.app.KtxScreen
-import ktx.app.copy
 
 
 class MainScreen : KtxScreen {
@@ -100,10 +99,9 @@ class MainScreen : KtxScreen {
         shape.end()
 
         Gdx.gl.glEnable(GL20.GL_BLEND)
-        // Attempt to draw a text background, TODO!
-//        shape.projectionMatrix.setToOrtho2D(0f, 0f, width, height)
+        // Draw a text background
         shape.begin(ShapeType.Filled)
-        shape.color = blueLight.copy(alpha = 0.5f)
+        shape.color = txtBgCol
         val p1 = cam.unproject(Vector3(10f, 100f, 0f))
         shape.rect(p1.x, p1.y, 160f, 80f)
         shape.end()
@@ -112,23 +110,19 @@ class MainScreen : KtxScreen {
         batch.begin()
         val xText = 100f
         font.color = blue
-//        font.draw(batch, "Value:", xText, height - 10, 30f, Align.right, false)
-//        font.draw(batch, "%,5d $".format(model.value.toInt()), xValues, height - 10, 30f, Align.right, false)
         font.draw(batch, "${model.qty}", xText, height - 30, 0f, Align.right, false)
         font.draw(batch, "Owned", xText+10, height - 30)
-//        font.draw(batch, "Total:", xText, height - 50, 30f, Align.right, false)
-//        font.draw(batch, "%,d $".format(model.moneyTotal.toInt()), xValues, height - 50, 30f, Align.right, false)
         font.draw(batch, "%,d $".format(model.moneyLeft.toInt()), xText, height - 70, 0f, Align.right, false)
         font.draw(batch, "Left", xText+10, height - 70)
         batch.end()
 
         ui.draw()
-
     }
 
     val blue = Color(.31f, .31f, 1f, 1f)
     val blueLight = Color(.7f, .8f, 1f, 1f)
     val red = Color.valueOf("FF6666")
+    val txtBgCol = Color.valueOf("#ceff9d88")
 
     private fun drawAxis() {
 

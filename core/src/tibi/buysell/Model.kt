@@ -10,20 +10,17 @@ class Model {
 
     var value = 200f
     val values = CircularFifoQueue<Float>(2000).apply { add(value) }
-    val volatility = 10f
     var time = 0f
 
     var qty = 0
-    val moneyInvested get() = qty * value
-    var moneyLeft = 1000f
-    val moneyTotal get() = moneyLeft + moneyInvested
+    var moneyLeft = 1_000f
     var boughtValue = 0f
 
 
     fun update() {
         time++
         // Pure random walk:
-        value += random(-volatility, +volatility)
+        value += random(-10f, +10f)
         // Now let's cheat a bit to avoid buying too low:
         if (value < 100) {
             value += (100 - value) / 100
