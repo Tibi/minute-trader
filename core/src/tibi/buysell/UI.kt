@@ -7,21 +7,20 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
-import com.badlogic.gdx.utils.viewport.Viewport
 import ktx.actors.onClick
 
 
-class UI(val model: Model, viewport: Viewport) : Stage(viewport) {
+class UI(val model: Model) : Stage() {
 
     val skin = createBasicSkin()
 
     val buyButton = TextButton("BUY", skin).apply {
-        setPosition(10f, 50f)
+        setPosition(10f, 30f)
         onClick { model.buy() }
     }
 
     val sellButton = TextButton("SELL", skin).apply {
-        setPosition(400f, 50f)
+        setPosition(10f, 150f)
         onClick { model.sell() }
     }
 
@@ -30,26 +29,31 @@ class UI(val model: Model, viewport: Viewport) : Stage(viewport) {
         addActor(sellButton)
     }
 
-    fun createBasicSkin(): Skin {
+
+    fun createBasicSkin() = Skin().also { skin ->
+
         //Create a font
-        val font = BitmapFont()
-        val skin = Skin()
-        skin.add("default", font)
+        skin.add("default", BitmapFont())
 
         //Create a texture
-        val pixmap = Pixmap(80, 30, Pixmap.Format.RGB888)
+        val pixmap = Pixmap(80, 60, Pixmap.Format.RGB888)
         pixmap.setColor(Color.WHITE)
         pixmap.fill()
         skin.add("background", Texture(pixmap))
 
         //Create a button style
-        val textButtonStyle = TextButton.TextButtonStyle()
-        textButtonStyle.up = skin.newDrawable("background", Color.GRAY)
-        textButtonStyle.down = skin.newDrawable("background", Color.DARK_GRAY)
-        textButtonStyle.checked = skin.newDrawable("background", Color.DARK_GRAY)
-        textButtonStyle.over = skin.newDrawable("background", Color.LIGHT_GRAY)
-        textButtonStyle.font = skin.getFont("default")
+        val textButtonStyle = TextButton.TextButtonStyle().apply {
+            up = skin.newDrawable("background", Color.GRAY)
+            down = skin.newDrawable("background", Color.DARK_GRAY)
+            checked = skin.newDrawable("background", Color.DARK_GRAY)
+            over = skin.newDrawable("background", Color.LIGHT_GRAY)
+            font = skin.getFont("default")
+        }
         skin.add("default", textButtonStyle)
-        return skin
+    }
+
+    override fun dispose() {
+        super.dispose()
+        skin.dispose()
     }
 }

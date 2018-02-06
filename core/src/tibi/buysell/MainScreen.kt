@@ -27,7 +27,7 @@ class MainScreen : KtxScreen {
     val font  = BitmapFont()
     val viewport: Viewport = ScreenViewport()
     val cam = viewport.camera
-    val ui = UI(model, viewport)
+    val ui = UI(model)
 
     private var width = 0f
     private var height = 0f
@@ -116,6 +116,7 @@ class MainScreen : KtxScreen {
         font.draw(batch, "Left", xText+10, height - 70)
         batch.end()
 
+        ui.act(delta)
         ui.draw()
     }
 
@@ -175,5 +176,6 @@ class MainScreen : KtxScreen {
         batch.dispose()
         font.dispose()
         shape.dispose()
+        ui.dispose()
     }
 }

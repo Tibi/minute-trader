@@ -45,7 +45,7 @@ class Model {
 
     fun sell() {
         if (qty == 0) return
-        val qtyToSell = ceil(qty / 10f).toInt()
+        val qtyToSell = ceil(qty / 5f).toInt()
         qty -= qtyToSell
         moneyLeft += qtyToSell * value
     }
