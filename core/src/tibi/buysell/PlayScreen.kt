@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import ktx.app.KtxScreen
 
 
-class MainScreen : KtxScreen {
+class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     val model = Model()
 
@@ -27,14 +27,18 @@ class MainScreen : KtxScreen {
     val font  = BitmapFont()
     val viewport: Viewport = ScreenViewport()
     val cam = viewport.camera
-    val ui = UI(model)
+    val ui = MainUI(this, game.skin)
 
     private var width = 0f
     private var height = 0f
 
-    var paused = false
+    /** In pixels / second */
+    var scaleX = 40
 
-    init {
+    var paused = false
+    var duration = 60f
+
+    override fun show() {
         resize(Gdx.graphics.width, Gdx.graphics.height)
         cam.position.set(220f, 160f, 0f)
         cam.update()
@@ -65,11 +69,17 @@ class MainScreen : KtxScreen {
         Gdx.gl.glClearColor(.9f, .95f, 1f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
-        if (!paused) model.update()
-        if (model.values.size < 2) return
+        if (!paused) model.update(delta)
+        if (model.points.size < 2) return
+
+        duration -= delta
+        if (duration <= 0) {
+            game.gameFinished(model)
+            return
+        }
 
         // Let the camera follow the curve
-        val diffX = model.time - (cam.position.x + cam.viewportWidth / 2 - 50)
+        val diffX = model.time * scaleX - (cam.position.x + cam.viewportWidth / 2 - 50)
         if (diffX > 0) {
             if (diffX > 50) {
                 cam.position.x += diffX
@@ -91,10 +101,8 @@ class MainScreen : KtxScreen {
         drawAxis()
 
         shape.setColor(.1f, .1f, .5f, 1f)
-        var x = model.time - model.values.size
-        model.values.windowed(2).forEach { vals ->
-            draw(x, vals[0], x+1, vals[1], true, blue)
-            x++
+        model.points.windowed(2).forEach { vals ->
+            draw(vals[0].x * scaleX, vals[0].y, vals[1].x * scaleX, vals[1].y, true, blue)
         }
         shape.end()
 
@@ -135,16 +143,22 @@ class MainScreen : KtxScreen {
         val coarseGrid = 100
         val fineGrid = 25
 
+        batch.begin()
+
         // Vertical lines
         var x = start.x - start.x % fineGrid
         while (x < end.x) {
             val onCoarseGrid = x.toInt() % coarseGrid == 0
             draw(x, start.y, x, end.y, x == 0f, if (onCoarseGrid) blue else blueLight)
+            if (onCoarseGrid) {
+                // Label
+                val p = cam.project(Vector3(x, 0f, 0f))
+                font.draw(batch, formatTime(x / scaleX), p.x + 5, 20f)
+            }
             x += fineGrid
         }
 
         // Horizontal lines
-        batch.begin()
         var y = start.y - start.y % fineGrid
         while (y < end.y) {
             val onCoarseGrid = y.toInt() % coarseGrid == 0
@@ -163,6 +177,9 @@ class MainScreen : KtxScreen {
             draw(start.x, model.boughtValue, end.x, model.boughtValue, true, red)
         }
     }
+
+    private fun formatTime(seconds: Float) =
+        "%d:%02d".format((seconds / 60).toInt(), (seconds % 60).toInt())
 
     fun draw(x1: Float, y1: Float, x2: Float, y2: Float, thick: Boolean, color: Color) {
         shape.color = color

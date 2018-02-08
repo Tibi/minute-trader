@@ -1,6 +1,7 @@
 package tibi.buysell
 
 import com.badlogic.gdx.math.MathUtils.random
+import com.badlogic.gdx.math.Vector2
 import org.apache.commons.collections4.queue.CircularFifoQueue
 import kotlin.math.ceil
 import kotlin.math.max
@@ -9,7 +10,7 @@ import kotlin.math.max
 class Model {
 
     var value = 200f
-    val values = CircularFifoQueue<Float>(2000).apply { add(value) }
+    val points = CircularFifoQueue<Vector2>(2000).apply { add(Vector2(time, value)) }
     var time = 0f
 
     var qty = 0
@@ -17,8 +18,8 @@ class Model {
     var boughtValue = 0f
 
 
-    fun update() {
-        time++
+    fun update(delta: Float) {
+        time += delta
         // Pure random walk:
         value += random(-10f, +10f)
         // Now let's cheat a bit to avoid buying too low:
@@ -28,7 +29,7 @@ class Model {
         if (value < 5f) {
             value = 5f
         }
-        values.add(value)
+        points.add(Vector2(time, value))
     }
 
     fun buy() {
