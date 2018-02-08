@@ -51,4 +51,14 @@ class Model {
         moneyLeft += qtyToSell * value
     }
 
+    fun clear() {
+        value = 200f
+        time = 0f
+        points.clear()
+        points.add(Vector2(time, value))
+        qty = 0
+        moneyLeft = 1_000f
+        boughtValue = 0f
+    }
+
 }

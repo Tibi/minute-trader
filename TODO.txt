@@ -1,4 +1,5 @@
  - Android version with Buy & Sell buttons
+   - red SELL, green BUY
  - nicer looking curve: thick but anti-alias -> ok, test on android
  - countdown from 1 minute then stop, show score etc..
  - vertical axis labels

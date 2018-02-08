@@ -2,9 +2,13 @@ package tibi.buysell
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import ktx.actors.onClick
 import ktx.app.KtxScreen
+import tibi.buysell.BuySellGame.Duration.FIVE
+import tibi.buysell.BuySellGame.Duration.ONE
 
 
 class MenuScreen(val game: BuySellGame) : KtxScreen {
@@ -12,6 +16,11 @@ class MenuScreen(val game: BuySellGame) : KtxScreen {
 
     override fun show() {
         Gdx.input.inputProcessor = ui
+        game.highScores.forEach { duration, score ->
+            if (score > 0) {
+                ui.labels[duration]?.setText("High Score: %,d".format(score))
+            }
+        }
     }
 
     override fun render(delta: Float) {
@@ -22,18 +31,22 @@ class MenuScreen(val game: BuySellGame) : KtxScreen {
 
 class MenuStage(val game: BuySellGame) : Stage() {
 
-    val oneButton = TextButton("1 Minute Challenge", game.skin, "green").apply {
-        setPosition(10f, 30f)
-        onClick { game.play(60) }
-    }
-
-    val fiveButton = TextButton("5 Minutes Challenge", game.skin, "green").apply {
-        setPosition(10f, 130f)
-        onClick { game.play(5*60) }
-    }
+    val buttons = mapOf(ONE to button(ONE), FIVE to button(FIVE))
+    val labels = mapOf(ONE to Label("", game.skin), FIVE to Label("", game.skin))
 
     init {
-        addActor(oneButton)
-        addActor(fiveButton)
+        val table = Table()
+        listOf(ONE, FIVE).forEach {
+            table.add(buttons[it]).minWidth(200f).center().pad(30f)
+            table.add(labels[it]).row()
+        }
+        table.setFillParent(true)
+        addActor(table)
     }
+
+    fun button(duration: BuySellGame.Duration) =
+            TextButton("${duration.description} Challenge", game.skin, "green").apply {
+                onClick { game.play(duration) }
+            }
+
 }

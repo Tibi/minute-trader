@@ -20,7 +20,7 @@ import ktx.app.KtxScreen
 
 class PlayScreen(val game: BuySellGame) : KtxScreen {
 
-    val model = Model()
+    val model = game.model
 
     val batch = SpriteBatch()
     val shape = ShapeRenderer()
@@ -74,7 +74,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
         duration -= delta
         if (duration <= 0) {
-            game.gameFinished(model)
+            game.gameFinished()
             return
         }
 
@@ -176,6 +176,10 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         if (model.qty > 0) {
             draw(start.x, model.boughtValue, end.x, model.boughtValue, true, red)
         }
+
+        // Finish line
+        val finishX = game.lastDuration.minutes * 60f * scaleX
+        draw(finishX, start.y, finishX, end.y, true, red)
     }
 
     private fun formatTime(seconds: Float) =
