@@ -80,20 +80,23 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         }
 
         // Let the camera follow the curve
-        val diffX = model.time * scaleX - (cam.position.x + cam.viewportWidth / 2 - 50)
+        val rightEdge = cam.position.x + cam.viewportWidth / 2
+        val diffX = model.time * scaleX + 100 - rightEdge
         if (diffX > 0) {
-            if (diffX > 50) {
-                cam.position.x += diffX
-            } else {
-                // smooth scrolling
-                cam.position.x++
-            }
+            cam.position.x += diffX
         }
-        val y = model.value
-        if (y + 50 > cam.position.y + cam.viewportHeight / 2) {
-            cam.position.y++
-        } else if (y - 50 < cam.position.y - cam.viewportHeight / 2) {
-            cam.position.y--
+        val topEdge = cam.position.y + cam.viewportHeight / 2
+        val diffYTop = model.value + 50 - topEdge
+        if (diffYTop > 0) {
+            cam.position.y += diffYTop
+        } else {
+            val bottomEdge = cam.position.y - cam.viewportHeight / 2
+            val diffYBottom = bottomEdge - (model.value - 50)
+            if (diffYBottom > 30) {
+                cam.position.y -= diffYBottom
+            } else if (diffYBottom > 0) {
+                cam.position.y--
+            }
         }
         cam.update()
 
@@ -168,7 +171,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         while (x < end.x) {
             val onCoarseGrid = x.toInt() % coarseGrid == 0
             draw(x, start.y, x, end.y, x == 0f, if (onCoarseGrid) blue else blueLight)
-            if (onCoarseGrid) {
+            if (onCoarseGrid && x >= 0) {
                 // Label
                 val p = cam.project(Vector3(x, 0f, 0f))
                 font.draw(batch, formatTime(x / scaleX), p.x + 5, 20f)
@@ -181,10 +184,10 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         while (y < end.y) {
             val onCoarseGrid = y.toInt() % coarseGrid == 0
             draw(start.x, y, end.x, y, y == 0f, if (onCoarseGrid) blue else blueLight)
-            if (onCoarseGrid) {
+            if (onCoarseGrid && y >= 0) {
                 // Label
                 val p = cam.project(Vector3(0f, y, 0f))
-                font.draw(batch, y.toInt().toString(), width - 10, p.y + 16, 0f, Align.right, false)
+                font.draw(batch, "${y.toInt()} $", width - 10, p.y + 16, 0f, Align.right, false)
             }
             y += fineGrid
         }
@@ -197,7 +200,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
     }
 
     private fun formatTime(seconds: Float) =
-        "%d:%02d".format((seconds / 60).toInt(), (seconds % 60).toInt())
+        "%d'%02d\"".format((seconds / 60).toInt(), (seconds % 60).toInt())
 
     fun draw(x1: Float, y1: Float, x2: Float, y2: Float, thick: Boolean, color: Color) {
         shape.color = color
