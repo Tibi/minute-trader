@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import ktx.actors.onClick
 import ktx.app.KtxScreen
+import ktx.app.clearScreen
 import tibi.buysell.BuySellGame.Duration.FIVE
 import tibi.buysell.BuySellGame.Duration.ONE
 
@@ -24,6 +25,7 @@ class MenuScreen(val game: BuySellGame) : KtxScreen {
     }
 
     override fun render(delta: Float) {
+        clearScreen(.9f, .95f, 1f, 1f)
         ui.act()
         ui.draw()
     }

@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import ktx.app.KtxScreen
+import ktx.app.clearScreen
 
 
 class PlayScreen(val game: BuySellGame) : KtxScreen {
@@ -66,16 +67,16 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     override fun render(delta: Float) {
 
-        Gdx.gl.glClearColor(.9f, .95f, 1f, 1f)
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+        clearScreen(.9f, .95f, 1f)
 
-        if (!paused) model.update(delta)
-        if (model.points.size < 2) return
-
-        duration -= delta
-        if (duration <= 0) {
-            game.gameFinished()
-            return
+        if (!paused) {
+            model.update(delta)
+            if (model.points.size < 2) return
+            duration -= delta
+            if (duration <= 0) {
+                game.gameFinished()
+                return
+            }
         }
 
         // Let the camera follow the curve
@@ -97,24 +98,40 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         cam.update()
 
         shape.projectionMatrix = cam.combined
+
+        // Axis
         shape.begin(ShapeType.Line)
         drawAxis()
+        shape.end()
 
+        // Start filled shapes
+        Gdx.gl.glEnable(GL20.GL_BLEND)
+        shape.begin(ShapeType.Filled)
+
+        // Draw a text background
+        shape.color = txtBgCol
+        val p1 = cam.unproject(Vector3(10f, 100f, 0f))
+        shape.rect(p1.x, p1.y, 160f, 80f)
+
+        // Finish line
+        val start = cam.unproject(Vector3(0f, height, 0f))
+        val finishX = game.lastDuration.minutes * 60f * scaleX
+                                                 // bottom left, bottom right, top right and top left
+        shape.rect(finishX - 300, start.y, 300f, height, transp, red, red, transp)
+
+        // End filled shapes
+        shape.end()
+        Gdx.gl.glDisable(GL20.GL_BLEND)
+
+        ///// Main Curve \\\\\
+        shape.begin(ShapeType.Line)
         shape.setColor(.1f, .1f, .5f, 1f)
         model.points.windowed(2).forEach { vals ->
             draw(vals[0].x * scaleX, vals[0].y, vals[1].x * scaleX, vals[1].y, true, blue)
         }
         shape.end()
 
-        Gdx.gl.glEnable(GL20.GL_BLEND)
-        // Draw a text background
-        shape.begin(ShapeType.Filled)
-        shape.color = txtBgCol
-        val p1 = cam.unproject(Vector3(10f, 100f, 0f))
-        shape.rect(p1.x, p1.y, 160f, 80f)
-        shape.end()
-        Gdx.gl.glDisable(GL20.GL_BLEND)
-
+        // Text
         batch.begin()
         val xText = 100f
         font.color = blue
@@ -131,7 +148,8 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
     val blue = Color(.31f, .31f, 1f, 1f)
     val blueLight = Color(.7f, .8f, 1f, 1f)
     val red = Color.valueOf("FF6666")
-    val txtBgCol = Color.valueOf("#ceff9d88")
+    val txtBgCol = Color.valueOf("ceff9d88")
+    val transp = Color(0)
 
     private fun drawAxis() {
 
@@ -176,10 +194,6 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         if (model.qty > 0) {
             draw(start.x, model.boughtValue, end.x, model.boughtValue, true, red)
         }
-
-        // Finish line
-        val finishX = game.lastDuration.minutes * 60f * scaleX
-        draw(finishX, start.y, finishX, end.y, true, red)
     }
 
     private fun formatTime(seconds: Float) =

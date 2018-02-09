@@ -18,15 +18,9 @@ class MainUI(val screen: PlayScreen, skin: Skin) : Stage() {
         onClick { screen.model.sell() }
     }
 
-    val pauseButton = TextButton("Pause", skin).apply {
-        setPosition(10f, 230f)
-        onClick { screen.paused = !screen.paused }
-    }
-
     init {
         addActor(buyButton)
         addActor(sellButton)
-        addActor(pauseButton)
     }
 
 }

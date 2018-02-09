@@ -1,5 +1,11 @@
- - Android version with Buy & Sell buttons
+ - menu/start screen.  title: "Minute Trader"
+ - buttons are stretching...
+ - click on menu is not working when coming back from play
+ - Android version with https://github.com/czyzby/gdx-setup
+ - Buy & Sell buttons
    - red SELL, green BUY
+   - rounded buttons, like Android material design
+   - skins
  - nicer looking curve: thick but anti-alias -> ok, test on android
  - countdown from 1 minute then stop, show score etc..
  - vertical axis labels
@@ -10,4 +16,9 @@
     fontParameter.size = 18;
     BitmapFont font = fontGenerator.generateFont(fontParameter);
  - start screen (overlay) choice between 1 minute, 5 minutes
- - high scores
+ - high scores, saved to cloud
+ - proguard
+ - icon
+ - AdMob http://www.norakomi.com/tutorial_admob_part1.php
+ - publish to Google Play
+
