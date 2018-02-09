@@ -1,5 +1,4 @@
  - menu/start screen.  title: "Minute Trader"
- - click on menu is not working when coming back from play
  - Android version with https://github.com/czyzby/gdx-setup
  - Buy & Sell buttons
    - red SELL, green BUY

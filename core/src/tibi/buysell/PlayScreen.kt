@@ -50,6 +50,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
                     Input.Keys.B -> model.buy()
                     Input.Keys.S -> model.sell()
                     Input.Keys.P -> paused = paused.not()
+                    Input.Keys.ESCAPE -> game.setScreen<MenuScreen>()
                     else -> return false
                 }
                 return true
