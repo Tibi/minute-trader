@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
+import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
 import ktx.app.KtxScreen
 import ktx.app.clearScreen
@@ -29,9 +30,14 @@ class MenuScreen(val game: BuySellGame) : KtxScreen {
         ui.act()
         ui.draw()
     }
+
+    override fun resize(width: Int, height: Int) {
+        ui.viewport.update(width, height, true)
+    }
 }
 
-class MenuStage(val game: BuySellGame) : Stage() {
+
+class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
 
     val buttons = mapOf(ONE to button(ONE), FIVE to button(FIVE))
     val labels = mapOf(ONE to Label("", game.skin), FIVE to Label("", game.skin))

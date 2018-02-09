@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
@@ -17,9 +18,10 @@ import tibi.buysell.BuySellGame.Duration.ONE
 class BuySellGame : KtxGame<KtxScreen>() {
 
     val model = Model()
+    lateinit var batch: SpriteBatch
 
     enum class Duration(val minutes: Float, val description: String) {
-        ONE(1f, "One Minute"),
+        ONE(.5f, "One Minute"),
         FIVE(5f, "Five Minutes")
     }
 
@@ -29,6 +31,8 @@ class BuySellGame : KtxGame<KtxScreen>() {
     val skin by lazy { createSkin() }
 
     override fun create() {
+        batch = SpriteBatch()
+
         addScreen(MenuScreen(this))
         addScreen(PlayScreen(this))
 
