@@ -9,8 +9,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
 import ktx.app.KtxScreen
 import ktx.app.clearScreen
-import tibi.buysell.BuySellGame.Duration.FIVE
 import tibi.buysell.BuySellGame.Duration.ONE
+import tibi.buysell.BuySellGame.Duration.THREE
 
 
 class MenuScreen(val game: BuySellGame) : KtxScreen {
@@ -39,12 +39,12 @@ class MenuScreen(val game: BuySellGame) : KtxScreen {
 
 class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
 
-    val buttons = mapOf(ONE to button(ONE), FIVE to button(FIVE))
-    val labels = mapOf(ONE to Label("", game.skin), FIVE to Label("", game.skin))
+    val buttons = mapOf(ONE to button(ONE), THREE to button(THREE))
+    val labels = mapOf(ONE to Label("", game.skin), THREE to Label("", game.skin))
 
     init {
         val table = Table()
-        listOf(ONE, FIVE).forEach {
+        listOf(ONE, THREE).forEach {
             table.add(buttons[it]).minWidth(200f).center().pad(30f)
             table.add(labels[it]).row()
         }

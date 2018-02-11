@@ -11,8 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.app.copy
-import tibi.buysell.BuySellGame.Duration.FIVE
 import tibi.buysell.BuySellGame.Duration.ONE
+import tibi.buysell.BuySellGame.Duration.THREE
 
 
 class BuySellGame : KtxGame<KtxScreen>() {
@@ -21,11 +21,11 @@ class BuySellGame : KtxGame<KtxScreen>() {
     lateinit var batch: SpriteBatch
 
     enum class Duration(val minutes: Float, val description: String) {
-        ONE(.5f, "One Minute"),
-        FIVE(5f, "Five Minutes")
+        ONE(1f, "One Minute"),
+        THREE(3f, "Three Minutes")
     }
 
-    val highScores = mutableMapOf(ONE to 0, FIVE to 0)
+    val highScores = mutableMapOf(ONE to 0, THREE to 0)
     var lastDuration = ONE
 
     val skin by lazy { createSkin() }
