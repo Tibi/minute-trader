@@ -18,6 +18,7 @@ buildscript {
     }
 }
 
+
 allprojects {
     apply plugin: "idea"
 
@@ -31,6 +32,21 @@ allprojects {
     }
 }
 
+
+project(":core") {
+    apply plugin: "kotlin"
+
+    dependencies {
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+        compile "io.github.libktx:ktx-app:$ktxVersion"
+        compile "io.github.libktx:ktx-actors:$ktxVersion"
+        compile "io.github.libktx:ktx-scene2d:$ktxVersion"
+    }
+}
+
+
 project(":desktop") {
     apply plugin: "kotlin"
 
@@ -38,18 +54,17 @@ project(":desktop") {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     }
 }
 
-project(":core") {
-    apply plugin: "kotlin"
-
-    dependencies {
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-        compile "io.github.libktx:ktx-app:$ktxVersion"
-        compile "io.github.libktx:ktx-actors:$ktxVersion"
-        compile "io.github.libktx:ktx-scene2d:$ktxVersion"
-    }
-}
+/*
+FreeType dependencies for Android:
+compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi"
+natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi-v7a"
+natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-arm64-v8a"
+natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
+natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
+ */

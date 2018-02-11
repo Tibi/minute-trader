@@ -1,6 +1,7 @@
 package tibi.buysell
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
@@ -20,7 +21,7 @@ class MenuScreen(val game: BuySellGame) : KtxScreen {
         Gdx.input.inputProcessor = ui
         game.highScores.forEach { duration, score ->
             if (score > 0) {
-                ui.labels[duration]?.setText("High Score: %,d".format(score))
+                ui.labels[duration]?.setText("High Score: %,d $".format(score))
             }
         }
     }
@@ -40,13 +41,15 @@ class MenuScreen(val game: BuySellGame) : KtxScreen {
 class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
 
     val buttons = mapOf(ONE to button(ONE), THREE to button(THREE))
-    val labels = mapOf(ONE to Label("", game.skin), THREE to Label("", game.skin))
+    val labels = listOf(ONE, THREE).associate { it to Label("no highscore", game.skin, "default", Color.BLACK) }
 
     init {
-        val table = Table()
+        val table = Table(game.skin).top()
+        table.add("Minute Trader", "title", Color.WHITE).expand().colspan(2)
+        table.row()
         listOf(ONE, THREE).forEach {
-            table.add(buttons[it]).minWidth(200f).center().pad(30f)
-            table.add(labels[it]).row()
+            table.add(buttons[it]).minWidth(230f).center().pad(30f)
+            table.add(labels[it]).left().row()
         }
         table.setFillParent(true)
         addActor(table)
