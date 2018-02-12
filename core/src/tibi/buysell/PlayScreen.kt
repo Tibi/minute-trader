@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import ktx.app.KtxScreen
 import ktx.app.clearScreen
+import tibi.buysell.BuySellGame.MyColors.*
 
 
 class PlayScreen(val game: BuySellGame) : KtxScreen {
@@ -69,8 +70,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     override fun render(delta: Float) {
 
-        clearScreen(.9f, .95f, 1f)
-
+        clearScreen(BG.col.r, BG.col.g, BG.col.b)
         if (!paused) {
             model.update(delta)
             if (model.points.size < 2) return
@@ -114,7 +114,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         shape.begin(ShapeType.Filled)
 
         // Draw a text background
-        shape.color = txtBgCol
+        shape.color = TEXT_BG.col
         val p1 = cam.unproject(Vector3(10f, 100f, 0f))
         shape.rect(p1.x, p1.y, 160f, 80f)
 
@@ -122,7 +122,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         val start = cam.unproject(Vector3(0f, screenHeight, 0f))
         val finishX = game.lastDuration.minutes * 60f * scaleX
                                                  // bottom left, bottom right, top right and top left
-        shape.rect(finishX - 300, start.y, 300f, screenHeight, transp, red, red, transp)
+        shape.rect(finishX - 300, start.y, 300f, screenHeight, TRANSPARENT.col, RED.col, RED.col, TRANSPARENT.col)
 
         // End filled shapes
         shape.end()
@@ -132,13 +132,13 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         shape.begin(ShapeType.Line)
         shape.setColor(.1f, .1f, .5f, 1f)
         model.points.windowed(2).forEach { vals ->
-            draw(vals[0].x * scaleX, vals[0].y, vals[1].x * scaleX, vals[1].y, true, blue)
+            draw(vals[0].x * scaleX, vals[0].y, vals[1].x * scaleX, vals[1].y, true, DRAW.col)
         }
         shape.end()
 
         // Text
         val xText = 100f
-        font.color = blue
+        font.color = DRAW.col
         batch.begin()
         font.draw(batch, "${model.qty}", xText, screenHeight - 30, 0f, Align.right, false)
         font.draw(batch, "Owned", xText+10, screenHeight - 30)
@@ -150,15 +150,9 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         ui.draw()
     }
 
-    val blue = Color(.31f, .31f, 1f, 1f)
-    val blueLight = Color(.7f, .8f, 1f, 1f)
-    val red = Color.valueOf("FF6666")!!
-    val txtBgCol = Color.valueOf("ceff9d88")!!
-    val transp = Color(0)
-
     private fun drawAxis() {
 
-        font.color = blueLight
+        font.color = DRAW_LIGHT.col
 
         // World coordinates of the screen viewport
         val start = cam.unproject(Vector3(0f, screenHeight, 0f))
@@ -172,7 +166,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         var x = start.x - start.x % fineGrid
         while (x < end.x) {
             val onCoarseGrid = x.toInt() % coarseGrid == 0
-            draw(x, start.y, x, end.y, x == 0f, if (onCoarseGrid) blue else blueLight)
+            draw(x, start.y, x, end.y, x == 0f, if (onCoarseGrid) DRAW.col else DRAW_LIGHT.col)
             if (onCoarseGrid && x >= 0) {
                 // Label
                 val p = cam.project(Vector3(x, 0f, 0f))
@@ -185,7 +179,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         var y = start.y - start.y % fineGrid
         while (y < end.y) {
             val onCoarseGrid = y.toInt() % coarseGrid == 0
-            draw(start.x, y, end.x, y, y == 0f, if (onCoarseGrid) blue else blueLight)
+            draw(start.x, y, end.x, y, y == 0f, if (onCoarseGrid) DRAW.col else DRAW_LIGHT.col)
             if (onCoarseGrid && y >= 0) {
                 // Label
                 val p = cam.project(Vector3(0f, y, 0f))
@@ -197,7 +191,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
         // Bought value line
         if (model.qty > 0) {
-            draw(start.x, model.boughtValue, end.x, model.boughtValue, true, red)
+            draw(start.x, model.boughtValue, end.x, model.boughtValue, true, RED.col)
         }
     }
 

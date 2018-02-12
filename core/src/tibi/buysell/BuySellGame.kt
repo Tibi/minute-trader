@@ -14,8 +14,7 @@ import ktx.app.KtxScreen
 import ktx.app.copy
 import tibi.buysell.BuySellGame.Duration.ONE
 import tibi.buysell.BuySellGame.Duration.THREE
-
-
+import tibi.buysell.BuySellGame.MyColors.*
 
 
 class BuySellGame : KtxGame<KtxScreen>() {
@@ -55,6 +54,25 @@ class BuySellGame : KtxGame<KtxScreen>() {
         setScreen<MenuScreen>()
     }
 
+    // http://paletton.com/#uid=73a1g0kbRt14+E48dwffUpTkImm
+    enum class MyColors(colorStr: String) {
+        BG("#FFFBD7"),
+        TEXT_BG("#B3A9C5"),
+        BRIGHT_TEXT("#B3A9C5"),
+        DARK_TEXT("#4D3279"),
+        GREEN_BUTTON("#297461"),
+        GREEN_BUTTON_DOWN("#7CA69C"),
+        RED_BUTTON("#B26A3F"),
+        RED_BUTTON_DOWN("#FFD6BE"),
+        RED("#FF0000"),
+        DRAW("#654D8D"),
+        DRAW_LIGHT("#9586AE"),
+
+        TRANSPARENT("#00000000")
+        ;
+        val col: Color = Color.valueOf(colorStr)
+    }
+
 
     private fun createSkin() = Skin().also { skin ->
 
@@ -63,10 +81,10 @@ class BuySellGame : KtxGame<KtxScreen>() {
         val param = FreeTypeFontGenerator.FreeTypeFontParameter()
         param.size = 18
         skin.add("default", generator.generateFont(param))
-        param.color = Color(.1f, .3f, .8f, 1f)
+        param.color = DARK_TEXT.col
         param.size = 80
-        param.borderWidth = 2f
-        param.borderColor = Color.BLACK
+//        param.borderWidth = 2f
+//        param.borderColor = Color.BLACK
 //        param.shadowOffsetX = 3
 //        param.shadowOffsetY = 3
         skin.add("title", generator.generateFont(param))
@@ -85,24 +103,20 @@ class BuySellGame : KtxGame<KtxScreen>() {
         }
         skin.add("default", textButtonStyle)
 
-        val darkGreen = Color.GREEN.copy(green = 0.5f)
-
         val greenButtonStyle = TextButton.TextButtonStyle().apply {
-            up = skin.newDrawable("background", darkGreen)
-            down = skin.newDrawable("background", Color.GREEN)
-            checked = skin.newDrawable("background", darkGreen)
-            over = skin.newDrawable("background", darkGreen)
+            up = skin.newDrawable("background", GREEN_BUTTON.col)
+            down = skin.newDrawable("background", GREEN_BUTTON_DOWN.col)
+            checked = skin.newDrawable("background", GREEN_BUTTON.col)
+            over = skin.newDrawable("background", GREEN_BUTTON.col)
             font = skin.getFont("default")
         }
         skin.add("green", greenButtonStyle)
 
-        val darkRed = Color.RED.copy(red = 0.5f)
-
         val redButtonStyle = TextButton.TextButtonStyle().apply {
-            up = skin.newDrawable("background", darkRed)
-            down = skin.newDrawable("background", Color.RED)
-            checked = skin.newDrawable("background", darkRed)
-            over = skin.newDrawable("background", darkRed)
+            up = skin.newDrawable("background", RED_BUTTON.col)
+            down = skin.newDrawable("background", RED_BUTTON_DOWN.col)
+            checked = skin.newDrawable("background", RED_BUTTON.col)
+            over = skin.newDrawable("background", RED_BUTTON.col)
             font = skin.getFont("default")
         }
         skin.add("red", redButtonStyle)

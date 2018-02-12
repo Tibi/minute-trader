@@ -12,6 +12,7 @@ import ktx.app.KtxScreen
 import ktx.app.clearScreen
 import tibi.buysell.BuySellGame.Duration.ONE
 import tibi.buysell.BuySellGame.Duration.THREE
+import tibi.buysell.BuySellGame.MyColors.*
 
 
 class MenuScreen(val game: BuySellGame) : KtxScreen {
@@ -27,7 +28,7 @@ class MenuScreen(val game: BuySellGame) : KtxScreen {
     }
 
     override fun render(delta: Float) {
-        clearScreen(.9f, .95f, 1f, 1f)
+        clearScreen(BG.col.r, BG.col.g, BG.col.b)
         ui.act()
         ui.draw()
     }
@@ -41,10 +42,12 @@ class MenuScreen(val game: BuySellGame) : KtxScreen {
 class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
 
     val buttons = mapOf(ONE to button(ONE), THREE to button(THREE))
-    val labels = listOf(ONE, THREE).associate { it to Label("no highscore", game.skin, "default", Color.BLACK) }
+    val labels = listOf(ONE, THREE).associate {
+        it to Label("no highscore", game.skin, "default", DARK_TEXT.col) }
 
     init {
         val table = Table(game.skin).top()
+//        table.debug()
         table.add("Minute Trader", "title", Color.WHITE).expand().colspan(2)
         table.row()
         listOf(ONE, THREE).forEach {
