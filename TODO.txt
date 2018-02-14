@@ -1,4 +1,3 @@
- - grid based layout, see assets/layout.png
  - icon
  - better title design: "Minute Trader"
  - Android version with https://github.com/czyzby/gdx-setup
