@@ -130,7 +130,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
         ///// Main Curve \\\\\
         shape.begin(ShapeType.Line)
-        shape.setColor(.1f, .1f, .5f, 1f)
+        shape.color = DRAW.col
         model.points.windowed(2).forEach { vals ->
             draw(vals[0].x * scaleX, vals[0].y, vals[1].x * scaleX, vals[1].y, true, DRAW.col)
         }
