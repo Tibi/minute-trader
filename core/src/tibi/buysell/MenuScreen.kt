@@ -12,7 +12,8 @@ import ktx.app.KtxScreen
 import ktx.app.clearScreen
 import tibi.buysell.BuySellGame.Duration.ONE
 import tibi.buysell.BuySellGame.Duration.THREE
-import tibi.buysell.BuySellGame.MyColors.*
+import tibi.buysell.BuySellGame.MyColors.BG
+import tibi.buysell.BuySellGame.MyColors.DARK_TEXT
 
 
 class MenuScreen(val game: BuySellGame) : KtxScreen {
@@ -20,8 +21,9 @@ class MenuScreen(val game: BuySellGame) : KtxScreen {
 
     override fun show() {
         Gdx.input.inputProcessor = ui
-        game.highScores.forEach { duration, score ->
-            if (score > 0) {
+        game.highScores.keys.forEach { duration ->
+            val score = game.highScores[duration]
+            if (score != null && score > 0) {
                 ui.labels[duration]?.setText("High Score: %,d $".format(score))
             }
         }
