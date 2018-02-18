@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
-import ktx.app.copy
 import tibi.buysell.BuySellGame.Duration.ONE
 import tibi.buysell.BuySellGame.Duration.THREE
 import tibi.buysell.BuySellGame.MyColors.*
@@ -73,16 +72,18 @@ class BuySellGame : KtxGame<KtxScreen>() {
         val col: Color = Color.valueOf(colorStr)
     }
 
+    /** Convert dimensions relative to screen size */
+    private fun r(a: Int) = a * Gdx.graphics.height / 480
 
     private fun createSkin() = Skin().also { skin ->
 
         //Create a font
         val generator = FreeTypeFontGenerator(Gdx.files.internal("fonts/Roboto-Medium.ttf"))
         val param = FreeTypeFontGenerator.FreeTypeFontParameter()
-        param.size = 18
+        param.size = r(20)
         skin.add("default", generator.generateFont(param))
         param.color = DARK_TEXT.col
-        param.size = 80
+        param.size = r(80)
 //        param.borderWidth = 2f
 //        param.borderColor = Color.BLACK
 //        param.shadowOffsetX = 3

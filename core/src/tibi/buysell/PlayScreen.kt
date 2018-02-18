@@ -6,7 +6,6 @@ import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
@@ -26,7 +25,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     val batch = SpriteBatch()// game.batch
     val shape = ShapeRenderer()
-    val font  = BitmapFont()
+    val font  = game.skin.getFont("default")
     val viewport: Viewport = ScreenViewport()
     val cam = viewport.camera
     val ui = PlayUI(this, game.skin)
