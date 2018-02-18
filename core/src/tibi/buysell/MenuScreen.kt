@@ -50,13 +50,17 @@ class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
     init {
         val table = Table(game.skin).top()
 //        table.debug()
-        table.add("Minute Trader", "title", Color.WHITE).expand().colspan(2)
+        table.setFillParent(true)
+        table.add().expand()
+        table.add("Minute Trader", "title", Color.WHITE).colspan(2)
+        table.add().expand()
         table.row()
         listOf(ONE, THREE).forEach {
-            table.add(buttons[it]).minWidth(230f).center().pad(30f)
-            table.add(labels[it]).left().row()
+            table.add().expandY()
+            table.add(buttons[it]).minWidth(230f).left()
+            table.add(labels[it]).right()
+            table.add().row()
         }
-        table.setFillParent(true)
         addActor(table)
     }
 
