@@ -8,6 +8,8 @@ object DesktopLauncher {
     @JvmStatic
     fun main(arg: Array<String>) {
         val config = LwjglApplicationConfiguration()
+        config.height = 600
+        config.width = 1000
         config.samples = 4
         // for android: config.numSamples = 2
         // see http://www.badlogicgames.com/wordpress/?p=2071

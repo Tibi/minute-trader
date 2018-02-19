@@ -25,7 +25,8 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     val batch = SpriteBatch()// game.batch
     val shape = ShapeRenderer()
-    val font  = game.skin.getFont("default")
+    val bigFont  = game.skin.getFont("big")
+    val smallFont  = game.skin.getFont("small")
     val viewport: Viewport = ScreenViewport()
     val cam = viewport.camera
     val ui = PlayUI(this, game.skin)
@@ -114,8 +115,8 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
         // Draw a text background
         shape.color = TEXT_BG.col
-        val p1 = cam.unproject(Vector3(10f, 100f, 0f))
-        shape.rect(p1.x, p1.y, 160f, 80f)
+        val p1 = cam.unproject(Vector3(10f, r(130f), 0f))
+        shape.rect(p1.x, p1.y, r(340f), r(110f))
 
         // Finish line
         val start = cam.unproject(Vector3(0f, screenHeight, 0f))
@@ -129,20 +130,20 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
         ///// Main Curve \\\\\
         shape.begin(ShapeType.Line)
-        shape.color = DRAW.col
+        shape.color = CURVE.col
         model.points.windowed(2).forEach { vals ->
-            draw(vals[0].x * scaleX, vals[0].y, vals[1].x * scaleX, vals[1].y, true, DRAW.col)
+            draw(vals[0].x * scaleX, vals[0].y, vals[1].x * scaleX, vals[1].y, true, CURVE.col)
         }
         shape.end()
 
-        // Text
-        val xText = 100f
-        font.color = DRAW.col
+        // Balance Text
+        val xText = r(180f)
+        bigFont.color = CURVE.col
         batch.begin()
-        font.draw(batch, "${model.qty}", xText, screenHeight - 30, 0f, Align.right, false)
-        font.draw(batch, "Owned", xText+10, screenHeight - 30)
-        font.draw(batch, "%,d $".format(model.moneyLeft.toInt()), xText, screenHeight - 70, 0f, Align.right, false)
-        font.draw(batch, "Left", xText+10, screenHeight - 70)
+        bigFont.draw(batch, "${model.qty}", xText, screenHeight - r(30), 0f, Align.right, false)
+        bigFont.draw(batch, "Owned", xText + r(20), screenHeight - r(30))
+        bigFont.draw(batch, "%,d $".format(model.moneyLeft.toInt()), xText, screenHeight - r(90), 0f, Align.right, false)
+        bigFont.draw(batch, "Left", xText + r(20), screenHeight - r(90))
         batch.end()
 
         ui.act(delta)
@@ -151,7 +152,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     private fun drawAxis() {
 
-        font.color = DRAW_LIGHT.col
+        smallFont.color = AXIS_MAIN.col
 
         // World coordinates of the screen viewport
         val start = cam.unproject(Vector3(0f, screenHeight, 0f))
@@ -165,11 +166,11 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         var x = start.x - start.x % fineGrid
         while (x < end.x) {
             val onCoarseGrid = x.toInt() % coarseGrid == 0
-            draw(x, start.y, x, end.y, x == 0f, if (onCoarseGrid) DRAW.col else DRAW_LIGHT.col)
+            draw(x, start.y, x, end.y, x == 0f, if (onCoarseGrid) AXIS_MAIN.col else AXIS_LIGHT.col)
             if (onCoarseGrid && x >= 0) {
                 // Label
                 val p = cam.project(Vector3(x, 0f, 0f))
-                font.draw(batch, formatTime(x / scaleX), p.x + 5, 20f)
+                smallFont.draw(batch, formatTime(x / scaleX), p.x + 5, 20f)
             }
             x += fineGrid
         }
@@ -178,11 +179,11 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         var y = start.y - start.y % fineGrid
         while (y < end.y) {
             val onCoarseGrid = y.toInt() % coarseGrid == 0
-            draw(start.x, y, end.x, y, y == 0f, if (onCoarseGrid) DRAW.col else DRAW_LIGHT.col)
+            draw(start.x, y, end.x, y, y == 0f, if (onCoarseGrid) AXIS_MAIN.col else AXIS_LIGHT.col)
             if (onCoarseGrid && y >= 0) {
                 // Label
                 val p = cam.project(Vector3(0f, y, 0f))
-                font.draw(batch, "${y.toInt()} $", screenWidth - 10, p.y + 16, 0f, Align.right, false)
+                smallFont.draw(batch, "${y.toInt()} $", screenWidth - 10, p.y + 16, 0f, Align.right, false)
             }
             y += fineGrid
         }
@@ -207,7 +208,6 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     override fun dispose() {
         batch.dispose()  //TODO not if owned by game
-        font.dispose()
         shape.dispose()
         ui.dispose()
     }

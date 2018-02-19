@@ -2,10 +2,14 @@ package tibi.buysell
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
+import com.badlogic.gdx.utils.Scaling
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
 import ktx.app.KtxScreen
@@ -45,19 +49,21 @@ class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
 
     val buttons = mapOf(ONE to button(ONE), THREE to button(THREE))
     val labels = listOf(ONE, THREE).associate {
-        it to Label("no highscore", game.skin, "default", DARK_TEXT.col) }
+        it to Label("no highscore", game.skin, "small", DARK_TEXT.col) }
 
     init {
         val table = Table(game.skin).top()
 //        table.debug()
         table.setFillParent(true)
-        table.add().expand()
+        val drawable = TextureRegionDrawable(TextureRegion(game.logo))
+        val image = Image(drawable, Scaling.none)
+        table.add(image).expand()
         table.add("Minute Trader", "title", Color.WHITE).colspan(2)
         table.add().expand()
         table.row()
         listOf(ONE, THREE).forEach {
             table.add().expandY()
-            table.add(buttons[it]).minWidth(230f).left()
+            table.add(buttons[it]).minWidth(r(230f)).left()
             table.add(labels[it]).right()
             table.add().row()
         }
@@ -65,8 +71,9 @@ class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
     }
 
     fun button(duration: BuySellGame.Duration) =
-            TextButton("${duration.description} Challenge", game.skin, "green").apply {
+            TextButton(duration.description, game.skin, "green").apply {
                 onClick { game.play(duration) }
+                height = r(70f)
             }
 
 }
