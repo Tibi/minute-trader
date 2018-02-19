@@ -55,17 +55,18 @@ class BuySellGame : KtxGame<KtxScreen>() {
 
     // http://paletton.com/#uid=73a1g0kbRt14+E48dwffUpTkImm
     enum class MyColors(colorStr: String) {
-        BG("#FFFBD7"),
+        BG("#FFFFFF"),
         TEXT_BG("#B3A9C5"),
         BRIGHT_TEXT("#B3A9C5"),
         DARK_TEXT("#4D3279"),
-        GREEN_BUTTON("#297461"),
-        GREEN_BUTTON_DOWN("#7CA69C"),
-        RED_BUTTON("#B26A3F"),
-        RED_BUTTON_DOWN("#FFD6BE"),
+        GREEN_BUTTON("#4dc891"),
+        GREEN_BUTTON_DOWN("#4dc891"),
+        RED_BUTTON("#ff7175"),
+        RED_BUTTON_DOWN("#ff7175"),
         RED("#FF0000"),
-        DRAW("#654D8D"),
-        DRAW_LIGHT("#9586AE"),
+        DRAW("#0081f2"),
+        //TODO different colors for main axis and curve
+        DRAW_LIGHT("#f3f3f3"),
 
         TRANSPARENT("#00000000")
         ;
