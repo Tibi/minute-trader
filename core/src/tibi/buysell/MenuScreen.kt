@@ -25,9 +25,9 @@ class MenuScreen(val game: BuySellGame) : KtxScreen {
 
     override fun show() {
         Gdx.input.inputProcessor = ui
-        game.highScores.keys.forEach { duration ->
-            val score = game.highScores[duration]
-            if (score != null && score > 0) {
+        listOf(ONE, THREE).forEach { duration ->
+            val score = game.highScores.getInteger(duration.toString())
+            if (score > 0) {
                 ui.labels[duration]?.setText("High Score: %,d $".format(score))
             }
         }

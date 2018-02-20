@@ -1,10 +1,7 @@
- - icon
- - better title design: "Minute Trader"
- - Android version with https://github.com/czyzby/gdx-setup
+ - fix scale on android, test != phones, tablets
+ - better title design
  - nicer looking curve: thick but anti-alias -> ok, test on android
- - handle back button
- - bigger font for the numbers?
- - high scores, saved to cloud? at least save locally
+ - handle back button -> seems to work on real phone
  - proguard
  - AdMob http://www.norakomi.com/tutorial_admob_part1.php
  - publish to Google Play

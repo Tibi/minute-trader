@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import tibi.buysell.BuySellGame.Duration.ONE
-import tibi.buysell.BuySellGame.Duration.THREE
 import tibi.buysell.BuySellGame.MyColors.*
 
 
@@ -21,13 +20,13 @@ class BuySellGame : KtxGame<KtxScreen>() {
     val model = Model()
     val batch by lazy { SpriteBatch() }
     val logo by lazy { Texture("icon128.png") }
+    val highScores by lazy { Gdx.app.getPreferences("Minute Trader High Scores")!! }
 
     enum class Duration(val minutes: Float, val description: String) {
         ONE(1f, "1 Minute"),
         THREE(3f, "3 Minutes")
     }
 
-    val highScores = mutableMapOf(ONE to 0, THREE to 0)
     var lastDuration = ONE
 
     val skin by lazy { createSkin() }
@@ -49,7 +48,12 @@ class BuySellGame : KtxGame<KtxScreen>() {
     }
 
     fun gameFinished() {
-        highScores[lastDuration] = model.moneyLeft.toInt()
+        val lastScore = highScores.getInteger(lastDuration.toString())
+        val score = model.moneyLeft.toInt()
+        if (score > lastScore) {
+            highScores.putInteger(lastDuration.toString(), score)
+            highScores.flush()
+        }
         setScreen<MenuScreen>()
     }
 
@@ -67,7 +71,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
         RED("#FF0000"),
         CURVE("#0081f2"),
         AXIS_MAIN("#808080"),
-        AXIS_LIGHT("#f0f0f0"),
+        AXIS_LIGHT("#e0e0e0"),
 
         TRANSPARENT("#00000000")
         ;
