@@ -29,7 +29,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
     val smallFont  = game.skin.getFont("small")
     val viewport: Viewport = ScreenViewport()
     val cam = viewport.camera
-    val ui = PlayUI(this, game.skin)
+    val ui = PlayUI(game, batch)
 
     var screenWidth = 0f
     var screenHeight = 0f
@@ -121,8 +121,9 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         // Finish line
         val start = cam.unproject(Vector3(0f, screenHeight, 0f))
         val finishX = game.lastDuration.minutes * 60f * scaleX
-                                                 // bottom left, bottom right, top right and top left
-        shape.rect(finishX - 300, start.y, 300f, screenHeight, TRANSPARENT.col, RED.col, RED.col, TRANSPARENT.col)
+        shape.rect(finishX - 300, start.y, 300f, screenHeight,
+                // bottom left   bottom right    top right       top left
+                TRANSPARENT.col, RED_BUTTON.col, RED_BUTTON.col, TRANSPARENT.col)
 
         // End filled shapes
         shape.end()

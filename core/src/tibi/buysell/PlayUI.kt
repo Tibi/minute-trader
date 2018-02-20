@@ -1,30 +1,37 @@
 package tibi.buysell
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
+import tibi.buysell.BuySellGame.MyColors.*
 
 
-class PlayUI(val screen: PlayScreen, skin: Skin) : Stage(ScreenViewport(), screen.batch) {
+class PlayUI(val game: BuySellGame, batch: SpriteBatch) : Stage(ScreenViewport(), batch) {
 
-    val buyButton = TextButton("BUY", skin, "green").apply {
+    val buyButton = TextButton("BUY", game.skin).apply {
         setPosition(10f, r(30f))
         height = r(100f)
-        onClick { screen.model.buy() }
+        onClick { game.model.buy() }
     }
 
-    val sellButton = TextButton("SELL", skin, "red").apply {
+    val sellButton = TextButton("SELL", game.skin).apply {
         setPosition(10f, r(200f))
         height = r(100f)
-        onClick { screen.model.sell() }
+        onClick { game.model.sell() }
     }
 
     init {
         addActor(buyButton)
         addActor(sellButton)
+    }
+
+    override fun act(delta: Float) {
+        super.act(delta)
+        buyButton.color = if (game.model.canBuy()) GREEN_BUTTON.col else DISABLED_BUTTON.col
+        sellButton.color = if (game.model.canSell()) RED_BUTTON.col else DISABLED_BUTTON.col
     }
 
 }

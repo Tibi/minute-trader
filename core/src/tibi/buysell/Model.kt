@@ -33,7 +33,7 @@ class Model {
     }
 
     fun buy() {
-        if (moneyLeft < value) return
+        if (!canBuy()) return
         val amountToBuy = moneyLeft / 3
         val qtyToBuy = max(1f, amountToBuy / value).toInt()
 
@@ -45,7 +45,7 @@ class Model {
     }
 
     fun sell() {
-        if (qty == 0) return
+        if (!canSell()) return
         val qtyToSell = ceil(qty / 5f).toInt()
         qty -= qtyToSell
         moneyLeft += qtyToSell * value
@@ -60,5 +60,8 @@ class Model {
         moneyLeft = 1_000f
         boughtValue = 0f
     }
+
+    fun canBuy() = moneyLeft >= value
+    fun canSell() = qty > 0
 
 }

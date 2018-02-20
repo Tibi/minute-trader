@@ -61,6 +61,8 @@ class BuySellGame : KtxGame<KtxScreen>() {
     // http://paletton.com/#uid=73a1g0kbRt14+E48dwffUpTkImm
     enum class MyColors(colorStr: String) {
         BG("#FFFFFF"),
+        WHITE("#FFFFFF"),
+        GREY("#AAAAAA"),
         TEXT_BG("#ceff9d88"),
         BRIGHT_TEXT("#B3A9C5"),
         DARK_TEXT("#4D3279"),
@@ -68,6 +70,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
         GREEN_BUTTON_DOWN("#8ef3a8"),
         RED_BUTTON("#ff9595"),
         RED_BUTTON_DOWN("#ffcece"),
+        DISABLED_BUTTON("#555555"),
         RED("#FF0000"),
         CURVE("#0081f2"),
         AXIS_MAIN("#808080"),
@@ -100,6 +103,16 @@ class BuySellGame : KtxGame<KtxScreen>() {
         val pixmap = createRoundedRectangle(200, 80, 4, Color.WHITE)
         skin.add("background", Texture(pixmap))
 
+        // Button styles
+        val defaultButtonStyle = TextButton.TextButtonStyle().apply {
+            up = skin.newDrawable("background", WHITE.col)
+            down = skin.newDrawable("background", GREY.col)
+            checked = skin.newDrawable("background", WHITE.col)
+            over = skin.newDrawable("background", WHITE.col)
+            font = skin.getFont("big")
+        }
+        skin.add("default", defaultButtonStyle)
+        
         // Button styles
         val greenButtonStyle = TextButton.TextButtonStyle().apply {
             up = skin.newDrawable("background", GREEN_BUTTON.col)
