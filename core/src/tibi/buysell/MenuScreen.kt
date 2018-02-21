@@ -47,9 +47,9 @@ class MenuScreen(val game: BuySellGame) : KtxScreen {
 
 class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
 
-    val buttons = mapOf(ONE to button(ONE), THREE to button(THREE))
-    val labels = listOf(ONE, THREE).associate {
-        it to Label("no highscore", game.skin, "small", DARK_TEXT.col) }
+    val durationsToShow = listOf(ONE)
+    val buttons = durationsToShow.associate { it to button(it) }
+    val labels  = durationsToShow.associate { it to Label("no highscore", game.skin, "small", DARK_TEXT.col) }
 
     init {
         val table = Table(game.skin).top()
@@ -59,21 +59,21 @@ class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
         val image = Image(drawable, Scaling.none)
         table.add(image).expand()
         table.add("Minute Trader", "title", Color.WHITE).colspan(2)
-        table.add().expand()
-        table.row()
-        listOf(ONE, THREE).forEach {
+        table.add().expand().row()
+        durationsToShow.forEach { dur ->
             table.add().expandY()
-            table.add(buttons[it]).minWidth(r(230f)).left()
-            table.add(labels[it]).right()
+            table.add(buttons[dur]).minWidth(r(230f)).left()
+            table.add(labels[dur]).right()
             table.add().row()
         }
+        table.add().expandY().row()
         addActor(table)
     }
 
     fun button(duration: BuySellGame.Duration) =
-            TextButton(duration.description, game.skin, "green").apply {
+            TextButton("START"/*duration.description*/, game.skin, "green").apply {
                 onClick { game.play(duration) }
-                height = r(70f)
+                height = r(100f)
             }
 
 }

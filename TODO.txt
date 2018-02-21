@@ -1,10 +1,24 @@
+ - disabled buttons are too dark
  - pause before going back to menu, to be able to see the score
  - fix scale on android, test != phones, tablets
    * axis label are wrongly placed
    * instead of r() use another viewport type
+ - icon: thicker green curve, growing wider?
  - better title design
  - nicer looking curve: thick but anti-alias -> ok, test on android
  - handle back button -> seems to work on real phone
  - proguard
- - AdMob http://www.norakomi.com/tutorial_admob_part1.php
+ - AdMob
+   * remove ad when no WiFi
+   * bigger ad on menu
+   * use real ad unit ID in prod
+        http://www.norakomi.com/tutorial_admob_part1.php
+        https://github.com/libgdx/libgdx/wiki/Admob-in-libgdx
+     App ID: ca-app-pub-3949821178729385~4664104094
+     ad unit ID: ca-app-pub-3949821178729385/2862624180
+     test ad unit ID: ca-app-pub-3940256099942544/6300978111
+ - make it browsable
+        https://stackoverflow.com/questions/34367875/android-adding-at-least-one-activity-with-an-action-view-intent-filter-after-u
  - publish to Google Play
+
+ - 3 minutes button disabled click => purchase it + ad free
