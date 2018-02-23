@@ -83,17 +83,17 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
         // Let the camera follow the curve
         val rightEdge = cam.position.x + cam.viewportWidth / 2
-        val diffX = model.time * scaleX + 100 - rightEdge
+        val diffX = model.time * scaleX + r(100) - rightEdge
         if (diffX > 0) {
             cam.position.x += diffX
         }
         val topEdge = cam.position.y + cam.viewportHeight / 2
-        val diffYTop = model.value + 50 - topEdge
+        val diffYTop = model.value + r(50) - topEdge
         if (diffYTop > 0) {
             cam.position.y += diffYTop
         } else {
             val bottomEdge = cam.position.y - cam.viewportHeight / 2
-            val diffYBottom = bottomEdge - (model.value - 50)
+            val diffYBottom = bottomEdge - (model.value - r(50))
             if (diffYBottom > 30) {
                 cam.position.y -= diffYBottom
             } else if (diffYBottom > 0) {
@@ -105,9 +105,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         shape.projectionMatrix = cam.combined
 
         // Axis
-        shape.begin(ShapeType.Line)
         drawAxis()
-        shape.end()
 
         // Start filled shapes
         Gdx.gl.glEnable(GL20.GL_BLEND)
@@ -127,7 +125,6 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
         // End filled shapes
         shape.end()
-        Gdx.gl.glDisable(GL20.GL_BLEND)
 
         ///// Main Curve \\\\\
         shape.begin(ShapeType.Line)
@@ -137,19 +134,23 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         }
         shape.end()
 
+        batch.begin()
+
         // Balance Text
+        // TODO put that in the UI
         val xText = r(180f)
         bigFont.color = CURVE.col
-        batch.begin()
         bigFont.draw(batch, "${model.qty}", xText, screenHeight - r(30), 0f, Align.right, false)
         bigFont.draw(batch, "Owned", xText + r(20), screenHeight - r(30))
         bigFont.draw(batch, "%,d $".format(model.moneyLeft.toInt()), xText, screenHeight - r(90), 0f, Align.right, false)
         bigFont.draw(batch, "Left", xText + r(20), screenHeight - r(90))
+
         batch.end()
 
         ui.act(delta)
         ui.draw()
     }
+
 
     private fun drawAxis() {
 
@@ -161,7 +162,10 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         val coarseGrid = 100
         val fineGrid = 25
 
-        batch.begin()
+        // Records the text drawings to be executed later: shape and batch should not be started at the same time.
+        val textDrawings = mutableListOf<() -> Unit>()
+
+        shape.begin(ShapeType.Line)
 
         // Vertical lines
         var x = start.x - start.x % fineGrid
@@ -171,7 +175,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
             if (onCoarseGrid && x >= 0) {
                 // Label
                 val p = cam.project(Vector3(x, 0f, 0f))
-                smallFont.draw(batch, formatTime(x / scaleX), p.x + 5, 20f)
+                textDrawings += { smallFont.draw(batch, formatTime(x / scaleX), p.x + 5, r(20f)) }
             }
             x += fineGrid
         }
@@ -184,22 +188,28 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
             if (onCoarseGrid && y >= 0) {
                 // Label
                 val p = cam.project(Vector3(0f, y, 0f))
-                smallFont.draw(batch, "${y.toInt()} $", screenWidth - 10, p.y + 16, 0f, Align.right, false)
+                textDrawings += { smallFont.draw(batch, "${y.toInt()} $", screenWidth - 10, p.y + 16,
+                                             0f, Align.right, false) }
             }
             y += fineGrid
         }
-        batch.end()
 
         // Bought value line
         if (model.qty > 0) {
             draw(start.x, model.boughtValue, end.x, model.boughtValue, true, RED.col)
         }
+        shape.end()
+
+        batch.begin()
+        textDrawings.forEach { it.invoke() }
+        batch.end()
+
     }
 
     private fun formatTime(seconds: Float) =
         "%d'%02d\"".format((seconds / 60).toInt(), (seconds % 60).toInt())
 
-    fun draw(x1: Float, y1: Float, x2: Float, y2: Float, thick: Boolean, color: Color) {
+    private fun draw(x1: Float, y1: Float, x2: Float, y2: Float, thick: Boolean, color: Color) {
         shape.color = color
         shape.line(x1, y1, x2, y2)
         if (thick) {

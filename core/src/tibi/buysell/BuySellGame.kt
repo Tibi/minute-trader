@@ -62,7 +62,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
     enum class MyColors(colorStr: String) {
         BG("#FFFFFF"),
         WHITE("#FFFFFF"),
-        TEXT_BG("#ceff9d88"),
+        TEXT_BG("#EEEEEE99"),
         BRIGHT_TEXT("#B3A9C5"),
         DARK_TEXT("#4D3279"),
         GREEN_BUTTON("#58ed7f"),
