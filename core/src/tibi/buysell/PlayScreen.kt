@@ -175,7 +175,8 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
             if (onCoarseGrid && x >= 0) {
                 // Label
                 val p = cam.project(Vector3(x, 0f, 0f))
-                textDrawings += { smallFont.draw(batch, formatTime(x / scaleX), p.x + 5, r(20f)) }
+                val label = formatTime(x / scaleX)
+                textDrawings += { smallFont.draw(batch, label, p.x + 5, r(20f)) }
             }
             x += fineGrid
         }
@@ -186,14 +187,14 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
             val onCoarseGrid = y.toInt() % coarseGrid == 0
             draw(start.x, y, end.x, y, y == 0f, if (onCoarseGrid) AXIS_MAIN.col else AXIS_LIGHT.col)
             if (onCoarseGrid && y >= 0) {
-                // Label
                 val p = cam.project(Vector3(0f, y, 0f))
-                textDrawings += { smallFont.draw(batch, "${y.toInt()} $", screenWidth - 10, p.y + 16,
-                                             0f, Align.right, false) }
+                val label = "${y.toInt()} $"
+                textDrawings += { smallFont.draw(batch, label, screenWidth - 10, p.y + r(22),
+                                                 0f, Align.right, false
+                ) }
             }
             y += fineGrid
         }
-
         // Bought value line
         if (model.qty > 0) {
             draw(start.x, model.boughtValue, end.x, model.boughtValue, true, RED.col)
@@ -201,7 +202,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         shape.end()
 
         batch.begin()
-        textDrawings.forEach { it.invoke() }
+        textDrawings.forEach { it() }
         batch.end()
 
     }
