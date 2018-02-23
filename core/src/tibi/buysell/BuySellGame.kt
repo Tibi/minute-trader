@@ -62,7 +62,6 @@ class BuySellGame : KtxGame<KtxScreen>() {
     enum class MyColors(colorStr: String) {
         BG("#FFFFFF"),
         WHITE("#FFFFFF"),
-        GREY("#AAAAAA"),
         TEXT_BG("#ceff9d88"),
         BRIGHT_TEXT("#B3A9C5"),
         DARK_TEXT("#4D3279"),
@@ -70,7 +69,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
         GREEN_BUTTON_DOWN("#8ef3a8"),
         RED_BUTTON("#ff9595"),
         RED_BUTTON_DOWN("#ffcece"),
-        DISABLED_BUTTON("#555555"),
+        DISABLED_BUTTON("#AAAAAA"),
         RED("#FF0000"),
         CURVE("#0081f2"),
         AXIS_MAIN("#808080"),
@@ -106,7 +105,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
         // Button styles
         val defaultButtonStyle = TextButton.TextButtonStyle().apply {
             up = skin.newDrawable("background", WHITE.col)
-            down = skin.newDrawable("background", GREY.col)
+            down = skin.newDrawable("background", WHITE.col)
             checked = skin.newDrawable("background", WHITE.col)
             over = skin.newDrawable("background", WHITE.col)
             font = skin.getFont("big")
