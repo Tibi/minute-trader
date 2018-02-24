@@ -2,6 +2,7 @@ package tibi.buysell
 
 import com.badlogic.gdx.math.MathUtils.random
 import com.badlogic.gdx.math.Vector2
+import ktx.math.vec2
 import org.apache.commons.collections4.queue.CircularFifoQueue
 import kotlin.math.ceil
 import kotlin.math.max
@@ -29,7 +30,7 @@ class Model {
         if (value < 5f) {
             value = 5f
         }
-        points.add(Vector2(time, value))
+        points.add(vec2(time, value))
     }
 
     fun buy() {

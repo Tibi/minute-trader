@@ -44,6 +44,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
         compile "io.github.libktx:ktx-app:$ktxVersion"
+        compile "io.github.libktx:ktx-math:$ktxVersion"
         compile "io.github.libktx:ktx-actors:$ktxVersion"
         compile "io.github.libktx:ktx-scene2d:$ktxVersion"
     }

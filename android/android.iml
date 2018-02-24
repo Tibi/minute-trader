@@ -118,6 +118,7 @@
     <orderEntry type="library" exported="" name="Gradle: annotations-13.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: ktx-actors-1.9.8-b1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: gdx-1.9.8" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: ktx-math-1.9.8-b1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: play-services-ads-11.8.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: ktx-app-1.9.8-b1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: support-fragment-25.2.0" level="project" />
