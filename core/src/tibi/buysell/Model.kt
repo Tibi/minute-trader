@@ -10,20 +10,23 @@ import kotlin.math.max
 
 class Model {
 
-    var value = 200f
+    var value = 0f
     val points = CircularFifoQueue<Vector2>(2000).apply { add(Vector2(time, value)) }
     var time = 0f
 
     var qty = 0
-    var moneyLeft = 1_000f
+    var moneyLeft = 0f
     var boughtValue = 0f
 
     val volatility = 4f
 
     fun update(delta: Float) {
         time += delta
+        // r is the % to go up or down, it's proportional to time elpsed and volatility
         val r = volatility * random(-delta, +delta)
+        // Going up, simply add r %
         if (r > 0) value += value * r
+        // Goes down to the value that requires r % to go up to the current value
         else value /= 1 - r
         points.add(vec2(time, value))
     }
@@ -32,12 +35,9 @@ class Model {
         if (!canBuy()) return
         val amountToBuy = moneyLeft / 3
         val qtyToBuy = max(1f, amountToBuy / value).toInt()
-
         boughtValue = (boughtValue * qty + value * qtyToBuy) / (qty + qtyToBuy)
-
         qty += qtyToBuy
         moneyLeft -= qtyToBuy * value
-
     }
 
     fun sell() {

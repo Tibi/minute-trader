@@ -38,7 +38,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     override fun show() {
         resize(Gdx.graphics.width, Gdx.graphics.height)
-        cam.position.set(5f, 150f, 0f)
+        cam.position.set(-1f, 150f, 0f)
         cam.update()
         Gdx.input.inputProcessor = ui
     }

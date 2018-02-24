@@ -40,11 +40,12 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
             setFillParent(true)
             pad(30f)
             left()
-            add().expandY().row()
-            add(sellButton).padBottom(80f)
-            add(qtyLabel).right().top().row()
+            add(sellButton)
+            add(qtyLabel).right().row()
+            add().padBottom(80f).row()
             add(buyButton)
-            add(balanceLabel).right().top()
+            add(balanceLabel).right().row()
+            add().expandY().row()
         })
     }
 
