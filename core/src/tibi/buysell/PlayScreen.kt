@@ -36,6 +36,9 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
     var paused = false
     var duration = 60f
 
+    //TODO put in atlas
+    val gradient = Texture(Gdx.app.files.internal("gradient.png"))
+
     override fun show() {
         resize(Gdx.graphics.width, Gdx.graphics.height)
         cam.position.set(-1f, 150f, 0f)
@@ -68,14 +71,11 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         drawAxis()
 
         // Finish line
-//        val start = cam.unproject(Vector3(0f, screenHeight, 0f))
-//        val finishX = game.lastDuration.minutes * 60f
-//        batch.projectionMatrix.ro
-//        bigFont.draw(batch)
-//        shape.rect(finishX - 300, start.y, 300f, screenHeight,
-//                // bottom left   bottom right    top right       top left
-//                TRANSPARENT.col, RED_BUTTON.col, RED_BUTTON.col, TRANSPARENT.col)
-
+        val finishX = project(game.lastDuration.minutes * 60f, 0f).x
+        batch.color = Color.RED
+        batch.draw(gradient, finishX - 100, 0f, 100f, viewport.screenHeight.toFloat())
+        bigFont.color = Color.WHITE
+        bigFont.draw(batch, "S\nE\nL\nL", finishX - 35, viewport.screenHeight - r(50f))
 
         ///// Main Curve \\\\\
         model.points.windowed(2).forEach { vals ->
