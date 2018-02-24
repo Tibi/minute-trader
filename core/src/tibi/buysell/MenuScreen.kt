@@ -1,6 +1,8 @@
 package tibi.buysell
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input.Keys.ENTER
+import com.badlogic.gdx.Input.Keys.SPACE
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -76,4 +78,11 @@ class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
                 height = r(100f)
             }
 
+    override fun keyDown(keyCode: Int): Boolean {
+        when (keyCode) {
+            SPACE, ENTER -> game.play(ONE)
+            else -> return false
+        }
+        return true
+    }
 }

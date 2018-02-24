@@ -14,7 +14,6 @@ import ktx.app.KtxScreen
 import ktx.app.clearScreen
 import ktx.math.vec3
 import tibi.buysell.BuySellGame.MyColors.*
-import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
@@ -30,9 +29,6 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
     val cam = viewport.camera
     val ui = PlayUI(this, batch)
 
-    val screenWidth get() = viewport.screenWidth.toFloat()
-    val screenHeight get() = viewport.screenHeight.toFloat()
-
     var paused = false
     var duration = 60f
 
@@ -41,8 +37,9 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     override fun show() {
         resize(Gdx.graphics.width, Gdx.graphics.height)
-        cam.position.set(-1f, 150f, 0f)
+        cam.position.set(-1f, 190f, 0f)
         cam.update()
+        paused = false
         Gdx.input.inputProcessor = ui
     }
 
@@ -91,30 +88,18 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     private fun letCameraFollowCurve() {
         // Change Y zoom
-        val deltaY = abs(model.value - cam.position.y)
-        if (deltaY > cam.viewportHeight / 4) {
-            cam.viewportHeight = model.value * 2
-        }
+        val minHeight = model.value * 1.3
+        val maxHeight = model.value * 3
+        // TODO zoom speed proportional to height - min or max
+        val zoomSpeed = 1.005f
+        if (cam.viewportHeight < minHeight) cam.viewportHeight *= zoomSpeed
+        if (cam.viewportHeight > maxHeight) cam.viewportHeight /= zoomSpeed
+        cam.position.y = cam.viewportHeight / 2.2f
 
         val rightEdge = cam.position.x + cam.viewportWidth / 2
-        val diffX = model.time + 2 - rightEdge
+        val diffX = model.time + 3 - rightEdge
         if (diffX > 0) {
             cam.position.x += diffX
-        }
-        val topEdge = cam.position.y + cam.viewportHeight / 2
-        val diffYTop = model.value + 50 - topEdge
-        if (diffYTop > 30) {
-            cam.position.y += diffYTop
-        } else if (diffYTop > 0) {
-            cam.position.y++
-        } else {
-            val bottomEdge = cam.position.y - cam.viewportHeight / 2
-            val diffYBottom = bottomEdge - (model.value - 50)
-            if (diffYBottom > 30) {
-                cam.position.y -= diffYBottom
-            } else if (diffYBottom > 0) {
-                cam.position.y--
-            }
         }
         cam.update()
     }
@@ -155,7 +140,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
             if (onCoarseGrid && y >= 0) {
                 val p = cam.project(Vector3(0f, y, 0f))
                 val label = "${y.toInt()} $"
-                textDrawings += { smallFont.draw(batch, label, screenWidth - 10, p.y + r(22), 0f, Align.right, false) }
+                textDrawings += { smallFont.draw(batch, label, viewport.screenWidth - 10f, p.y + r(22), 0f, Align.right, false) }
             }
             y += fineGridY
         }
