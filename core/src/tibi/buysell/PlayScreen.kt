@@ -1,9 +1,6 @@
 package tibi.buysell
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
-import com.badlogic.gdx.InputAdapter
-import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -17,6 +14,7 @@ import ktx.app.KtxScreen
 import ktx.app.clearScreen
 import ktx.math.vec3
 import tibi.buysell.BuySellGame.MyColors.*
+import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
@@ -30,7 +28,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     val viewport: Viewport = StretchViewport(20f, 400f)  // always 20" and 400 $ visible
     val cam = viewport.camera
-    val ui = PlayUI(game, batch)
+    val ui = PlayUI(this, batch)
 
     val screenWidth get() = viewport.screenWidth.toFloat()
     val screenHeight get() = viewport.screenHeight.toFloat()
@@ -42,20 +40,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         resize(Gdx.graphics.width, Gdx.graphics.height)
         cam.position.set(5f, 150f, 0f)
         cam.update()
-
-        val keyProcessor = object : InputAdapter() {
-            override fun keyDown(key: Int): Boolean {
-                when (key) {
-                    Input.Keys.B -> model.buy()
-                    Input.Keys.S -> model.sell()
-                    Input.Keys.P -> paused = paused.not()
-                    Input.Keys.ESCAPE -> game.setScreen<MenuScreen>()
-                    else -> return false
-                }
-                return true
-            }
-        }
-        Gdx.input.inputProcessor = InputMultiplexer(ui, keyProcessor)
+        Gdx.input.inputProcessor = ui
     }
 
     override fun resize(width: Int, height: Int) {
@@ -105,6 +90,12 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
     }
 
     private fun letCameraFollowCurve() {
+        // Change Y zoom
+        val deltaY = abs(model.value - cam.position.y)
+        if (deltaY > cam.viewportHeight / 4) {
+            cam.viewportHeight = model.value * 2
+        }
+
         val rightEdge = cam.position.x + cam.viewportWidth / 2
         val diffX = model.time + 2 - rightEdge
         if (diffX > 0) {
@@ -112,8 +103,10 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         }
         val topEdge = cam.position.y + cam.viewportHeight / 2
         val diffYTop = model.value + 50 - topEdge
-        if (diffYTop > 0) {
+        if (diffYTop > 30) {
             cam.position.y += diffYTop
+        } else if (diffYTop > 0) {
+            cam.position.y++
         } else {
             val bottomEdge = cam.position.y - cam.viewportHeight / 2
             val diffYBottom = bottomEdge - (model.value - 50)
@@ -128,10 +121,6 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
 
     private fun drawAxis() {
-
-        // Main axis
-        draw(0f, 0f, 60f, 0f, true, Color.BLACK)
-        draw(0f, 0f, 0f, 1000f, true, Color.BLACK)
 
         // start and end in world coords
         val start = unproject(0, viewport.screenHeight)
@@ -170,6 +159,11 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
             }
             y += fineGridY
         }
+
+        // Main axis
+        draw(0f, 0f, 60f, 0f, true, Color.BLACK)
+        draw(0f, 0f, 0f, 1000f, true, Color.BLACK)
+
         // Bought value line
         if (model.qty > 0) {
             draw(start.x, model.boughtValue, end.x, model.boughtValue, true, RED.col)

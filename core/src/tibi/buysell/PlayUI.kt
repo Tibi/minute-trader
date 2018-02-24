@@ -1,53 +1,70 @@
 package tibi.buysell
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
+import ktx.scene2d.Scene2DSkin
+import ktx.scene2d.table
 import tibi.buysell.BuySellGame.MyColors.*
 
 
-class PlayUI(val game: BuySellGame, batch: SpriteBatch) : Stage(ScreenViewport(), batch) {
+class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(), batch) {
 
-    val balanceLabel = Label("", game.skin).apply {
-        setPosition(10f, 400f)
+    val game = screen.game
+    val model = game.model
+
+    val qtyLabel = Label("", game.skin).apply {
         color = DARK_TEXT.col
-        height = 100f
+    }
+    val balanceLabel = Label("", game.skin).apply {
+        color = DARK_TEXT.col
     }
 
     val sellButton = TextButton("SELL", game.skin).apply {
-        setPosition(10f, r(200f))
-        height = r(100f)
         onClick { game.model.sell() }
     }
 
     val buyButton = TextButton("BUY", game.skin).apply {
-        setPosition(10f, r(30f))
-        height = r(100f)
         onClick { game.model.buy() }
     }
 
     init {
-        val table = Table(game.skin).top()
-//        table.debug()
-        table.setFillParent(true)
-        table.pad(30f).left()
-        table.add(balanceLabel).expandY().top().row()
-        table.add(sellButton).left().padBottom(50f).row()
-        table.add(buyButton).left()
-        addActor(table)
+        Scene2DSkin.defaultSkin = game.skin
+        addActor(table {
+//            debug()
+            setFillParent(true)
+            pad(30f)
+            left()
+            add().expandY().row()
+            add(sellButton).padBottom(80f)
+            add(qtyLabel).right().top().row()
+            add(buyButton)
+            add(balanceLabel).right().top()
+        })
     }
 
     override fun act(delta: Float) {
         super.act(delta)
-        buyButton.color = if (game.model.canBuy()) GREEN_BUTTON.col else DISABLED_BUTTON.col
-        sellButton.color = if (game.model.canSell()) RED_BUTTON.col else DISABLED_BUTTON.col
-        val model = game.model
-        balanceLabel.setText("${model.qty} Owned\n" + "%,d $ Left".format(model.moneyLeft.toInt()))
+        buyButton.color = if (model.canBuy()) GREEN_BUTTON.col else DISABLED_BUTTON.col
+        sellButton.color = if (model.canSell()) RED_BUTTON.col else DISABLED_BUTTON.col
+        qtyLabel.setText("${model.qty} Owned" )
+        balanceLabel.setText("%,d $ Left".format(model.moneyLeft.toInt()))
+    }
+
+    override fun keyDown(key: Int): Boolean {
+        when (key) {
+            Input.Keys.B -> model.buy()
+            Input.Keys.S -> model.sell()
+            Input.Keys.P -> screen.paused = screen.paused.not()
+            Input.Keys.ESCAPE -> game.setScreen<MenuScreen>()
+            else -> return super.keyDown(key)
+        }
+        return true
     }
 
 }

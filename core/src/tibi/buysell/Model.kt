@@ -18,18 +18,13 @@ class Model {
     var moneyLeft = 1_000f
     var boughtValue = 0f
 
+    val volatility = 4f
 
     fun update(delta: Float) {
         time += delta
-        // Pure random walk:
-        value += random(-10f, +10f)
-        // Now let's cheat a bit to avoid buying too low:
-        if (value < 100) {
-            value += (100 - value) / 100
-        }
-        if (value < 5f) {
-            value = 5f
-        }
+        val r = volatility * random(-delta, +delta)
+        if (r > 0) value += value * r
+        else value /= 1 - r
         points.add(vec2(time, value))
     }
 
