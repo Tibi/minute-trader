@@ -1,4 +1,7 @@
  - draw more or less axis and labels depending on zoom
+ - red background below buy line, green above
+ - create assets in x 2, use another viewport to render
+ - use an atlas
  - pause before going back to menu, to be able to see the score
  - create an atlas with fonts and line drawing dots
  - fix scale on android, test != phones, tablets

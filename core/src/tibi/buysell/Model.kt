@@ -22,7 +22,7 @@ class Model {
 
     fun update(delta: Float) {
         time += delta
-        // r is the % to go up or down, it's proportional to time elpsed and volatility
+        // r is the % to go up or down, it's proportional to time elapsed and volatility
         val r = volatility * random(-delta, +delta)
         // Going up, simply add r %
         if (r > 0) value += value * r

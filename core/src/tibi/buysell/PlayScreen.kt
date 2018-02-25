@@ -15,6 +15,8 @@ import ktx.app.clearScreen
 import ktx.math.vec3
 import tibi.buysell.BuySellGame.MyColors.*
 import kotlin.math.atan2
+import kotlin.math.log10
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 
@@ -25,15 +27,31 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
     val bigFont  = game.skin.getFont("big")
     val smallFont  = game.skin.getFont("small")
 
-    val viewport: Viewport = StretchViewport(20f, 400f)  // always 20" and 400 $ visible
+    val viewport: Viewport = StretchViewport(20f, 400f)  // 20" and 400 $ visible
     val cam = viewport.camera
     val ui = PlayUI(this, batch)
 
     var paused = false
     var duration = 60f
 
+    val screenWidth get() = viewport.screenWidth.toFloat()
+    val screenHeight get() = viewport.screenHeight.toFloat()
+
     //TODO put in atlas
     val gradient = Texture(Gdx.app.files.internal("gradient.png"))
+    val tip = Texture(Gdx.files.internal("tip.png"))
+    val penThick = TextureRegion(Texture(Pixmap(3, 3, Pixmap.Format.RGBA8888).apply {
+        val lighter = Color.WHITE.cpy()
+        lighter.a = .5f
+        setColor(lighter)
+        fill()
+        setColor(Color.WHITE)
+        fillRectangle(0, 1, 3, 1)
+    }))
+    val penFine = TextureRegion(Texture(Pixmap(1, 1, Pixmap.Format.RGBA8888).apply {
+        setColor(Color.WHITE)
+        fill()
+    }))
 
     override fun show() {
         resize(Gdx.graphics.width, Gdx.graphics.height)
@@ -65,19 +83,39 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
         batch.begin()
 
+        // Buy & Sell backgrounds below and above by line
+//        if (model.qty > 0) {
+//            val boughtY = project(0f, model.boughtValue).y
+//            val greenBg = Color.valueOf("#BEFFBE")
+//            val redBg = Color.valueOf("#FFE5FF")
+//            batch.color = redBg
+//            batch.draw(penFine, 0f, 0f, screenWidth, boughtY)
+//            batch.color = greenBg
+//            batch.draw(penFine, 0f, boughtY, screenWidth, screenHeight)
+//        }
+
         drawAxis()
 
         // Finish line
         val finishX = project(game.lastDuration.minutes * 60f, 0f).x
         batch.color = Color.RED
-        batch.draw(gradient, finishX - 100, 0f, 100f, viewport.screenHeight.toFloat())
+        batch.draw(gradient, finishX - 100, 0f, 100f, screenHeight)
         bigFont.color = Color.WHITE
-        bigFont.draw(batch, "S\nE\nL\nL", finishX - 35, viewport.screenHeight - r(50f))
+        bigFont.draw(batch, "S\nE\nL\nL\n!!", finishX - 40, screenHeight - r(50f))
+
+        // Bought value line
+        if (model.qty > 0) {
+            val boughtY = project(0f, model.boughtValue).y
+            drawLineScreen(0f, boughtY, screenWidth, boughtY, true, RED.col)
+        }
 
         ///// Main Curve \\\\\
         model.points.windowed(2).forEach { vals ->
-            draw(vals[0].x, vals[0].y, vals[1].x, vals[1].y, true, CURVE.col)
+            drawLine(vals[0].x, vals[0].y, vals[1].x, vals[1].y, true, CURVE.col)
         }
+        val tipPos = project(model.time, model.value)
+        batch.color = Color.WHITE
+        batch.draw(tip, tipPos.x, tipPos.y)
 
         batch.end()
 //        Gdx.app.log("GPU", "# GPU calls: ${batch.renderCalls}")
@@ -120,7 +158,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         var x = start.x - start.x % fineGridX
         while (x < end.x) {
             val onCoarseGrid = x.toInt() % coarseGridX == 0
-            draw(x, start.y, x, end.y, x == 0f, if (onCoarseGrid) AXIS_MAIN.col else AXIS_LIGHT.col)
+            drawLine(x, start.y, x, end.y, x == 0f, if (onCoarseGrid) AXIS_MAIN.col else AXIS_LIGHT.col)
             if (onCoarseGrid && x >= 0) {
                 // Label
                 val p = cam.project(Vector3(x, 0f, 0f))
@@ -131,12 +169,12 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         }
 
         // Horizontal lines
-        val coarseGridY = 100
-        val fineGridY = 20
+        val coarseGridY = (10f).pow(log10(cam.viewportHeight / 2).toInt()).toInt()
+        val fineGridY = coarseGridY / 5
         var y = start.y - start.y % fineGridY
         while (y < end.y) {
             val onCoarseGrid = y.toInt() % coarseGridY == 0
-            draw(start.x, y, end.x, y, y == 0f, if (onCoarseGrid) AXIS_MAIN.col else AXIS_LIGHT.col)
+            drawLine(start.x, y, end.x, y, y == 0f, if (onCoarseGrid) AXIS_MAIN.col else AXIS_LIGHT.col)
             if (onCoarseGrid && y >= 0) {
                 val p = cam.project(Vector3(0f, y, 0f))
                 val label = "${y.toInt()} $"
@@ -146,13 +184,8 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         }
 
         // Main axis
-        draw(0f, 0f, 60f, 0f, true, Color.BLACK)
-        draw(0f, 0f, 0f, 1000f, true, Color.BLACK)
-
-        // Bought value line
-        if (model.qty > 0) {
-            draw(start.x, model.boughtValue, end.x, model.boughtValue, true, RED.col)
-        }
+        drawLine(0f, 0f, 60f, 0f, true, Color.BLACK)
+        drawLine(0f, 0f, 0f, 1000f, true, Color.BLACK)
 
         smallFont.color = AXIS_MAIN.col
         textDrawings.forEach { it() }
@@ -161,22 +194,6 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
     private fun formatTime(seconds: Float) =
         "%d'%02d\"".format((seconds / 60).toInt(), (seconds % 60).toInt())
 
-
-//    val pen = Texture(Gdx.files.internal("pen.png"))
-    val penThick = TextureRegion(Texture(Pixmap(3, 3, Pixmap.Format.RGBA8888).apply {
-        val lighter = Color.WHITE.cpy()
-        lighter.a = .5f
-        setColor(lighter)
-        fill()
-        setColor(Color.WHITE)
-        fillRectangle(0, 1, 3, 1)
-    }))
-    val penFine = TextureRegion(Texture(Pixmap(1, 1, Pixmap.Format.RGBA8888).apply {
-        setColor(Color.WHITE)
-        fill()
-    }))
-
-
     /** Converts x,y from world to screen coordinates. */
     private fun project(x: Float, y: Float): Vector3 = cam.project(vec3(x, y))
 
@@ -184,14 +201,14 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
     private fun unproject(x: Int, y: Int): Vector3 = cam.unproject(vec3(x.toFloat(), y.toFloat()))
 
     /** x,y in world coordinates. */
-    private fun draw(x1: Float, y1: Float, x2: Float, y2: Float, thick: Boolean, color: Color) {
+    private fun drawLine(x1: Float, y1: Float, x2: Float, y2: Float, thick: Boolean, color: Color) {
         val start = project(x1, y1).cpy()
         val end = project(x2, y2)
-        drawLine(start.x, start.y, end.x, end.y, thick, color)
+        drawLineScreen(start.x, start.y, end.x, end.y, thick, color)
     }
 
     /** x,y in screen coordinates. */
-    fun drawLine(x1: Float, y1: Float, x2: Float, y2: Float, thick: Boolean, color: Color) {
+    fun drawLineScreen(x1: Float, y1: Float, x2: Float, y2: Float, thick: Boolean, color: Color) {
         val dx = x2 - x1
         val dy = y2 - y1
         val dist = sqrt(dx * dx + dy * dy)
