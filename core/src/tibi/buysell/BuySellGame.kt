@@ -92,8 +92,8 @@ class BuySellGame : KtxGame<KtxScreen>() {
         skin.add("big", generator.generateFont(param))
         param.color = DARK_TEXT.col
         param.size = r(80)
-//        param.borderWidth = 2f
-//        param.borderColor = Color.BLACK
+        param.borderWidth = 2f
+        param.borderColor = DARK_TEXT.col.cpy().add(.2f, .2f, .2f, 0f)
 //        param.shadowOffsetX = 3
 //        param.shadowOffsetY = 3
         skin.add("title", generator.generateFont(param))
@@ -133,6 +133,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
 
         val labelStyle = Label.LabelStyle().apply {
             font = skin.getFont("big")
+            fontColor = DARK_TEXT.col
         }
         skin.add("default", labelStyle)
     }

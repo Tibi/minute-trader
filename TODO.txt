@@ -26,3 +26,4 @@
 
  - add 3 minutes button disabled click => purchase it + ad free
  - difficulty levels by simulating down markets (asymetric random)
+ - vertical layout: buttons at the bottom

@@ -14,10 +14,7 @@ import ktx.app.KtxScreen
 import ktx.app.clearScreen
 import ktx.math.vec3
 import tibi.buysell.BuySellGame.MyColors.*
-import kotlin.math.atan2
-import kotlin.math.log10
-import kotlin.math.pow
-import kotlin.math.sqrt
+import kotlin.math.*
 
 
 class PlayScreen(val game: BuySellGame) : KtxScreen {
@@ -67,12 +64,12 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
     }
 
     override fun render(delta: Float) {
-
+        val deltaTime = min(0.3f, delta)
         clearScreen(BG.col.r, BG.col.g, BG.col.b)
         if (!paused) {
-            model.update(delta)
+            model.update(deltaTime)
             if (model.points.size < 2) return
-            duration -= delta
+            duration -= deltaTime
             if (duration <= 0) {
                 game.gameFinished()
                 return
@@ -120,7 +117,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         batch.end()
 //        Gdx.app.log("GPU", "# GPU calls: ${batch.renderCalls}")
 
-        ui.act(delta)
+        ui.act(deltaTime)
         ui.draw()
     }
 
@@ -169,23 +166,26 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         }
 
         // Horizontal lines
-        val coarseGridY = (10f).pow(log10(cam.viewportHeight / 2).toInt()).toInt()
+        val digits = log10(cam.viewportHeight / 5f).roundToInt()
+        val coarseGridY = 10f.pow(digits)
         val fineGridY = coarseGridY / 5
-        var y = start.y - start.y % fineGridY
+        var y = 0f
+        var fineCount = 0
         while (y < end.y) {
-            val onCoarseGrid = y.toInt() % coarseGridY == 0
-            drawLine(start.x, y, end.x, y, y == 0f, if (onCoarseGrid) AXIS_MAIN.col else AXIS_LIGHT.col)
-            if (onCoarseGrid && y >= 0) {
+            val onCoarseGrid = fineCount == 0
+            drawLine(start.x, y, end.x, y, false, if (onCoarseGrid) AXIS_MAIN.col else AXIS_LIGHT.col)
+            if (onCoarseGrid) {
                 val p = cam.project(Vector3(0f, y, 0f))
-                val label = "${y.toInt()} $"
+                val label = "%,.${max(0, -digits)}f $".format(y)
                 textDrawings += { smallFont.draw(batch, label, viewport.screenWidth - 10f, p.y + r(22), 0f, Align.right, false) }
             }
             y += fineGridY
+            fineCount++
+            if (fineCount == 5) fineCount = 0
         }
-
         // Main axis
-        drawLine(0f, 0f, 60f, 0f, true, Color.BLACK)
-        drawLine(0f, 0f, 0f, 1000f, true, Color.BLACK)
+        drawLine(0f, 0f, 60f, 0f, true, DARK_TEXT.col)
+        drawLine(0f, 0f, 0f, 100_000f, true, DARK_TEXT.col)
 
         smallFont.color = AXIS_MAIN.col
         textDrawings.forEach { it() }

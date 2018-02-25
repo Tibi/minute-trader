@@ -18,12 +18,8 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
     val game = screen.game
     val model = game.model
 
-    val qtyLabel = Label("", game.skin).apply {
-        color = DARK_TEXT.col
-    }
-    val balanceLabel = Label("", game.skin).apply {
-        color = DARK_TEXT.col
-    }
+    val qtyLabel = Label("", game.skin)
+    val balanceLabel = Label("", game.skin)
 
     val sellButton = TextButton("SELL", game.skin).apply {
         onClick { game.model.sell() }
@@ -53,8 +49,8 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
         super.act(delta)
         buyButton.color = if (model.canBuy()) GREEN_BUTTON.col else DISABLED_BUTTON.col
         sellButton.color = if (model.canSell()) RED_BUTTON.col else DISABLED_BUTTON.col
-        qtyLabel.setText("${model.qty} Owned" )
-        balanceLabel.setText("%,d $ Left".format(model.moneyLeft.toInt()))
+        qtyLabel.setText("${model.qty}") // Coin${if (model.qty > 1) "s" else ""}")
+        balanceLabel.setText("%,d $".format(model.moneyLeft.toInt()))
     }
 
     override fun keyDown(key: Int): Boolean {
@@ -67,7 +63,6 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
         }
         return true
     }
-
 }
 
 
