@@ -81,15 +81,15 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         batch.begin()
 
         // Buy & Sell backgrounds below and above by line
-//        if (model.qty > 0) {
-//            val boughtY = project(0f, model.boughtValue).y
-//            val greenBg = Color.valueOf("#BEFFBE")
-//            val redBg = Color.valueOf("#FFE5FF")
-//            batch.color = redBg
-//            batch.draw(penFine, 0f, 0f, screenWidth, boughtY)
-//            batch.color = greenBg
-//            batch.draw(penFine, 0f, boughtY, screenWidth, screenHeight)
-//        }
+        if (model.qty > 0) {
+            val boughtY = project(0f, model.boughtValue).y
+            val greenBg = Color.valueOf("#C5FFC5")
+            val redBg = Color.valueOf("#FFE5E5")
+            batch.color = redBg
+            batch.draw(penFine, 0f, 0f, screenWidth, boughtY)
+            batch.color = greenBg
+            batch.draw(penFine, 0f, boughtY, screenWidth, screenHeight)
+        }
 
         drawAxis()
 
@@ -126,9 +126,8 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         val minHeight = model.value * 1.3
         val maxHeight = model.value * 3
         // TODO zoom speed proportional to height - min or max
-        val zoomSpeed = 1.005f
-        if (cam.viewportHeight < minHeight) cam.viewportHeight *= zoomSpeed
-        if (cam.viewportHeight > maxHeight) cam.viewportHeight /= zoomSpeed
+        if (cam.viewportHeight < minHeight) cam.viewportHeight *= 1.01f
+        if (cam.viewportHeight > maxHeight) cam.viewportHeight /= 1.005f
         cam.position.y = cam.viewportHeight / 2.2f
 
         val rightEdge = cam.position.x + cam.viewportWidth / 2
