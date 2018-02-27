@@ -83,11 +83,9 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         // Buy & Sell backgrounds below and above by line
         if (model.qty > 0) {
             val boughtY = project(0f, model.boughtValue).y
-            val greenBg = Color.valueOf("#C5FFC5")
-            val redBg = Color.valueOf("#FFE5E5")
-            batch.color = redBg
+            batch.color = RED_BG.col
             batch.draw(penFine, 0f, 0f, screenWidth, boughtY)
-            batch.color = greenBg
+            batch.color = GREEN_BG.col
             batch.draw(penFine, 0f, boughtY, screenWidth, screenHeight)
         }
 
@@ -95,7 +93,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
         // Finish line
         val finishX = project(game.lastDuration.minutes * 60f, 0f).x
-        batch.color = Color.RED
+        batch.color = RED_BG.col
         batch.draw(gradient, finishX - 100, 0f, 100f, screenHeight)
         bigFont.color = Color.WHITE
         bigFont.draw(batch, "S\nE\nL\nL\n!!", finishX - 40, screenHeight - r(50f))
@@ -123,13 +121,17 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     private fun letCameraFollowCurve() {
         // Change Y zoom
-        val minHeight = model.value * 1.3
-        val maxHeight = model.value * 3
-        // TODO zoom speed proportional to height - min or max
-        if (cam.viewportHeight < minHeight) cam.viewportHeight *= 1.01f
+        val minHeight = model.value * 1.3f
+        val maxHeight = model.value * 3f
+        if (cam.viewportHeight < minHeight) {
+            // zoom up speed proportional to height - min
+            val zoomSpeed = 1 + (minHeight - cam.viewportHeight) / cam.viewportHeight / 10
+            cam.viewportHeight *= zoomSpeed
+        }
         if (cam.viewportHeight > maxHeight) cam.viewportHeight /= 1.005f
         cam.position.y = cam.viewportHeight / 2.2f
 
+        // Scroll to the right
         val rightEdge = cam.position.x + cam.viewportWidth / 2
         val diffX = model.time + 3 - rightEdge
         if (diffX > 0) {
