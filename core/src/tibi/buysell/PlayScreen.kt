@@ -93,7 +93,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
         // Finish line
         val finishX = project(game.lastDuration.minutes * 60f, 0f).x
-        batch.color = RED_BG.col
+        batch.color = RED_BUTTON.col
         batch.draw(gradient, finishX - 100, 0f, 100f, screenHeight)
         bigFont.color = Color.WHITE
         bigFont.draw(batch, "S\nE\nL\nL\n!!", finishX - 40, screenHeight - r(50f))
