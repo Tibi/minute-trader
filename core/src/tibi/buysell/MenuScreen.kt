@@ -18,8 +18,7 @@ import ktx.app.KtxScreen
 import ktx.app.clearScreen
 import tibi.buysell.BuySellGame.Duration.ONE
 import tibi.buysell.BuySellGame.Duration.THREE
-import tibi.buysell.BuySellGame.MyColors.BG
-import tibi.buysell.BuySellGame.MyColors.DARK_TEXT
+import tibi.buysell.BuySellGame.MyColors.*
 
 
 class MenuScreen(val game: BuySellGame) : KtxScreen {
@@ -73,9 +72,9 @@ class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
     }
 
     fun button(duration: BuySellGame.Duration) =
-            TextButton("START"/*duration.description*/, game.skin, "green").apply {
+            TextButton("START", game.skin).apply {
                 onClick { game.play(duration) }
-                height = r(100f)
+                color = GREEN_BUTTON.col
             }
 
     override fun keyDown(keyCode: Int): Boolean {

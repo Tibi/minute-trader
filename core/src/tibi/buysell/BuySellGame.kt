@@ -12,7 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import tibi.buysell.BuySellGame.Duration.ONE
-import tibi.buysell.BuySellGame.MyColors.*
+import tibi.buysell.BuySellGame.MyColors.DARK_TEXT
+import tibi.buysell.BuySellGame.MyColors.WHITE
 
 
 class BuySellGame : KtxGame<KtxScreen>() {
@@ -101,10 +102,12 @@ class BuySellGame : KtxGame<KtxScreen>() {
         skin.add("title", generator.generateFont(param))
 
         // Buttons background
-        val pixmap = createRoundedRectangle(200, 80, 4, Color.WHITE)
+        // Try to make all buttons the same size in mm on screen
+        // or use  Gdx.graphics.getDensity() ?
+        val pixmap = createRoundedRectangle(200, Gdx.graphics.ppiY.toInt(), 4, Color.WHITE)
         skin.add("background", Texture(pixmap))
 
-        // Button styles
+        // Button style
         val defaultButtonStyle = TextButton.TextButtonStyle().apply {
             up = skin.newDrawable("background", WHITE.col)
             down = skin.newDrawable("background", WHITE.col)
@@ -113,25 +116,6 @@ class BuySellGame : KtxGame<KtxScreen>() {
             font = skin.getFont("big")
         }
         skin.add("default", defaultButtonStyle)
-        
-        // Button styles
-        val greenButtonStyle = TextButton.TextButtonStyle().apply {
-            up = skin.newDrawable("background", GREEN_BUTTON.col)
-            down = skin.newDrawable("background", GREEN_BUTTON_DOWN.col)
-            checked = skin.newDrawable("background", GREEN_BUTTON.col)
-            over = skin.newDrawable("background", GREEN_BUTTON.col)
-            font = skin.getFont("big")
-        }
-        skin.add("green", greenButtonStyle)
-
-        val redButtonStyle = TextButton.TextButtonStyle().apply {
-            up = skin.newDrawable("background", RED_BUTTON.col)
-            down = skin.newDrawable("background", RED_BUTTON_DOWN.col)
-            checked = skin.newDrawable("background", RED_BUTTON.col)
-            over = skin.newDrawable("background", RED_BUTTON.col)
-            font = skin.getFont("big")
-        }
-        skin.add("red", redButtonStyle)
 
         val labelStyle = Label.LabelStyle().apply {
             font = skin.getFont("big")
