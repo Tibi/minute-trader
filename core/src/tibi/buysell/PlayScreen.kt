@@ -36,7 +36,6 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     //TODO put in atlas
     val gradient = Texture(Gdx.app.files.internal("gradient.png"))
-    val tip = Texture(Gdx.files.internal("tip.png"))
     val penThick = TextureRegion(Texture(Pixmap(3, 3, Pixmap.Format.RGBA8888).apply {
         val lighter = Color.WHITE.cpy()
         lighter.a = .5f
@@ -108,9 +107,6 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         model.points.windowed(2).forEach { vals ->
             drawLine(vals[0].x, vals[0].y, vals[1].x, vals[1].y, true, CURVE.col)
         }
-        val tipPos = project(model.time, model.value)
-        batch.color = Color.WHITE
-        batch.draw(tip, tipPos.x, tipPos.y)
 
         batch.end()
 //        Gdx.app.log("GPU", "# GPU calls: ${batch.renderCalls}")
@@ -128,7 +124,10 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
             val zoomSpeed = 1 + (minHeight - cam.viewportHeight) / cam.viewportHeight / 10
             cam.viewportHeight *= zoomSpeed
         }
-        if (cam.viewportHeight > maxHeight) cam.viewportHeight /= 1.005f
+        if (cam.viewportHeight > maxHeight) {
+            val zoomSpeed = 1 + (cam.viewportHeight - maxHeight) / cam.viewportHeight / 20
+            cam.viewportHeight /= zoomSpeed
+        }
         cam.position.y = cam.viewportHeight / 2.2f
 
         // Scroll to the right
