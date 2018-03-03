@@ -36,10 +36,10 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
             setFillParent(true)
             pad(30f)
             left()
-            add(sellButton)
+            add(sellButton).left()
             add(qtyLabel).right().row()
             add().padBottom(80f).row()
-            add(buyButton)
+            add(buyButton).padRight(30f)
             add(balanceLabel).right().row()
             add().expandY().row()
         })
@@ -47,8 +47,8 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
 
     override fun act(delta: Float) {
         super.act(delta)
-        buyButton.color = if (model.canBuy()) GREEN_BUTTON.col else DISABLED_BUTTON.col
-        sellButton.color = if (model.canSell()) RED_BUTTON.col else DISABLED_BUTTON.col
+        buyButton.color = if (model.canBuy()) RED_BUTTON.col else DISABLED_BUTTON.col
+        sellButton.color = if (model.canSell()) GREEN_BUTTON.col else DISABLED_BUTTON.col
         qtyLabel.setText("${model.qty}") // Coin${if (model.qty > 1) "s" else ""}")
         balanceLabel.setText("%,d $".format(model.moneyLeft.toInt()))
     }
