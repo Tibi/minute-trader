@@ -1,6 +1,6 @@
 android {
     buildToolsVersion "25.0.2"
-    compileSdkVersion 22
+    compileSdkVersion 25
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -16,9 +16,18 @@ android {
     }
     defaultConfig {
         applicationId "tibi.buysell"
+        versionCode 1
+        versionName "1.0"
         minSdkVersion 22
         targetSdkVersion 25
     }
+
+    buildTypes {
+        release {
+            minifyEnabled true // Enables code shrinking for the release build type.
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+      }
 }
 
 

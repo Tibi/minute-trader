@@ -18,7 +18,7 @@ class Model {
     var moneyLeft = 0f
     var boughtValue = 0f
 
-    val volatility = 4f
+    val volatility = 2f
 
     fun update(delta: Float) {
         time += delta

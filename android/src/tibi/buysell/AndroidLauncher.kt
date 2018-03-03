@@ -46,12 +46,14 @@ class AndroidLauncher : AndroidApplication() {
         adView.adUnitId = "ca-app-pub-3940256099942544/6300978111"
         // PROD
 //        adView.adUnitId = "ca-app-pub-3949821178729385/2862624180"
-        val adRequest = AdRequest.Builder().build()
+        val adRequest = AdRequest.Builder()
+                .addTestDevice("D59936D97A67EDB51825A30E54A190EA")  // my Motorola
+                .build()
         adView.loadAd(adRequest)
         return adView
     }
 
-    private fun createAdLayoutParams(): RelativeLayout.LayoutParams {
+    private fun createAdLayoutParams(): ViewGroup.LayoutParams {
         val marginParams = ViewGroup.MarginLayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT)
         marginParams.bottomMargin = 50

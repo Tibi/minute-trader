@@ -104,7 +104,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
         // Buttons background
         // Try to make all buttons the same size in mm on screen
         // or use  Gdx.graphics.getDensity() ?
-        val pixmap = createRoundedRectangle(200, Gdx.graphics.ppiY.toInt(), 4, Color.WHITE)
+        val pixmap = createRoundedRectangle(200, Gdx.graphics.ppiY.toInt() * 2 / 3, 4, Color.WHITE)
         skin.add("background", Texture(pixmap))
 
         // Button style

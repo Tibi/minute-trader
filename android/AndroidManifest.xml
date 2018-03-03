@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="tibi.buysell"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    package="tibi.buysell">
 
     <uses-feature android:glEsVersion="0x00020000" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,9 +19,10 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-                <action android:name="android.intent.action.VIEW" />
+                <!-- with this, the app icon is not installed
+                action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http" android:host="www.tibi.org" android:pathPrefix="/gizmos" />
+                <data android:scheme="http" android:host="www.tibi.org" android:pathPrefix="/gizmos" /-->
             </intent-filter>
         </activity>
 
