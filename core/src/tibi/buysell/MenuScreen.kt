@@ -3,14 +3,11 @@ package tibi.buysell
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Keys.ENTER
 import com.badlogic.gdx.Input.Keys.SPACE
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Scaling
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
@@ -53,28 +50,28 @@ class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
     val labels  = durationsToShow.associate { it to Label("no highscore", game.skin, "small", DARK_TEXT.col) }
 
     init {
-        val table = Table(game.skin).top()
-//        table.debug()
-        table.setFillParent(true)
-        val drawable = TextureRegionDrawable(TextureRegion(game.logo))
-        val image = Image(drawable, Scaling.none)
-        table.add(image).expand()
-        table.add("Minute Trader", "title", Color.WHITE).colspan(2)
-        table.add().expand().row()
-        durationsToShow.forEach { dur ->
-            table.add().expandY()
-            table.add(buttons[dur]).minWidth(r(230f)).left()
-            table.add(labels[dur]).right()
-            table.add().row()
-        }
-        table.add().expandY().row()
-        addActor(table)
+        addActor(Table().apply {
+            top()
+//            debug()
+            setFillParent(true)
+            add(Image(game.logo).apply { setScaling(Scaling.fit) }).expand()
+            add(Image(game.title).apply { setScaling(Scaling.fit) }).colspan(2)
+            add().expand().row()
+            durationsToShow.forEach { dur ->
+                add().expandY()
+                add(buttons[dur]).left()
+                add(labels[dur]).right()
+                add().row()
+            }
+            add().expandY().row()  // Blank space for Ads
+        })
     }
 
     fun button(duration: BuySellGame.Duration) =
             TextButton("START", game.skin).apply {
                 onClick { game.play(duration) }
                 color = GREEN_BUTTON.col
+                pad(30f)
             }
 
     override fun keyDown(keyCode: Int): Boolean {

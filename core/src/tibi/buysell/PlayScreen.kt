@@ -70,8 +70,8 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
             if (model.points.size < 2) return
             duration -= deltaTime
             if (duration <= 0) {
-                game.gameFinished()
-                return
+                paused = true
+                ui.gameOver()
             }
         }
 
@@ -94,7 +94,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         val finishX = project(game.lastDuration.minutes * 60f, 0f).x
         batch.color = GREEN_BUTTON.col
         batch.draw(gradient, finishX - 100, 0f, 100f, screenHeight)
-        bigFont.color = DARK_TEXT.col
+        bigFont.color = WHITE.col
         bigFont.draw(batch, "S\nE\nL\nL\n!!", finishX - 40, screenHeight - r(50f))
 
         // Bought value line
