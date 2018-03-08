@@ -61,6 +61,7 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
         when (key) {
             Input.Keys.B -> model.buy()
             Input.Keys.S -> model.sell()
+            Input.Keys.X -> gameOver()
             Input.Keys.P -> screen.paused = screen.paused.not()
             Input.Keys.ESCAPE -> game.setScreen<MenuScreen>()
             else -> return super.keyDown(key)
@@ -69,15 +70,18 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
     }
 
     fun gameOver() {
-        val dialog = object : Dialog("Game Over!", skin)  {
+        object : Dialog("", skin)  {
             override fun remove(): Boolean {
                 game.gameFinished()
                 return super.remove()
             }
-        }
-        dialog.text("Score: ${model.moneyLeft}")
-        dialog.button(TextButton("OK", skin).apply { color = GREEN_BUTTON.col })
-        dialog.show(this)
+        }.apply {
+            background.minWidth = 500f
+            background.minHeight = 300f
+            add(Label("Time's up!", skin, "big")).pad(10f).center().top()
+            text("Score: ${model.moneyLeft}")
+            onClick { hide() }
+        }.show(this)
     }
 }
 

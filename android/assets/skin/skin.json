@@ -63,6 +63,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
 		background: window
 		titleFont: big
+		titleFontColor: dark_text
 	}
 }
 }

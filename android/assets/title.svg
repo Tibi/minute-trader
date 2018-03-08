@@ -49,15 +49,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="202.09488"
-     inkscape:cy="947.00151"
+     inkscape:cx="345.66631"
+     inkscape:cy="924.85865"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1307"
      inkscape:window-height="818"
-     inkscape:window-x="583"
-     inkscape:window-y="110"
+     inkscape:window-x="184"
+     inkscape:window-y="153"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata5">
@@ -89,7 +89,7 @@
            style="font-size:96px;" /></flowRegion><flowPara
          id="flowPara821" /></flowRoot>    <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.7555542px;line-height:125%;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:url(#linearGradient833);fill-opacity:1;stroke:#7d56bb;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.7555542px;line-height:125%;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:url(#linearGradient833);fill-opacity:1;stroke:#ff9595;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers;"
        x="28.865108"
        y="40.421253"
        id="text825"
@@ -99,6 +99,6 @@
          id="tspan823"
          x="28.865108"
          y="40.421253"
-         style="stroke-width:1;-inkscape-font-specification:Bahnschrift;font-family:Bahnschrift;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:url(#linearGradient833);fill-opacity:1;stroke:#7d56bb;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers;letter-spacing:-0.52916683px;word-spacing:0.81227084px">Minute Trader</tspan></text>
+         style="stroke-width:1;-inkscape-font-specification:Bahnschrift;font-family:Bahnschrift;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:url(#linearGradient833);fill-opacity:1;stroke:#ff9595;stroke-opacity:0;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers;letter-spacing:-0.52916683px;word-spacing:0.81227084px;">Minute Trader</tspan></text>
   </g>
 </svg>

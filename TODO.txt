@@ -1,6 +1,10 @@
  - thicker font
  - now resize => zoom is reset
- - screen pause before going back to menu, show the score, high score + comment
+ - game over dialog:
+   * bigger,
+   * more opaque,
+   * format score like 3'211 $
+   * less ugly
  - atlas should be a single png, not 4...
  - handle back button -> seems to work on real phone
  - AdMob
@@ -12,14 +16,13 @@
      App ID: ca-app-pub-3949821178729385~4664104094
      ad unit ID: ca-app-pub-3949821178729385/2862624180
      test ad unit ID: ca-app-pub-3940256099942544/6300978111
- - make it browsable
+ - make it browsable? what does it mean?
         https://stackoverflow.com/questions/34367875/android-adding-at-least-one-activity-with-an-action-view-intent-filter-after-u
  - publish to Google Play
    * proguard
    * sign the apk
 
 next release
- - vertical layout support
+ - vertical layout: buttons at the bottom
  - add 3 minutes button disabled click => purchase it + ad free
  - difficulty levels by simulating down markets (asymetric random)
- - vertical layout: buttons at the bottom

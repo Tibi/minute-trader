@@ -4,7 +4,7 @@ size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-big1
+small
   rotate: false
   xy: 1, 94
   size: 512, 512
@@ -20,32 +20,6 @@ title
   index: -1
 
 skin2.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-big2
-  rotate: false
-  xy: 1, 1
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-skin3.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-small
-  rotate: false
-  xy: 1, 1
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-skin4.png
 size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
