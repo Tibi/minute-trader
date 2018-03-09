@@ -26,3 +26,4 @@ next release
  - vertical layout: buttons at the bottom
  - add 3 minutes button disabled click => purchase it + ad free
  - difficulty levels by simulating down markets (asymetric random)
+ - small icons on the curve at buy & sell points

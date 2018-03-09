@@ -70,15 +70,17 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
     }
 
     fun gameOver() {
+        screen.paused = true
         object : Dialog("", skin)  {
             override fun remove(): Boolean {
                 game.gameFinished()
                 return super.remove()
             }
         }.apply {
-            background.minWidth = 500f
-            background.minHeight = 300f
-            add(Label("Time's up!", skin, "big")).pad(10f).center().top()
+            background.minWidth = screen.screenWidth * .8f
+            background.minHeight = screen.screenHeight * .8f
+            removeActor(titleTable)
+            contentTable.add(Label("Time's up!", skin, "big")).pad(10f).center().top().row()
             text("Score: ${model.moneyLeft}")
             onClick { hide() }
         }.show(this)
