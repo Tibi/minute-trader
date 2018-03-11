@@ -2,8 +2,8 @@ package tibi.buysell
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
@@ -14,8 +14,8 @@ class BuySellGame : KtxGame<KtxScreen>() {
 
     val model = Model()
     val batch by lazy { SpriteBatch() }
-    val logo by lazy { Texture("icon-big.png") }
-    val title by lazy { Texture("title.png") }
+    val logo: TextureRegion by lazy { skin.atlas.findRegion("icon-big") }
+    val title: TextureRegion by lazy { skin.atlas.findRegion("title") }
     val highScores by lazy { Gdx.app.getPreferences("Minute Trader High Scores")!! }
 
     enum class Duration(val minutes: Float, val description: String) {

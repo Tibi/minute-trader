@@ -2,9 +2,6 @@ package tibi.buysell
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.Pixmap
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Align
@@ -34,20 +31,9 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
     val screenWidth get() = viewport.screenWidth.toFloat()
     val screenHeight get() = viewport.screenHeight.toFloat()
 
-    //TODO put in atlas
-    val gradient = Texture(Gdx.app.files.internal("gradient.png"))
-    val penThick = TextureRegion(Texture(Pixmap(3, 3, Pixmap.Format.RGBA8888).apply {
-        val lighter = Color.WHITE.cpy()
-        lighter.a = .5f
-        setColor(lighter)
-        fill()
-        setColor(Color.WHITE)
-        fillRectangle(0, 1, 3, 1)
-    }))
-    val penFine = TextureRegion(Texture(Pixmap(1, 1, Pixmap.Format.RGBA8888).apply {
-        setColor(Color.WHITE)
-        fill()
-    }))
+    val gradient = game.skin.atlas.findRegion("gradient")
+    val penThick = game.skin.atlas.findRegion("penThick")
+    val penFine  = game.skin.atlas.findRegion("penFine")
 
     override fun show() {
         resize(Gdx.graphics.width, Gdx.graphics.height)
@@ -108,7 +94,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         }
 
         batch.end()
-//        Gdx.app.log("GPU", "# GPU calls: ${batch.renderCalls}")
+        Gdx.app.log("GPU", "# GPU calls: ${batch.renderCalls}")
 
         ui.act(deltaTime)
         ui.draw()
