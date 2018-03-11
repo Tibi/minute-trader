@@ -14,7 +14,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
 
     val model = Model()
     val batch by lazy { SpriteBatch() }
-    val logo by lazy { Texture("icon128.png") }
+    val logo by lazy { Texture("icon-big.png") }
     val title by lazy { Texture("title.png") }
     val highScores by lazy { Gdx.app.getPreferences("Minute Trader High Scores")!! }
 
@@ -59,7 +59,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
         WHITE("#FFFFFF"),
         TEXT_BG("#EEEEEE99"),
         BRIGHT_TEXT("#B3A9C5"),
-        DARK_TEXT("#4D3279"),
+        DARK_TEXT("#7f56bb"),
         GREEN_BUTTON("#58ed7f"),
         GREEN_BUTTON_DOWN("#8ef3a8"),
         GREEN_BG("#C5FFC5"),

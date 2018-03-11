@@ -8,6 +8,8 @@ import kotlin.math.ceil
 import kotlin.math.max
 
 
+const val START_AMOUNT = 1_000f
+
 class Model {
 
     var value = 0f
@@ -18,7 +20,7 @@ class Model {
     var moneyLeft = 0f
     var boughtValue = 0f
 
-    val volatility = 2f
+    val volatility = 3f
 
     fun update(delta: Float) {
         time += delta
@@ -53,7 +55,7 @@ class Model {
         points.clear()
         points.add(Vector2(time, value))
         qty = 0
-        moneyLeft = 1_000f
+        moneyLeft = START_AMOUNT
         boughtValue = 0f
     }
 

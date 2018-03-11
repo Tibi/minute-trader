@@ -6,16 +6,9 @@ filter: Linear,Linear
 repeat: none
 small
   rotate: false
-  xy: 1, 94
+  xy: 1, 1
   size: 512, 512
   orig: 512, 512
-  offset: 0, 0
-  index: -1
-title
-  rotate: false
-  xy: 1, 608
-  size: 700, 93
-  orig: 700, 93
   offset: 0, 0
   index: -1
 
@@ -29,30 +22,23 @@ button
   xy: 1, 1
   size: 50, 50
   split: 16, 17, 16, 17
-  pad: 0, 0, 0, 0
+  pad: 11, 12, 12, 13
   orig: 50, 50
   offset: 0, 0
   index: -1
 big
   rotate: false
-  xy: 1, 183
+  xy: 1, 53
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
-icon128
-  rotate: false
-  xy: 1, 53
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
 window
   rotate: false
-  xy: 515, 595
-  size: 100, 100
-  split: 33, 33, 33, 33
-  pad: 0, 0, 0, 0
-  orig: 100, 100
+  xy: 515, 515
+  size: 50, 50
+  split: 24, 24, 24, 24
+  pad: 20, 20, 20, 20
+  orig: 50, 50
   offset: 0, 0
   index: -1

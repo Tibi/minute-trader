@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
 import ktx.scene2d.Scene2DSkin
 import ktx.scene2d.table
+import tibi.buysell.BuySellGame.Duration.ONE
 import tibi.buysell.BuySellGame.MyColors.*
 
 
@@ -36,16 +37,15 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
     init {
         Scene2DSkin.defaultSkin = skin
         addActor(table {
-//            debug()
             setFillParent(true)
             pad(30f)
+            top()
             left()
             add(sellButton).left().padRight(30f)
             add(qtyLabel).right().row()
             add().padBottom(80f).row()
             add(buyButton).fill().padRight(30f)
             add(balanceLabel).right().row()
-            add().expandY().row()
         })
     }
 
@@ -77,11 +77,23 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
                 return super.remove()
             }
         }.apply {
-            background.minWidth = screen.screenWidth * .8f
-            background.minHeight = screen.screenHeight * .8f
+            background.minWidth = screen.screenWidth * .6f
+            background.minHeight = screen.screenHeight * .6f
             removeActor(titleTable)
-            contentTable.add(Label("Time's up!", skin, "big")).pad(10f).center().top().row()
-            text("Score: ${model.moneyLeft}")
+            contentTable.top()
+            contentTable.defaults().pad(20f)
+            contentTable.add(Label("Time's up!", skin, "big")).row()
+            val score = model.moneyLeft.toInt()
+            contentTable.add("Score: " + "%,d $".format(score)).padTop(50f).row()
+            when {
+                score > game.highScores.getInteger(ONE.name) -> text("That's a high score, congratulations!")
+                score > START_AMOUNT -> text("No high score but not bad!")
+                else -> text("You'll do better next time!")
+            }
+            contentTable.row()
+            if (model.qty > 0) {
+                text("You didn't sell all!")
+            }
             onClick { hide() }
         }.show(this)
     }

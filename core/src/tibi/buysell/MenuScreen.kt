@@ -24,7 +24,7 @@ class MenuScreen(val game: BuySellGame) : KtxScreen {
     override fun show() {
         Gdx.input.inputProcessor = ui
         listOf(ONE, THREE).forEach { duration ->
-            val score = game.highScores.getInteger(duration.toString())
+            val score = game.highScores.getInteger(duration.name)
             if (score > 0) {
                 ui.labels[duration]?.setText("High Score: %,d $".format(score))
             }
@@ -71,6 +71,7 @@ class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
             TextButton("START", game.skin).apply {
                 onClick { game.play(duration) }
                 color = GREEN_BUTTON.col
+                label.color = DARK_TEXT.col
                 pad(30f)
             }
 

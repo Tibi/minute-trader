@@ -3,7 +3,7 @@ atlasData: {
 	atlasCurrent: true
 	drawables: [
 		{
-			file: C:/Users/Tibi/Documents/src/buy-sell/android/assets/button.9.png
+			file: C:/Users/Tibi/src/buy-sell/android/assets/button.9.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -19,7 +19,7 @@ atlasData: {
 			minHeight: 0
 		}
 		{
-			file: C:/Users/Tibi/Documents/src/buy-sell/android/assets/window.9.png
+			file: C:/Users/Tibi/src/buy-sell/android/assets/window.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -35,7 +35,7 @@ atlasData: {
 			minHeight: 0
 		}
 		{
-			file: C:/Users/Tibi/Documents/src/buy-sell/android/assets/fonts/small.png
+			file: C:/Users/Tibi/src/buy-sell/android/assets/fonts/small.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -51,7 +51,7 @@ atlasData: {
 			minHeight: 0
 		}
 		{
-			file: C:/Users/Tibi/Documents/src/buy-sell/android/assets/fonts/big.png
+			file: C:/Users/Tibi/src/buy-sell/android/assets/fonts/big.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -62,38 +62,6 @@ atlasData: {
 			tint: null
 			tintName: null
 			name: big
-			tiled: false
-			minWidth: 0
-			minHeight: 0
-		}
-		{
-			file: C:/Users/Tibi/Documents/src/buy-sell/android/assets/title.png
-			bgColor: {
-				r: 1
-				g: 1
-				b: 1
-				a: 1
-			}
-			visible: true
-			tint: null
-			tintName: null
-			name: title
-			tiled: false
-			minWidth: 0
-			minHeight: 0
-		}
-		{
-			file: C:/Users/Tibi/Documents/src/buy-sell/android/assets/icon128.png
-			bgColor: {
-				r: 1
-				g: 1
-				b: 1
-				a: 1
-			}
-			visible: true
-			tint: null
-			tintName: null
-			name: icon128
 			tiled: false
 			minWidth: 0
 			minHeight: 0
@@ -147,12 +115,12 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: big
-			file: C:/Users/Tibi/Documents/src/buy-sell/android/assets/fonts/big.fnt
+			file: C:/Users/Tibi/src/buy-sell/android/assets/fonts/big.fnt
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: small
-			file: C:/Users/Tibi/Documents/src/buy-sell/android/assets/fonts/small.fnt
+			file: C:/Users/Tibi/src/buy-sell/android/assets/fonts/small.fnt
 		}
 	]
 	classStyleMap: {
@@ -1713,5 +1681,5 @@ preferences: {
 		value: false
 	}
 }
-saveFile: C:/Users/Tibi/Documents/src/buy-sell/android/assets/skin/skin.scmp
+saveFile: C:/Users/Tibi/src/buy-sell/android/assets/skin/skin.scmp
 }
