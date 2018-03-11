@@ -1,5 +1,6 @@
  - now resize => zoom is reset
- - atlas should be a single png, not 4...
+ - French version
+ - help texts or tutorial
  - handle back button -> seems to work on real phone
  - AdMob
    * remove ad when no WiFi
@@ -18,6 +19,6 @@
 
 next release
  - vertical layout: buttons at the bottom
- - add 3 minutes button disabled click => purchase it + ad free
+ - 2 players, networked
  - difficulty levels by simulating down markets (asymetric random)
  - small icons on the curve at buy & sell points
