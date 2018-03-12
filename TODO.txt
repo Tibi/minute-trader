@@ -1,16 +1,8 @@
- - now resize => zoom is reset
+ - generate new ic_launcher icon
  - French version
+   * include éèêù€àç in fonts
  - help texts or tutorial
- - handle back button -> seems to work on real phone
- - AdMob
-   * remove ad when no WiFi
-   * bigger ad on menu
-   * use real ad unit ID in prod
-        http://www.norakomi.com/tutorial_admob_part1.php
-        https://github.com/libgdx/libgdx/wiki/Admob-in-libgdx
-     App ID: ca-app-pub-3949821178729385~4664104094
-     ad unit ID: ca-app-pub-3949821178729385/2862624180
-     test ad unit ID: ca-app-pub-3940256099942544/6300978111
+ - handle back button -> should go back to main menu
  - make it browsable? what does it mean?
         https://stackoverflow.com/questions/34367875/android-adding-at-least-one-activity-with-an-action-view-intent-filter-after-u
  - publish to Google Play
@@ -19,6 +11,7 @@
 
 next release
  - vertical layout: buttons at the bottom
+   * bug: resize => zoom is reset
  - 2 players, networked
  - difficulty levels by simulating down markets (asymetric random)
  - small icons on the curve at buy & sell points

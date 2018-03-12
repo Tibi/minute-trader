@@ -13,20 +13,21 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
 import ktx.app.KtxScreen
 import ktx.app.clearScreen
+import ktx.i18n.get
 import tibi.buysell.BuySellGame.Duration.ONE
 import tibi.buysell.BuySellGame.Duration.THREE
 import tibi.buysell.BuySellGame.MyColors.*
 
-
 class MenuScreen(val game: BuySellGame) : KtxScreen {
     val ui = MenuStage(game)
+    val txt = game.txt
 
     override fun show() {
         Gdx.input.inputProcessor = ui
         listOf(ONE, THREE).forEach { duration ->
             val score = game.highScores.getInteger(duration.name)
             if (score > 0) {
-                ui.labels[duration]?.setText("High Score: %,d $".format(score))
+                ui.labels[duration]?.setText(txt["highScore", score])
             }
         }
     }
@@ -47,7 +48,8 @@ class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
 
     val durationsToShow = listOf(ONE)
     val buttons = durationsToShow.associate { it to button(it) }
-    val labels  = durationsToShow.associate { it to Label("no highscore", game.skin, "small", DARK_TEXT.col) }
+    val labels  = durationsToShow.associate {
+        it to Label(game.txt["noHighscore"], game.skin, "small", DARK_TEXT.col) }
 
     init {
         addActor(Table().apply {
@@ -68,7 +70,7 @@ class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
     }
 
     fun button(duration: BuySellGame.Duration) =
-            TextButton("START", game.skin).apply {
+            TextButton(game.txt["start"], game.skin).apply {
                 onClick { game.play(duration) }
                 color = GREEN_BUTTON.col
                 label.color = DARK_TEXT.col
