@@ -3,7 +3,7 @@ atlasData: {
 	atlasCurrent: true
 	drawables: [
 		{
-			file: C:/Users/Tibi/src/buy-sell/android/assets/skin/skin_data/button.9.png
+			file: C:/Users/Tibi/src/buy-sell/assets-source/skin/button.9.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -19,7 +19,7 @@ atlasData: {
 			minHeight: 0
 		}
 		{
-			file: C:/Users/Tibi/src/buy-sell/android/assets/skin/skin_data/window.9.png
+			file: C:/Users/Tibi/src/buy-sell/assets-source/skin/window.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -35,7 +35,7 @@ atlasData: {
 			minHeight: 0
 		}
 		{
-			file: C:/Users/Tibi/src/buy-sell/android/assets/skin/skin_data/small.png
+			file: C:/Users/Tibi/src/buy-sell/assets-source/fonts/small.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -51,7 +51,7 @@ atlasData: {
 			minHeight: 0
 		}
 		{
-			file: C:/Users/Tibi/src/buy-sell/android/assets/skin/skin_data/big.png
+			file: C:/Users/Tibi/src/buy-sell/assets-source/fonts/big.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -67,7 +67,7 @@ atlasData: {
 			minHeight: 0
 		}
 		{
-			file: C:/Users/Tibi/src/buy-sell/android/assets/skin/skin_data/title.png
+			file: C:/Users/Tibi/src/buy-sell/assets-source/art/title.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -83,7 +83,7 @@ atlasData: {
 			minHeight: 0
 		}
 		{
-			file: C:/Users/Tibi/src/buy-sell/android/assets/skin/skin_data/gradient.png
+			file: C:/Users/Tibi/src/buy-sell/assets-source/art/gradient.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -99,7 +99,7 @@ atlasData: {
 			minHeight: 0
 		}
 		{
-			file: C:/Users/Tibi/src/buy-sell/android/assets/skin/skin_data/icon-big.png
+			file: C:/Users/Tibi/src/buy-sell/assets-source/art/icon-big.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -115,7 +115,7 @@ atlasData: {
 			minHeight: 0
 		}
 		{
-			file: C:/Users/Tibi/src/buy-sell/android/assets/skin/skin_data/penFine.png
+			file: C:/Users/Tibi/src/buy-sell/assets-source/art/penFine.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -131,7 +131,7 @@ atlasData: {
 			minHeight: 0
 		}
 		{
-			file: C:/Users/Tibi/src/buy-sell/android/assets/skin/skin_data/penThick.png
+			file: C:/Users/Tibi/src/buy-sell/assets-source/art/penThick.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -195,12 +195,12 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: big
-			file: C:/Users/Tibi/src/buy-sell/android/assets/skin/skin_data/big.fnt
+			file: C:/Users/Tibi/src/buy-sell/assets-source/fonts/big.fnt
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: small
-			file: C:/Users/Tibi/src/buy-sell/android/assets/skin/skin_data/small.fnt
+			file: C:/Users/Tibi/src/buy-sell/assets-source/fonts/small.fnt
 		}
 	]
 	classStyleMap: {
@@ -1758,8 +1758,8 @@ preferences: {
 	}
 	resources-relative: {
 		class: java.lang.Boolean
-		value: true
+		value: false
 	}
 }
-saveFile: C:/Users/Tibi/src/buy-sell/android/assets/skin/skin.scmp
+saveFile: C:/Users/Tibi/src/buy-sell/assets-source/skin/skin.scmp
 }

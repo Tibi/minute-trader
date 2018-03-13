@@ -4,18 +4,18 @@ size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-small
-  rotate: false
-  xy: 1, 92
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
 title
   rotate: false
   xy: 1, 606
   size: 700, 95
   orig: 700, 95
+  offset: 0, 0
+  index: -1
+small
+  rotate: false
+  xy: 1, 92
+  size: 512, 512
+  orig: 512, 512
   offset: 0, 0
   index: -1
 
@@ -24,22 +24,6 @@ size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-big
-  rotate: false
-  xy: 1, 215
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-button
-  rotate: false
-  xy: 1, 1
-  size: 50, 50
-  split: 16, 17, 16, 17
-  pad: 11, 12, 12, 13
-  orig: 50, 50
-  offset: 0, 0
-  index: -1
 gradient
   rotate: false
   xy: 515, 726
@@ -66,6 +50,22 @@ penThick
   xy: 515, 721
   size: 3, 3
   orig: 3, 3
+  offset: 0, 0
+  index: -1
+big
+  rotate: false
+  xy: 1, 215
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+button
+  rotate: false
+  xy: 1, 1
+  size: 50, 50
+  split: 16, 17, 16, 17
+  pad: 11, 12, 12, 13
+  orig: 50, 50
   offset: 0, 0
   index: -1
 window
