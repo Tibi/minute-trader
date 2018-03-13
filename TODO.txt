@@ -1,5 +1,5 @@
  - French version
-   * include éè€ in fonts
+   * include éè in fonts
  - help texts or tutorial
  - handle back button -> should go back to main menu
  - make it browsable? what does it mean?
