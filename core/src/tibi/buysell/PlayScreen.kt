@@ -18,6 +18,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     val model = game.model
     val batch = game.batch
+    val txt = game.txt
     val bigFont  = game.skin.getFont("big")
     val smallFont  = game.skin.getFont("small")
 
@@ -80,7 +81,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         batch.color = GREEN_BUTTON.col
         batch.draw(gradient, finishX - 100, 0f, 100f, screenHeight)
         bigFont.color = WHITE.col
-        bigFont.draw(batch, "S\nE\nL\nL\n!!", finishX - 40, screenHeight - r(50f))
+        bigFont.draw(batch, txt["sellFinish"], finishX - 46, screenHeight - r(50f), 36f, Align.center, true)
 
         // Bought value line
         if (model.qty > 0) {
@@ -94,7 +95,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         }
 
         batch.end()
-        Gdx.app.log("GPU", "# GPU calls: ${batch.renderCalls}")
+//        Gdx.app.log("GPU", "# GPU calls: ${batch.renderCalls}")
 
         ui.act(deltaTime)
         ui.draw()

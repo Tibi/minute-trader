@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
+import ktx.i18n.get
 import ktx.scene2d.Scene2DSkin
 import ktx.scene2d.table
 import tibi.buysell.BuySellGame.Duration.ONE
@@ -20,16 +21,17 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
     val game = screen.game
     val model = game.model
     val skin = game.skin
+    val txt = game.txt
 
     val qtyLabel = Label("", skin, "big")
     val balanceLabel = Label("", skin, "big")
 
-    val sellButton = TextButton("SELL", skin).apply {
+    val sellButton = TextButton(txt["SELL"], skin).apply {
         onClick { if (!screen.paused) model.sell() }
         pad(30f)
     }
 
-    val buyButton = TextButton("BUY", skin).apply {
+    val buyButton = TextButton(txt["BUY"], skin).apply {
         onClick { if (!screen.paused) model.buy() }
         pad(30f)
     }
@@ -41,7 +43,7 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
             pad(30f)
             top()
             left()
-            add(sellButton).left().padRight(30f)
+            add(sellButton).fill().padRight(30f)
             add(qtyLabel).right().row()
             add().padBottom(80f).row()
             add(buyButton).fill().padRight(30f)
@@ -54,7 +56,7 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
         buyButton.color = if (model.canBuy()) RED_BUTTON.col else DISABLED_BUTTON.col
         sellButton.color = if (model.canSell()) GREEN_BUTTON.col else DISABLED_BUTTON.col
         qtyLabel.setText("${model.qty}")
-        balanceLabel.setText("%,d $".format(model.moneyLeft.toInt()))
+        balanceLabel.setText(txt["moneyLeft", model.moneyLeft])
     }
 
     override fun keyDown(key: Int): Boolean {
@@ -82,17 +84,17 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
             removeActor(titleTable)
             contentTable.top()
             contentTable.defaults().pad(20f)
-            contentTable.add(Label("Time's up!", skin, "big")).row()
+            contentTable.add(Label(txt["GameOver"], skin, "big")).row()
             val score = model.moneyLeft.toInt()
-            contentTable.add("Score: " + "%,d $".format(score)).padTop(50f).row()
+            contentTable.add(txt["Score", score]).padTop(50f).row()
             when {
-                score > game.highScores.getInteger(ONE.name) -> text("That's a high score, congratulations!")
-                score > START_AMOUNT -> text("No high score but not bad!")
-                else -> text("You'll do better next time!")
+                score > game.highScores.getInteger(ONE.name) -> text(txt["highScoreCongrats"])
+                score > START_AMOUNT -> text(txt["notBad"])
+                else -> text(txt["betterNextTime"])
             }
             contentTable.row()
             if (model.qty > 0) {
-                text("You didn't sell all!")
+                text(txt["notSold"])
             }
             onClick { hide() }
         }.show(this)
