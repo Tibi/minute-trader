@@ -21,7 +21,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
     val txt by lazy { I18NBundle.createBundle(Gdx.files.internal("i18n/texts")) }
 
     enum class Duration(val minutes: Float, val description: String) {
-        ONE(.1f, "1 Minute"),
+        ONE(1f, "1 Minute"),
         THREE(3f, "3 Minutes")
     }
 

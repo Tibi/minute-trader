@@ -22,6 +22,16 @@ class Model {
 
     val volatility = 3f
 
+    fun clear() {
+        value = 200f
+        time = 0f
+        points.clear()
+        points.add(Vector2(time, value))
+        qty = 1
+        moneyLeft = START_AMOUNT - qty * value
+        boughtValue = value
+    }
+
     fun update(delta: Float) {
         time += delta
         // r is the % to go up or down, it's proportional to time elapsed and volatility
@@ -47,16 +57,6 @@ class Model {
         val qtyToSell = ceil(qty / 5f).toInt()
         qty -= qtyToSell
         moneyLeft += qtyToSell * value
-    }
-
-    fun clear() {
-        value = 200f
-        time = 0f
-        points.clear()
-        points.add(Vector2(time, value))
-        qty = 0
-        moneyLeft = START_AMOUNT
-        boughtValue = 0f
     }
 
     fun canBuy() = moneyLeft >= value

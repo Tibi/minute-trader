@@ -56,7 +56,7 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
         buyButton.color = if (model.canBuy()) RED_BUTTON.col else DISABLED_BUTTON.col
         sellButton.color = if (model.canSell()) GREEN_BUTTON.col else DISABLED_BUTTON.col
         qtyLabel.setText("${model.qty}")
-        balanceLabel.setText(txt["moneyLeft", model.moneyLeft])
+        balanceLabel.setText(txt["moneyLeft", model.moneyLeft.toInt()])
     }
 
     override fun keyDown(key: Int): Boolean {
