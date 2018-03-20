@@ -3,10 +3,12 @@ package tibi.buysell
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
 import ktx.i18n.get
@@ -96,7 +98,17 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
             if (model.qty > 0) {
                 text(txt["notSold"])
             }
-            onClick { hide() }
+            val clickListener = object : ClickListener() {
+                // If clicked arount the center, hide the dialog.
+              override fun clicked(event: InputEvent, x: Float, y: Float) {
+                    println("x $x, y $y")
+                  if (x > screen.screenWidth * 0.05 && x < screen.screenWidth * 0.55
+                      && y > screen.screenHeight * 0.05 && y < screen.screenHeight * 0.55) {
+                      hide()
+                  }
+              }
+            }
+            this.addListener(clickListener)
         }.show(this)
     }
 }

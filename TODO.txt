@@ -1,5 +1,3 @@
-Clic écran game over
-
 Comments drôles
 
 Explications quand clic sur bouton désactiver
