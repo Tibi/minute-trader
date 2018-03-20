@@ -1,8 +1,15 @@
+Clic écran game over
+
+Comments drôles
+
+Explications quand clic sur bouton désactiver
+
+ - handle back button -> should go back to main menu
+
  - French version
    * include éè in fonts
  - help texts or tutorial
  - put ads more to the left?
- - handle back button -> should go back to main menu
  - make it browsable? what does it mean?
         https://stackoverflow.com/questions/34367875/android-adding-at-least-one-activity-with-an-action-view-intent-filter-after-u
  - publish to Google Play

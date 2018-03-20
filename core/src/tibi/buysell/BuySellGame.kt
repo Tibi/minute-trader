@@ -68,7 +68,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
         RED_BUTTON("#ff9595"),
         RED_BUTTON_DOWN("#ffcece"),
         RED_BG("#FFE5E5"),
-        DISABLED_BUTTON("#AAAAAA"),
+        DISABLED_BUTTON("#e0e0e0"),
         RED("#FF0000"),
         CURVE("#0081f2"),
         AXIS_MAIN("#808080"),

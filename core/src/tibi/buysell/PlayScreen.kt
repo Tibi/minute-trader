@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import ktx.app.KtxScreen
 import ktx.app.clearScreen
+import ktx.i18n.get
 import ktx.math.vec3
 import tibi.buysell.BuySellGame.MyColors.*
 import kotlin.math.*
@@ -162,7 +163,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
             drawLine(start.x, y, end.x, y, false, if (onCoarseGrid) AXIS_MAIN.col else AXIS_LIGHT.col)
             if (onCoarseGrid) {
                 val p = cam.project(Vector3(0f, y, 0f))
-                val label = "%,.${max(0, -digits)}f $".format(y)
+                val label = txt["amount", "%,.${max(0, -digits)}f".format(y)]
                 textDrawings += { smallFont.draw(batch, label, viewport.screenWidth - 10f, p.y + r(22), 0f, Align.right, false) }
             }
             y += fineGridY
