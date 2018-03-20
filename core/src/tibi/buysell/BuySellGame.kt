@@ -18,6 +18,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
     val logo: TextureRegion by lazy { skin.atlas.findRegion("icon-big") }
     val title: TextureRegion by lazy { skin.atlas.findRegion("title") }
     val highScores by lazy { Gdx.app.getPreferences("Minute Trader High Scores")!! }
+    val prefs by lazy { Gdx.app.getPreferences("Minute Trader Preferences")!! }
     val txt by lazy { I18NBundle.createBundle(Gdx.files.internal("i18n/texts")) }
 
     enum class Duration(val minutes: Float, val description: String) {

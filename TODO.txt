@@ -1,12 +1,6 @@
-Comments drôles
-
-Explications quand clic sur bouton désactiver
-
+ - funny comments
  - handle back button -> should go back to main menu
-
- - French version
-   * include éè in fonts
- - help texts or tutorial
+ - help button (?) on menu screen -> show user guide
  - put ads more to the left?
  - make it browsable? what does it mean?
         https://stackoverflow.com/questions/34367875/android-adding-at-least-one-activity-with-an-action-view-intent-filter-after-u

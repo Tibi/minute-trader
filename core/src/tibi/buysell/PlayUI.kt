@@ -28,18 +28,44 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
     val qtyLabel = Label("", skin, "big")
     val balanceLabel = Label("", skin, "big")
 
-    val sellButton = TextButton(txt["SELL"], skin).apply {
-        onClick { if (!screen.paused) model.sell() }
-        pad(30f)
-    }
-
-    val buyButton = TextButton(txt["BUY"], skin).apply {
-        onClick { if (!screen.paused) model.buy() }
-        pad(30f)
-    }
+    val sellButton = TextButton(txt["SELL"], skin).apply { pad(30f) }
+    val buyButton = TextButton(txt["BUY"], skin).apply { pad(30f) }
 
     init {
         Scene2DSkin.defaultSkin = skin
+        fun pos(dia: Dialog, button: TextButton) {
+            dia.setPosition(button.x + button.width,
+                            button.y + (button.height - dia.height) / 2)
+        }
+        sellButton.onClick {
+            if (screen.paused) return@onClick
+            if (!model.canSell() && !game.prefs.getBoolean("tutoSellDone")) {
+                screen.paused = true
+                val dia = dialog(txt["allSold"]) {
+                    screen.paused = false
+                    game.prefs.putBoolean("tutoSellDone", true)
+                    game.prefs.flush()
+                }
+                dia.show(this@PlayUI)
+                pos(dia, sellButton)
+            }
+            model.sell()
+        }
+        buyButton.onClick {
+            if (screen.paused) return@onClick
+            if (!model.canBuy() && !game.prefs.getBoolean("tutoBuyDone")) {
+                screen.paused = true
+                val dia = dialog(txt["noMoney"]) {
+                    screen.paused = false
+                    game.prefs.putBoolean("tutoBuyDone", true)
+                    game.prefs.flush()
+                }
+                dia.show(this@PlayUI)
+                pos(dia, buyButton)
+            }
+            model.buy()
+        }
+
         addActor(table {
             setFillParent(true)
             pad(30f)
@@ -75,18 +101,9 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
 
     fun gameOver() {
         screen.paused = true
-        object : Dialog("", skin)  {
-            override fun remove(): Boolean {
-                game.gameFinished()
-                return super.remove()
-            }
-        }.apply {
+        dialog(txt["GameOver"]) { game.gameFinished() }.apply {
             background.minWidth = screen.screenWidth * .6f
             background.minHeight = screen.screenHeight * .6f
-            removeActor(titleTable)
-            contentTable.top()
-            contentTable.defaults().pad(20f)
-            contentTable.add(Label(txt["GameOver"], skin, "big")).row()
             val score = model.moneyLeft.toInt()
             contentTable.add(txt["Score", score]).padTop(50f).row()
             when {
@@ -98,20 +115,31 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
             if (model.qty > 0) {
                 text(txt["notSold"])
             }
-            val clickListener = object : ClickListener() {
-                // If clicked arount the center, hide the dialog.
-              override fun clicked(event: InputEvent, x: Float, y: Float) {
-                    println("x $x, y $y")
-                  if (x > screen.screenWidth * 0.05 && x < screen.screenWidth * 0.55
-                      && y > screen.screenHeight * 0.05 && y < screen.screenHeight * 0.55) {
-                      hide()
-                  }
-              }
+            show(this@PlayUI)
+        }
+    }
+
+
+    fun dialog(title: String, onClose: () -> Unit) = object : Dialog("", skin) {
+        override fun remove(): Boolean {
+            onClose()
+            return super.remove()
+        }
+    }.apply {
+        contentTable.top()
+        contentTable.defaults().pad(20f)
+        contentTable.add(Label(title, skin, "big")).row()
+        val clickListener = object : ClickListener() {
+            override fun clicked(event: InputEvent, x: Float, y: Float) {
+                if (x > 0 && x < width && y > 0 && y < height) {
+                    hide()
+                }
             }
-            this.addListener(clickListener)
-        }.show(this)
+        }
+        addListener(clickListener)
     }
 }
+
 
 
 /** Converts dimensions relative to screen size */
