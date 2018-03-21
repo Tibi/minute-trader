@@ -1,7 +1,7 @@
 package tibi.buysell
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
+import com.badlogic.gdx.Input.Keys.*
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -32,6 +32,7 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
     val buyButton = TextButton(txt["BUY"], skin).apply { pad(30f) }
 
     init {
+        Gdx.input.isCatchBackKey = true
         Scene2DSkin.defaultSkin = skin
         fun pos(dia: Dialog, button: TextButton) {
             dia.setPosition(button.x + button.width,
@@ -89,11 +90,11 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
 
     override fun keyDown(key: Int): Boolean {
         when (key) {
-            Input.Keys.B -> model.buy()
-            Input.Keys.S -> model.sell()
-            Input.Keys.X -> gameOver()
-            Input.Keys.P -> screen.paused = screen.paused.not()
-            Input.Keys.ESCAPE -> game.setScreen<MenuScreen>()
+            B -> model.buy()
+            S -> model.sell()
+            X -> gameOver()
+            P -> screen.paused = screen.paused.not()
+            ESCAPE, BACK -> { Gdx.input.isCatchBackKey = false; game.setScreen<MenuScreen>() }
             else -> return super.keyDown(key)
         }
         return true

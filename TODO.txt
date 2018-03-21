@@ -1,5 +1,5 @@
+ - done, TO TEST: handle back button -> should go back to main menu
  - funny comments
- - handle back button -> should go back to main menu
  - help button (?) on menu screen -> show user guide
  - put ads more to the left?
  - make it browsable? what does it mean?
