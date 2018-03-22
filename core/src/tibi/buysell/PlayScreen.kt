@@ -3,10 +3,10 @@ package tibi.buysell
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.StretchViewport
-import com.badlogic.gdx.utils.viewport.Viewport
 import ktx.app.KtxScreen
 import ktx.app.clearScreen
 import ktx.i18n.get
@@ -23,7 +23,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
     val bigFont  = game.skin.getFont("big")
     val smallFont  = game.skin.getFont("small")
 
-    val viewport: Viewport = StretchViewport(20f, 400f)  // 20" and 400 $ visible
+    val viewport = StretchViewport(20f, 400f)  // 20" and 400 $ visible
     val cam = viewport.camera
     val ui = PlayUI(this, batch)
 
@@ -36,6 +36,8 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
     val gradient = game.skin.atlas.findRegion("gradient")
     val penThick = game.skin.atlas.findRegion("penThick")
     val penFine  = game.skin.atlas.findRegion("penFine")
+    val buyMarker = game.skin.atlas.findRegion("buy-marker")
+    val sellMarker = game.skin.atlas.findRegion("sell-marker")
 
     override fun show() {
         resize(Gdx.graphics.width, Gdx.graphics.height)
@@ -95,8 +97,11 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
             drawLine(vals[0].x, vals[0].y, vals[1].x, vals[1].y, true, CURVE.col)
         }
 
+        model.buys.forEach { drawBuyMarker(it) }
+        model.sells.forEach { drawSellMarker(it) }
+
         batch.end()
-//        Gdx.app.log("GPU", "# GPU calls: ${batch.renderCalls}")
+        Gdx.app.log("GPU", "# GPU calls: ${batch.renderCalls}")
 
         ui.act(deltaTime)
         ui.draw()
@@ -189,7 +194,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     /** x,y in world coordinates. */
     private fun drawLine(x1: Float, y1: Float, x2: Float, y2: Float, thick: Boolean, color: Color) {
-        val start = project(x1, y1).cpy()
+        val start = project(x1, y1)
         val end = project(x2, y2)
         drawLineScreen(start.x, start.y, end.x, end.y, thick, color)
     }
@@ -206,6 +211,18 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         } else {
             batch.draw(penFine,  x1, y1, 0f, 0f, dist, 1f, 1f, 1f, MathUtils.radiansToDegrees * rad)
         }
+    }
+
+    fun drawBuyMarker(v: Vector2) {
+        val p = cam.project(vec3(v.x, v.y))
+        batch.color = Color.WHITE
+        batch.draw(buyMarker, p.x - 7, p.y - 20, 14f, 20f)
+    }
+
+    fun drawSellMarker(v: Vector2) {
+        val p = cam.project(vec3(v.x, v.y))
+        batch.color = Color.WHITE
+        batch.draw(sellMarker, p.x - 7, p.y, 14f, 20f)
     }
 
     override fun dispose() {

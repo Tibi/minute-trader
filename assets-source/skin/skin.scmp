@@ -146,6 +146,38 @@ atlasData: {
 			minWidth: 0
 			minHeight: 0
 		}
+		{
+			file: C:/Users/Tibi/src/buy-sell/assets-source/art/buy-marker.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: null
+			name: buy-marker
+			tiled: false
+			minWidth: 0
+			minHeight: 0
+		}
+		{
+			file: C:/Users/Tibi/src/buy-sell/assets-source/art/sell-marker.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: null
+			name: sell-marker
+			tiled: false
+			minWidth: 0
+			minHeight: 0
+		}
 	]
 }
 jsonData: {

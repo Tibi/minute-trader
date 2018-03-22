@@ -13,6 +13,8 @@ class Model {
     var value = 0f
     val points = CircularFifoQueue<Vector2>(2000).apply { add(Vector2(time, value)) }
     var time = 0f
+    val buys = mutableListOf<Vector2>()
+    val sells = mutableListOf<Vector2>()
 
     var qty = 0
     var moneyLeft = 0f
@@ -25,6 +27,8 @@ class Model {
         time = 0f
         points.clear()
         points.add(Vector2(time, value))
+        buys.clear()
+        sells.clear()
         qty = 1
         moneyLeft = START_AMOUNT - qty * value
         boughtValue = value
@@ -46,12 +50,14 @@ class Model {
         boughtValue = (boughtValue * qty + value) / (qty + 1)
         qty++
         moneyLeft -= value
+        buys.add(vec2(time, value))
     }
 
     fun sell() {
         if (!canSell()) return
         qty--
         moneyLeft += value
+        sells.add(vec2(time, value))
     }
 
     fun sellAll() {

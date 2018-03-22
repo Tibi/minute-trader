@@ -6,4 +6,3 @@ next release
    * bug: resize => zoom is reset
  - 2 players, networked
  - difficulty levels by simulating down markets (asymetric random)
- - small icons on the curve at buy & sell points

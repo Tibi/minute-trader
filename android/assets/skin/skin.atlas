@@ -1,67 +1,75 @@
 
 skin.png
-size: 1024,1024
+size: 2048,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-title
+buy-marker
   rotate: false
-  xy: 1, 606
-  size: 700, 95
-  orig: 700, 95
+  xy: 703, 823
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
-small
-  rotate: false
-  xy: 1, 92
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-skin2.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
 gradient
   rotate: false
-  xy: 515, 726
+  xy: 703, 875
   size: 100, 1
   orig: 100, 1
   offset: 0, 0
   index: -1
 icon-big
   rotate: false
-  xy: 1, 53
+  xy: 1, 105
   size: 160, 160
   orig: 160, 160
   offset: 0, 0
   index: -1
 penFine
   rotate: false
-  xy: 617, 726
+  xy: 805, 875
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 penThick
   rotate: false
-  xy: 515, 721
+  xy: 53, 100
   size: 3, 3
   orig: 3, 3
   offset: 0, 0
   index: -1
+sell-marker
+  rotate: false
+  xy: 1, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+title
+  rotate: false
+  xy: 1, 781
+  size: 700, 95
+  orig: 700, 95
+  offset: 0, 0
+  index: -1
 big
   rotate: false
-  xy: 1, 215
+  xy: 515, 267
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+small
+  rotate: false
+  xy: 1, 267
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 button
   rotate: false
-  xy: 1, 1
+  xy: 1, 53
   size: 50, 50
   split: 16, 17, 16, 17
   pad: 11, 12, 12, 13
@@ -70,7 +78,7 @@ button
   index: -1
 window
   rotate: false
-  xy: 163, 163
+  xy: 163, 215
   size: 50, 50
   split: 24, 24, 24, 24
   pad: 20, 20, 20, 20
