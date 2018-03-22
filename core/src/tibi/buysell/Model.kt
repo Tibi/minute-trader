@@ -4,8 +4,6 @@ import com.badlogic.gdx.math.MathUtils.random
 import com.badlogic.gdx.math.Vector2
 import ktx.math.vec2
 import org.apache.commons.collections4.queue.CircularFifoQueue
-import kotlin.math.ceil
-import kotlin.math.max
 
 
 const val START_AMOUNT = 1_000f
@@ -45,18 +43,21 @@ class Model {
 
     fun buy() {
         if (!canBuy()) return
-        val amountToBuy = moneyLeft / 3
-        val qtyToBuy = max(1f, amountToBuy / value).toInt()
-        boughtValue = (boughtValue * qty + value * qtyToBuy) / (qty + qtyToBuy)
-        qty += qtyToBuy
-        moneyLeft -= qtyToBuy * value
+        boughtValue = (boughtValue * qty + value) / (qty + 1)
+        qty++
+        moneyLeft -= value
     }
 
     fun sell() {
         if (!canSell()) return
-        val qtyToSell = ceil(qty / 5f).toInt()
-        qty -= qtyToSell
-        moneyLeft += qtyToSell * value
+        qty--
+        moneyLeft += value
+    }
+
+    fun sellAll() {
+        if (!canSell()) return
+        moneyLeft += value * qty
+        qty = 0
     }
 
     fun canBuy() = moneyLeft >= value

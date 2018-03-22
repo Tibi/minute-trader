@@ -3,11 +3,13 @@ package tibi.buysell
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Keys.*
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
+import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
@@ -52,6 +54,13 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
             }
             model.sell()
         }
+        sellButton.addListener(object : ActorGestureListener() {
+            override fun longPress(actor: Actor?, x: Float, y: Float): Boolean {
+                if (screen.paused) return false
+                model.sellAll()
+                return true
+            }
+        })
         buyButton.onClick {
             if (screen.paused) return@onClick
             if (!model.canBuy() && !game.prefs.getBoolean("tutoBuyDone")) {
