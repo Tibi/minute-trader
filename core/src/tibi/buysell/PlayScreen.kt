@@ -2,6 +2,7 @@ package tibi.buysell
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
@@ -97,8 +98,8 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
             drawLine(vals[0].x, vals[0].y, vals[1].x, vals[1].y, true, CURVE.col)
         }
 
-        model.buys.forEach { drawBuyMarker(it) }
-        model.sells.forEach { drawSellMarker(it) }
+        model.buys .forEach { drawMarker(it, isBuy = true ) }
+        model.sells.forEach { drawMarker(it, isBuy = false) }
 
         batch.end()
         Gdx.app.log("GPU", "# GPU calls: ${batch.renderCalls}")
@@ -213,16 +214,21 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         }
     }
 
-    fun drawBuyMarker(v: Vector2) {
-        val p = cam.project(vec3(v.x, v.y))
+    fun drawMarker(pos: Vector2, isBuy: Boolean) {
+        // Current x being drawn
+        val xMax = cam.project(vec3(model.time, 0f)).x
+        // Where the marker will end up
+        val target = cam.project(vec3(pos.x, pos.y))
+        // X distance (in pixels) between animation start and end
+        val xDelta = 30f
+        val y = if (target.x < xMax - xDelta) target.y  // animation is over
+        else target.y * (xMax - target.x) / xDelta
+        val bouncedY = Interpolation.bounceOut.apply(y / target.y) * target.y
         batch.color = Color.WHITE
-        batch.draw(buyMarker, p.x - 7, p.y - 20, 14f, 20f)
-    }
-
-    fun drawSellMarker(v: Vector2) {
-        val p = cam.project(vec3(v.x, v.y))
-        batch.color = Color.WHITE
-        batch.draw(sellMarker, p.x - 7, p.y, 14f, 20f)
+        val marker = if (isBuy) buyMarker else sellMarker
+        batch.draw(marker,
+                target.x - marker.packedWidth / 2,
+                bouncedY - marker.packedHeight)
     }
 
     override fun dispose() {

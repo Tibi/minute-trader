@@ -6,35 +6,35 @@ filter: Linear,Linear
 repeat: none
 buy-marker
   rotate: false
-  xy: 703, 823
-  size: 50, 50
-  orig: 50, 50
+  xy: 1543, 615
+  size: 20, 30
+  orig: 20, 30
   offset: 0, 0
   index: -1
 gradient
   rotate: false
-  xy: 703, 875
+  xy: 1, 33
   size: 100, 1
   orig: 100, 1
   offset: 0, 0
   index: -1
 icon-big
   rotate: false
-  xy: 1, 105
-  size: 160, 160
-  orig: 160, 160
+  xy: 1029, 133
+  size: 512, 512
+  orig: 512, 512
   offset: 0, 0
   index: -1
 penFine
   rotate: false
-  xy: 805, 875
+  xy: 103, 33
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 penThick
   rotate: false
-  xy: 53, 100
+  xy: 703, 590
   size: 3, 3
   orig: 3, 3
   offset: 0, 0
@@ -42,34 +42,34 @@ penThick
 sell-marker
   rotate: false
   xy: 1, 1
-  size: 50, 50
-  orig: 50, 50
+  size: 20, 30
+  orig: 20, 30
   offset: 0, 0
   index: -1
 title
   rotate: false
-  xy: 1, 781
+  xy: 1, 550
   size: 700, 95
   orig: 700, 95
   offset: 0, 0
   index: -1
 big
   rotate: false
-  xy: 515, 267
+  xy: 515, 36
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 small
   rotate: false
-  xy: 1, 267
+  xy: 1, 36
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 button
   rotate: false
-  xy: 1, 53
+  xy: 703, 595
   size: 50, 50
   split: 16, 17, 16, 17
   pad: 11, 12, 12, 13
@@ -78,7 +78,7 @@ button
   index: -1
 window
   rotate: false
-  xy: 163, 215
+  xy: 1029, 81
   size: 50, 50
   split: 24, 24, 24, 24
   pad: 20, 20, 20, 20

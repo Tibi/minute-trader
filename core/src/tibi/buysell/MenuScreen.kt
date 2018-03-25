@@ -53,19 +53,22 @@ class MenuStage(val game: BuySellGame) : Stage(ScreenViewport(), game.batch) {
 
     init {
         addActor(Table().apply {
-            top()
 //            debug()
+            top()
+            pad(20f)
             setFillParent(true)
-            add(Image(game.logo).apply { setScaling(Scaling.fit) }).expand()
-            add(Image(game.title).apply { setScaling(Scaling.fit) }).colspan(2)
-            add().expand().row()
-            durationsToShow.forEach { dur ->
-                add().expandY()
-                add(buttons[dur]).left()
-                add(labels[dur]).right()
-                add().row()
-            }
-            add().expandY().row()  // Blank space for Ads
+            add(Image(game.logo).apply { setScaling(Scaling.fit) }).top()//.expand()
+            add(Table().apply {
+//                debug()
+                top()
+                padTop(40f)
+                add(Image(game.title).apply { setScaling(Scaling.fit) }).colspan(2).row()
+                add().height(r(100f)).row()//
+                durationsToShow.forEach { dur ->
+                    add(buttons[dur]).left()
+                    add(labels[dur]).right()
+                }
+            }).top()
         })
     }
 

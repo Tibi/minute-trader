@@ -1,5 +1,3 @@
- - bigger logo on menu screen
- - bigger buy sell marker, weth border
  - funny comments
  - help button (?) on menu screen -> show user guide
 
