@@ -98,8 +98,8 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
             drawLine(vals[0].x, vals[0].y, vals[1].x, vals[1].y, true, CURVE.col)
         }
 
-        model.buys .forEach { drawMarker(it, isBuy = true ) }
-        model.sells.forEach { drawMarker(it, isBuy = false) }
+        model.buys .forEach { drawMarker(it, buy = true ) }
+        model.sells.forEach { drawMarker(it, buy = false) }
 
         batch.end()
         Gdx.app.log("GPU", "# GPU calls: ${batch.renderCalls}")
@@ -214,21 +214,21 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         }
     }
 
-    fun drawMarker(pos: Vector2, isBuy: Boolean) {
+    fun drawMarker(pos: Vector2, buy: Boolean) {
+        // slope y/x
+        val a = -8f
         // Current x being drawn
         val xMax = cam.project(vec3(model.time, 0f)).x
         // Where the marker will end up
         val target = cam.project(vec3(pos.x, pos.y))
-        // X distance (in pixels) between animation start and end
-        val xDelta = 30f
-        val y = if (target.x < xMax - xDelta) target.y  // animation is over
-        else target.y * (xMax - target.x) / xDelta
-        val bouncedY = Interpolation.bounceOut.apply(y / target.y) * target.y
+        val b = a * xMax
+        val y = a * target.x - b
+        val div = if (buy) target.y else screenHeight - target.y
+        val bouncedY = Interpolation.bounceOut.apply(y / div) * div
         batch.color = Color.WHITE
-        val marker = if (isBuy) buyMarker else sellMarker
-        batch.draw(marker,
-                target.x - marker.packedWidth / 2,
-                bouncedY - marker.packedHeight)
+        val marker = if (buy) buyMarker else sellMarker
+        batch.draw(marker, target.x - marker.packedWidth / 2,
+                   if (buy) bouncedY - marker.packedHeight else screenHeight - bouncedY)
     }
 
     override fun dispose() {
