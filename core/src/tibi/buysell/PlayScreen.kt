@@ -216,7 +216,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     fun drawMarker(pos: Vector2, buy: Boolean) {
         // slope y/x
-        val a = -8f
+        val a = -10f
         // Current x being drawn
         val xMax = cam.project(vec3(model.time, 0f)).x
         // Where the marker will end up

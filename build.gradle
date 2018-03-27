@@ -1,7 +1,7 @@
 buildscript {
     ext {
         appName = "buy-sell"
-        kotlinVersion = '1.2.30'
+        kotlinVersion = '1.2.31'
         gdxVersion = '1.9.8'
         ktxVersion = '1.9.8-b1'
         roboVMVersion = '1.12.0'
