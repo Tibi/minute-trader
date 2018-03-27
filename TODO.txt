@@ -1,3 +1,4 @@
+ - bigger ads using smart banners
  - funny comments
  - help button (?) on menu screen -> show user guide
 
