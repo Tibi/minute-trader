@@ -41,7 +41,7 @@ class AndroidLauncher : AndroidApplication() {
 
     fun createAdView(): AdView {
         val adView = AdView(this)
-        adView.adSize = AdSize.BANNER  // TODO bigger banner on the menu
+        adView.adSize = AdSize.SMART_BANNER
         adView.adUnitId = "ca-app-pub-3949821178729385/2862624180"
         val adRequest = AdRequest.Builder()
                 .addTestDevice("D59936D97A67EDB51825A30E54A190EA")  // my Motorola
@@ -53,7 +53,7 @@ class AndroidLauncher : AndroidApplication() {
     private fun createAdLayoutParams(): ViewGroup.LayoutParams {
         val marginParams = ViewGroup.MarginLayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT)
-        marginParams.bottomMargin = 50
+        marginParams.bottomMargin = 90
         val adParams = RelativeLayout.LayoutParams(marginParams)
         adParams.addRule(RelativeLayout.CENTER_IN_PARENT)
         adParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
