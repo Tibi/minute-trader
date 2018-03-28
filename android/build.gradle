@@ -15,8 +15,8 @@ android {
     }
     defaultConfig {
         applicationId "tibi.buysell"
-        versionCode 6
-        versionName "0.6"
+        versionCode 7
+        versionName "0.7"
         minSdkVersion 17
         targetSdkVersion 26
     }
