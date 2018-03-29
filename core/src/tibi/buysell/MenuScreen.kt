@@ -24,6 +24,7 @@ class MenuScreen(val game: BuySellGame) : KtxScreen {
 
     override fun show() {
         Gdx.input.inputProcessor = ui
+        Gdx.input.isCatchBackKey = false  // let Back exit the app
         listOf(ONE, THREE).forEach { duration ->
             val score = game.highScores.getInteger(duration.name)
             if (score > 0) {

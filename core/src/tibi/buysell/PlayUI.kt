@@ -34,7 +34,6 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
     val buyButton = TextButton(txt["BUY"], skin).apply { pad(30f) }
 
     init {
-        Gdx.input.isCatchBackKey = true
         Scene2DSkin.defaultSkin = skin
         fun pos(dia: Dialog, button: TextButton) {
             dia.setPosition(button.x + button.width,
@@ -103,7 +102,7 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
             S -> model.sell()
             X -> gameOver()
             P -> screen.paused = screen.paused.not()
-            ESCAPE, BACK -> { Gdx.input.isCatchBackKey = false; game.setScreen<MenuScreen>() }
+            ESCAPE, BACK -> game.setScreen<MenuScreen>()
             else -> return super.keyDown(key)
         }
         return true
