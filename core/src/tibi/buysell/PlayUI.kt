@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
 import ktx.i18n.get
 import ktx.scene2d.Scene2DSkin
+import ktx.scene2d.dialog
 import ktx.scene2d.table
 import tibi.buysell.BuySellGame.Duration.ONE
 import tibi.buysell.BuySellGame.MyColors.*
@@ -128,7 +129,20 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
         }
     }
 
+    fun tuto() {
+        if (game.prefs.getBoolean("tutoDone")) return
+        screen.paused = true
+        dialog("") {
+            screen.paused = false
+            game.prefs.putBoolean("tutoDone", true)
+        }.apply {
+            contentTable.add(txt["tuto1"]).row()
+            contentTable.add(txt["tuto2"])
+            show(this@PlayUI)
+        }
+    }
 
+    /** Displays a dialog */
     fun dialog(title: String, onClose: () -> Unit) = object : Dialog("", skin) {
         override fun remove(): Boolean {
             onClose()
@@ -137,7 +151,9 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
     }.apply {
         contentTable.top()
         contentTable.defaults().pad(20f)
-        contentTable.add(Label(title, skin, "big")).row()
+        if (title.isNotEmpty()) {
+            contentTable.add(Label(title, skin, "big")).row()
+        }
         val clickListener = object : ClickListener() {
             override fun clicked(event: InputEvent, x: Float, y: Float) {
                 if (x > 0 && x < width && y > 0 && y < height) {
