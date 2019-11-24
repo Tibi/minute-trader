@@ -104,7 +104,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         model.sells.forEach { drawMarker(it, buy = false) }
 
         batch.end()
-        Gdx.app.log("GPU", "# GPU calls: ${batch.renderCalls}")
+//        Gdx.app.log("GPU", "# GPU calls: ${batch.renderCalls}")
 
         ui.act(deltaTime)
         ui.draw()

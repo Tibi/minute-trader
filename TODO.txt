@@ -1,6 +1,6 @@
- - bigger ads using smart banners
- - funny comments
  - help button (?) on menu screen -> show user guide
+ - in pause mode, show "Paused" on screen
+ - pause when screen clicked outside buttons?
 
 next release
  - vertical layout: buttons at the bottom

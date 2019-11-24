@@ -15,7 +15,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
 import ktx.i18n.get
 import ktx.scene2d.Scene2DSkin
-import ktx.scene2d.dialog
 import ktx.scene2d.table
 import tibi.buysell.BuySellGame.Duration.ONE
 import tibi.buysell.BuySellGame.MyColors.*
@@ -33,6 +32,8 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
 
     val sellButton = TextButton(txt["SELL"], skin).apply { pad(30f) }
     val buyButton = TextButton(txt["BUY"], skin).apply { pad(30f) }
+
+    var showTuto = false
 
     init {
         Scene2DSkin.defaultSkin = skin
@@ -131,6 +132,8 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
 
     fun tuto() {
         if (game.prefs.getBoolean("tutoDone")) return
+//        actors.filterIsInstance<Table>().forEach { it.validate() }
+//        val txtPos = qtyLabel.localToStageCoordinates(vec2(qtyLabel.x, qtyLabel.y))
         screen.paused = true
         dialog("") {
             screen.paused = false
@@ -139,7 +142,10 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
             contentTable.add(txt["tuto1"]).row()
             contentTable.add(txt["tuto2"])
             show(this@PlayUI)
+//            x = txtPos.x + qtyLabel.width + 20
+//            y = txtPos.y
         }
+//        println("${qtyLabel.x}, ${qtyLabel.y}")
     }
 
     /** Displays a dialog */
