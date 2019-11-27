@@ -1,9 +1,10 @@
  - help button (?) on menu screen -> show user guide
+ - use online leader board like DreamLo
  - in pause mode, show "Paused" on screen
  - pause when screen clicked outside buttons?
 
 next release
- - vertical layout:Â buttons at the bottom
+ - vertical layout:ÿbuttons at the bottom
    * bug: resize => zoom is reset
  - 2 players, networked
  - difficulty levels by simulating down markets (asymetric random)
