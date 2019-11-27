@@ -1,10 +1,10 @@
  - help button (?) on menu screen -> show user guide
- - use online leader board like DreamLo
+ - use online leader board like DreamLo, see https://medium.com/swlh/my-experience-creating-my-first-libgdx-game-985dbbc26724
  - in pause mode, show "Paused" on screen
  - pause when screen clicked outside buttons?
 
 next release
- - vertical layout:ÿbuttons at the bottom
+ - vertical layout: buttons at the bottom
    * bug: resize => zoom is reset
  - 2 players, networked
  - difficulty levels by simulating down markets (asymetric random)
