@@ -1,7 +1,7 @@
- - help button (?) on menu screen -> show user guide
- - use online leader board like DreamLo, see https://medium.com/swlh/my-experience-creating-my-first-libgdx-game-985dbbc26724
+  - use online leader board like DreamLo, see https://medium.com/swlh/my-experience-creating-my-first-libgdx-game-985dbbc26724
  - in pause mode, show "Paused" on screen
  - pause when screen clicked outside buttons?
+ - migrate to git
 
 next release
  - vertical layout: buttons at the bottom

@@ -10,13 +10,14 @@ atlasData: {
 				b: 0
 				a: 1
 			}
-			visible: true
 			tint: null
 			tintName: null
 			name: button
 			tiled: false
-			minWidth: 0
-			minHeight: 0
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
 		}
 		{
 			file: C:/Users/Tibi/src/buy-sell/assets-source/skin/window.9.png
@@ -26,45 +27,14 @@ atlasData: {
 				b: 1
 				a: 1
 			}
-			visible: true
 			tint: null
 			tintName: null
 			name: window
 			tiled: false
-			minWidth: 0
-			minHeight: 0
-		}
-		{
-			file: C:/Users/Tibi/src/buy-sell/assets-source/fonts/small.png
-			bgColor: {
-				r: 0
-				g: 0
-				b: 0
-				a: 1
-			}
-			visible: false
-			tint: null
-			tintName: null
-			name: small
-			tiled: false
-			minWidth: 0
-			minHeight: 0
-		}
-		{
-			file: C:/Users/Tibi/src/buy-sell/assets-source/fonts/big.png
-			bgColor: {
-				r: 0
-				g: 0
-				b: 0
-				a: 1
-			}
-			visible: false
-			tint: null
-			tintName: null
-			name: big
-			tiled: false
-			minWidth: 0
-			minHeight: 0
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
 		}
 		{
 			file: C:/Users/Tibi/src/buy-sell/assets-source/art/title.png
@@ -74,13 +44,14 @@ atlasData: {
 				b: 1
 				a: 1
 			}
-			visible: true
 			tint: null
 			tintName: null
 			name: title
 			tiled: false
-			minWidth: 0
-			minHeight: 0
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
 		}
 		{
 			file: C:/Users/Tibi/src/buy-sell/assets-source/art/gradient.png
@@ -90,13 +61,14 @@ atlasData: {
 				b: 0
 				a: 1
 			}
-			visible: true
 			tint: null
 			tintName: null
 			name: gradient
 			tiled: false
-			minWidth: 0
-			minHeight: 0
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
 		}
 		{
 			file: C:/Users/Tibi/src/buy-sell/assets-source/art/icon-big.png
@@ -106,13 +78,14 @@ atlasData: {
 				b: 1
 				a: 1
 			}
-			visible: true
 			tint: null
 			tintName: null
 			name: icon-big
 			tiled: false
-			minWidth: 0
-			minHeight: 0
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
 		}
 		{
 			file: C:/Users/Tibi/src/buy-sell/assets-source/art/penFine.png
@@ -122,13 +95,14 @@ atlasData: {
 				b: 0
 				a: 1
 			}
-			visible: true
 			tint: null
 			tintName: null
 			name: penFine
 			tiled: false
-			minWidth: 0
-			minHeight: 0
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
 		}
 		{
 			file: C:/Users/Tibi/src/buy-sell/assets-source/art/penThick.png
@@ -138,13 +112,14 @@ atlasData: {
 				b: 0
 				a: 1
 			}
-			visible: true
 			tint: null
 			tintName: null
 			name: penThick
 			tiled: false
-			minWidth: 0
-			minHeight: 0
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
 		}
 		{
 			file: C:/Users/Tibi/src/buy-sell/assets-source/art/buy-marker.png
@@ -154,13 +129,14 @@ atlasData: {
 				b: 0
 				a: 1
 			}
-			visible: true
 			tint: null
 			tintName: null
 			name: buy-marker
 			tiled: false
-			minWidth: 0
-			minHeight: 0
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
 		}
 		{
 			file: C:/Users/Tibi/src/buy-sell/assets-source/art/sell-marker.png
@@ -170,13 +146,50 @@ atlasData: {
 				b: 0
 				a: 1
 			}
-			visible: true
 			tint: null
 			tintName: null
 			name: sell-marker
 			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+		}
+	]
+	fontDrawables: [
+		{
+			file: C:/Users/Tibi/src/buy-sell/assets-source/fonts/big.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: big
+			tiled: false
 			minWidth: 0
 			minHeight: 0
+			customized: false
+			tenPatchData: null
+		}
+		{
+			file: C:/Users/Tibi/src/buy-sell/assets-source/fonts/small.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: small
+			tiled: false
+			minWidth: 0
+			minHeight: 0
+			customized: false
+			tenPatchData: null
 		}
 	]
 }
@@ -235,6 +248,7 @@ jsonData: {
 			file: C:/Users/Tibi/src/buy-sell/assets-source/fonts/small.fnt
 		}
 	]
+	freeTypeFonts: []
 	classStyleMap: {
 		com.badlogic.gdx.scenes.scene2d.ui.Button: [
 			{
@@ -328,6 +342,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.CheckBox: [
@@ -506,6 +521,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.ImageButton: [
@@ -642,6 +658,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton: [
@@ -827,6 +844,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.Label: [
@@ -858,6 +876,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 			{
 				class: com.ray3k.skincomposer.data.StyleData
@@ -887,6 +906,7 @@ jsonData: {
 					}
 				}
 				deletable: true
+				parent: null
 			}
 			{
 				class: com.ray3k.skincomposer.data.StyleData
@@ -916,6 +936,7 @@ jsonData: {
 					}
 				}
 				deletable: true
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.List: [
@@ -961,6 +982,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.ProgressBar: [
@@ -1027,6 +1049,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 			{
 				class: com.ray3k.skincomposer.data.StyleData
@@ -1091,6 +1114,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.ScrollPane: [
@@ -1143,6 +1167,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.SelectBox: [
@@ -1216,6 +1241,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.Slider: [
@@ -1296,6 +1322,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 			{
 				class: com.ray3k.skincomposer.data.StyleData
@@ -1374,6 +1401,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.SplitPane: [
@@ -1391,6 +1419,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 			{
 				class: com.ray3k.skincomposer.data.StyleData
@@ -1406,6 +1435,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.TextButton: [
@@ -1549,6 +1579,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.TextField: [
@@ -1636,6 +1667,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.TextTooltip: [
@@ -1667,6 +1699,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.Touchpad: [
@@ -1691,6 +1724,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.Tree: [
@@ -1736,6 +1770,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.Window: [
@@ -1774,6 +1809,7 @@ jsonData: {
 					}
 				}
 				deletable: false
+				parent: null
 			}
 		]
 	}
@@ -1794,4 +1830,5 @@ preferences: {
 	}
 }
 saveFile: C:/Users/Tibi/src/buy-sell/assets-source/skin/skin.scmp
+version: 34
 }

@@ -103,7 +103,7 @@ class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(
             B -> model.buy()
             S -> model.sell()
             X -> gameOver()
-            P -> screen.paused = screen.paused.not()
+            SPACE -> screen.paused = screen.paused.not()
             ESCAPE, BACK -> game.setScreen<MenuScreen>()
             else -> return super.keyDown(key)
         }

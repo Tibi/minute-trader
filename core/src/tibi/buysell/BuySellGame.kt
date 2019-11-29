@@ -19,11 +19,11 @@ class BuySellGame : KtxGame<KtxScreen>() {
     val title: TextureRegion by lazy { skin.atlas.findRegion("title") }
     val highScores by lazy { Gdx.app.getPreferences("Minute Trader High Scores")!! }
     val prefs by lazy { Gdx.app.getPreferences("Minute Trader Preferences")!! }
-    val txt by lazy { I18NBundle.createBundle(Gdx.files.internal("i18n/texts")) }
+    val txt: I18NBundle by lazy { I18NBundle.createBundle(Gdx.files.internal("i18n/texts")) }
 
     enum class Duration(val minutes: Float, val description: String) {
-        ONE(1f, "1 Minute"),
-        THREE(3f, "3 Minutes")
+        ONE(1f, "1 min"),
+        THREE(3f, "3 min")
     }
 
     var lastDuration = ONE
@@ -34,10 +34,13 @@ class BuySellGame : KtxGame<KtxScreen>() {
     override fun create() {
         addScreen(MenuScreen(this))
         addScreen(PlayScreen(this))
-
+        addScreen(HelpScreen(this))
         setScreen<MenuScreen>()
     }
 
+    fun help() {
+        setScreen<HelpScreen>()
+    }
 
     fun play(duration: Duration) {
         model.clear()
@@ -77,6 +80,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
 
         TRANSPARENT("#00000000")
         ;
+        // TODO use colors defined in the skin
         val col: Color = Color.valueOf(colorStr)
     }
 
