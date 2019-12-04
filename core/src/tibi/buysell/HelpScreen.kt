@@ -20,7 +20,7 @@ class HelpScreen(val game: BuySellGame) : KtxScreen {
             setFillParent(true)
             label("The goal of the game is to make money"); row()
             label("by buying and selling coins."); row()
-            label("The red line is you average buy price."); row()
+            label("The red line is your average buy price."); row()
             label("If you sell above it, you make money."); row()
             row().height(100f)
             label("Buy low, sell high!")

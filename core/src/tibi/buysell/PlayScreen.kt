@@ -2,6 +2,7 @@ package tibi.buysell
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.glutils.HdpiUtils
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
@@ -26,7 +27,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     val viewport = StretchViewport(20f, 400f)  // 20" and 400 $ visible
     val cam = viewport.camera
-    val ui = PlayUI(this, batch)
+    val ui = PlayUI(this)
 
     var paused = false
     var duration = 60f
@@ -56,6 +57,9 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
     }
 
     override fun render(delta: Float) {
+        // Resets GL viewport that has been changed by the PlayUI Stage
+        HdpiUtils.glViewport(0, 0, Gdx.graphics.width, Gdx.graphics.height)
+
         val deltaTime = min(0.3f, delta)
         clearScreen(BG.col.r, BG.col.g, BG.col.b)
         if (!paused) {
@@ -69,6 +73,8 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
         letCameraFollowCurve()
 
+        // The batch is not using the projection matrix from the camera.
+        // => all calls to draw are in screen coordinates and the images are drawn unscaled.
         batch.begin()
 
         // Buy & Sell backgrounds below and above by line

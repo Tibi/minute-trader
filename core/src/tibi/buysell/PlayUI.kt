@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
-import com.badlogic.gdx.utils.viewport.ScreenViewport
+import com.badlogic.gdx.utils.viewport.FitViewport
 import ktx.actors.onClick
 import ktx.i18n.get
 import ktx.scene2d.Scene2DSkin
@@ -20,7 +20,8 @@ import tibi.buysell.BuySellGame.Duration.ONE
 import tibi.buysell.BuySellGame.MyColors.*
 
 
-class PlayUI(val screen: PlayScreen, batch: SpriteBatch) : Stage(ScreenViewport(), batch) {
+class PlayUI(val screen: PlayScreen)
+    : Stage(FitViewport(1200f, 800f), SpriteBatch()) {
 
     val game = screen.game
     val model = game.model
