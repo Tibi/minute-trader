@@ -2,7 +2,6 @@ package tibi.buysell
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.glutils.HdpiUtils
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
@@ -57,8 +56,6 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
     }
 
     override fun render(delta: Float) {
-        // Resets GL viewport that has been changed by the PlayUI Stage
-        HdpiUtils.glViewport(0, 0, Gdx.graphics.width, Gdx.graphics.height)
 
         val deltaTime = min(0.3f, delta)
         clearScreen(BG.col.r, BG.col.g, BG.col.b)

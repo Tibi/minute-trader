@@ -2,7 +2,6 @@ package tibi.buysell
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Keys.*
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -11,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
-import com.badlogic.gdx.utils.viewport.FitViewport
+import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
 import ktx.i18n.get
 import ktx.scene2d.Scene2DSkin
@@ -20,8 +19,7 @@ import tibi.buysell.BuySellGame.Duration.ONE
 import tibi.buysell.BuySellGame.MyColors.*
 
 
-class PlayUI(val screen: PlayScreen)
-    : Stage(FitViewport(1200f, 800f), SpriteBatch()) {
+class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
 
     val game = screen.game
     val model = game.model
@@ -163,9 +161,7 @@ class PlayUI(val screen: PlayScreen)
         }
         val clickListener = object : ClickListener() {
             override fun clicked(event: InputEvent, x: Float, y: Float) {
-                if (x > 0 && x < width && y > 0 && y < height) {
                     hide()
-                }
             }
         }
         addListener(clickListener)

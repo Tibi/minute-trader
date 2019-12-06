@@ -1820,6 +1820,10 @@ preferences: {
 		class: java.lang.Integer
 		value: 30
 	}
+	last-import-export-path: {
+		class: java.lang.String
+		value: C:/Users/Tibi/src/buy-sell/android/assets/skin/skin.json
+	}
 	id: {
 		class: java.lang.Integer
 		value: 995109627
