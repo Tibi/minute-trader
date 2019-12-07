@@ -2,13 +2,11 @@ package tibi.buysell
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Keys.*
-import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
-import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
@@ -32,7 +30,8 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
     val sellButton = TextButton(txt["SELL"], skin).apply { pad(30f) }
     val buyButton = TextButton(txt["BUY"], skin).apply { pad(30f) }
 
-    var showTuto = false
+    var tutoDialog: Dialog? = null
+    var tutoDialogComp: Label = qtyLabel
 
     init {
         Scene2DSkin.defaultSkin = skin
@@ -52,15 +51,12 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
                 dia.show(this@PlayUI)
                 pos(dia, sellButton)
             }
-            model.sell()
-        }
-        sellButton.addListener(object : ActorGestureListener() {
-            override fun longPress(actor: Actor?, x: Float, y: Float): Boolean {
-                if (screen.paused) return false
+            if (model.time > game.lastDuration.minutes * 60 - 3) {
                 model.sellAll()
-                return true
+            } else {
+                model.sell()
             }
-        })
+        }
         buyButton.onClick {
             if (screen.paused) return@onClick
             if (!model.canBuy() && !game.prefs.getBoolean("tutoBuyDone")) {
@@ -93,8 +89,9 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
         super.act(delta)
         buyButton.color = if (model.canBuy()) RED_BUTTON.col else DISABLED_BUTTON.col
         sellButton.color = if (model.canSell()) GREEN_BUTTON.col else DISABLED_BUTTON.col
-        qtyLabel.setText("${model.qty}")
+        qtyLabel.setText(model.qty)
         balanceLabel.setText(txt["amount", model.moneyLeft.toInt()])
+        tutoDialog?.setPosition(tutoDialogComp.right + 20, tutoDialogComp.y)
     }
 
     override fun keyDown(key: Int): Boolean {
@@ -131,20 +128,26 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
 
     fun tuto() {
         if (game.prefs.getBoolean("tutoDone")) return
-//        actors.filterIsInstance<Table>().forEach { it.validate() }
-//        val txtPos = qtyLabel.localToStageCoordinates(vec2(qtyLabel.x, qtyLabel.y))
         screen.paused = true
-        dialog("") {
+        tutoDialogComp = qtyLabel
+        tutoDialog = dialog("") {
+            tuto2()
+        }.apply {
+            contentTable.add(txt["tuto1"])
+            show(this@PlayUI)
+        }
+    }
+
+    fun tuto2() {
+        tutoDialogComp = balanceLabel
+        tutoDialog = dialog("") {
+            tutoDialog = null
             screen.paused = false
             game.prefs.putBoolean("tutoDone", true)
         }.apply {
-            contentTable.add(txt["tuto1"]).row()
             contentTable.add(txt["tuto2"])
             show(this@PlayUI)
-//            x = txtPos.x + qtyLabel.width + 20
-//            y = txtPos.y
         }
-//        println("${qtyLabel.x}, ${qtyLabel.y}")
     }
 
     /** Displays a dialog */
@@ -161,7 +164,7 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
         }
         val clickListener = object : ClickListener() {
             override fun clicked(event: InputEvent, x: Float, y: Float) {
-                    hide()
+                hide()
             }
         }
         addListener(clickListener)
