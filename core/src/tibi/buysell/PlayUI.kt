@@ -2,6 +2,7 @@ package tibi.buysell
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Keys.*
+import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog
@@ -34,10 +35,7 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
 
     init {
         Scene2DSkin.defaultSkin = skin
-        fun pos(dia: Dialog, button: TextButton) {
-            dia.setPosition(button.x + button.width,
-                            button.y + (button.height - dia.height) / 2)
-        }
+
 
         addActor(table {
             setFillParent(true)
@@ -52,15 +50,18 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
         })
     }
 
+    fun Dialog.setPosition(button: Actor) {
+        setPosition(button.x + button.width,
+                    button.y + (button.height - height) / 2)
+    }
+
     override fun act(delta: Float) {
         super.act(delta)
         buyButton.color = if (model.canBuy()) RED_BUTTON.col else DISABLED_BUTTON.col
         sellButton.color = if (model.canSell()) GREEN_BUTTON.col else DISABLED_BUTTON.col
         qtyLabel.setText(model.qty)
         balanceLabel.setText(Amount.nls(model.moneyLeft.toInt()))
-        val dialog = tutoDialog
-        dialog?.setPosition(tutoDialogComp.right + 20,
-                            tutoDialogComp.y + (tutoDialogComp.height - dialog.height) / 2)
+        tutoDialog?.setPosition(tutoDialogComp)
     }
 
     override fun keyDown(key: Int): Boolean {
