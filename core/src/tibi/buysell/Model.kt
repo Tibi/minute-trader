@@ -29,8 +29,8 @@ class Model {
         points.add(Vector2(time, value))
         buys.clear()
         sells.clear()
-        qty = 1
-        moneyLeft = START_AMOUNT - qty * value
+        qty = 0
+        moneyLeft = START_AMOUNT
         boughtValue = value
     }
 

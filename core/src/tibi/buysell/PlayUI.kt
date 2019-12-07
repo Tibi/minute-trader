@@ -27,8 +27,8 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
     val qtyLabel = Label("", skin, "big")
     val balanceLabel = Label("", skin, "big")
 
-    val sellButton = TextButton(txt["SELL"], skin).apply { pad(30f) }
-    val buyButton = TextButton(txt["BUY"], skin).apply { pad(30f) }
+    val sellButton = TextButton(txt["SELL"], skin).apply { pad(30f); onClick { model.sell() }}
+    val buyButton  = TextButton(txt["BUY"],  skin).apply { pad(30f); onClick { model.buy()  }}
 
     var tutoDialog: Dialog? = null
     var tutoDialogComp: Label = qtyLabel
@@ -38,38 +38,6 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
         fun pos(dia: Dialog, button: TextButton) {
             dia.setPosition(button.x + button.width,
                             button.y + (button.height - dia.height) / 2)
-        }
-        sellButton.onClick {
-            if (screen.paused) return@onClick
-            if (!model.canSell() && !game.prefs.getBoolean("tutoSellDone")) {
-                screen.paused = true
-                val dia = dialog(txt["allSold"]) {
-                    screen.paused = false
-                    game.prefs.putBoolean("tutoSellDone", true)
-                    game.prefs.flush()
-                }
-                dia.show(this@PlayUI)
-                pos(dia, sellButton)
-            }
-            if (model.time > game.lastDuration.minutes * 60 - 3) {
-                model.sellAll()
-            } else {
-                model.sell()
-            }
-        }
-        buyButton.onClick {
-            if (screen.paused) return@onClick
-            if (!model.canBuy() && !game.prefs.getBoolean("tutoBuyDone")) {
-                screen.paused = true
-                val dia = dialog(txt["noMoney"]) {
-                    screen.paused = false
-                    game.prefs.putBoolean("tutoBuyDone", true)
-                    game.prefs.flush()
-                }
-                dia.show(this@PlayUI)
-                pos(dia, buyButton)
-            }
-            model.buy()
         }
 
         addActor(table {
@@ -91,7 +59,8 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
         sellButton.color = if (model.canSell()) GREEN_BUTTON.col else DISABLED_BUTTON.col
         qtyLabel.setText(model.qty)
         balanceLabel.setText(txt["amount", model.moneyLeft.toInt()])
-        tutoDialog?.setPosition(tutoDialogComp.right + 20, tutoDialogComp.y)
+        tutoDialog?.setPosition(tutoDialogComp.right + 20,
+                                tutoDialogComp.y + (tutoDialogComp.height - (tutoDialog?.height?:0f)) / 2)
     }
 
     override fun keyDown(key: Int): Boolean {

@@ -64,6 +64,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
             if (model.points.size < 2) return
             duration -= deltaTime
             if (duration <= 0) {
+                model.sellAll()
                 ui.gameOver()
             }
         }
