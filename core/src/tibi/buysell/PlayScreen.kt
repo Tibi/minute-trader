@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.StretchViewport
 import ktx.app.KtxScreen
 import ktx.app.clearScreen
-import ktx.i18n.get
 import ktx.math.vec3
 import tibi.buysell.BuySellGame.MyColors.*
 import kotlin.math.*
@@ -20,7 +19,6 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     val model = game.model
     val batch = game.batch
-    val txt = game.txt
     val bigFont  = game.skin.getFont("big")
     val smallFont  = game.skin.getFont("small")
 
@@ -91,8 +89,8 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         batch.color = GREEN_BUTTON.col
         batch.draw(gradient, finishX - 100, 0f, 100f, screenHeight)
         bigFont.color = WHITE.col
-        bigFont.draw(batch, txt["sellFinish"], finishX - 46, screenHeight - r(50f), 36f, Align.center, true)
-
+        bigFont.draw(batch, I18n.SellFinish(), finishX - 46, screenHeight - r(50f),
+                     36f, Align.center, true)
         // Bought value line
         if (model.qty > 0) {
             val boughtY = project(0f, model.boughtValue).y
@@ -175,7 +173,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
             drawLine(start.x, y, end.x, y, false, if (onCoarseGrid) AXIS_MAIN.col else AXIS_LIGHT.col)
             if (onCoarseGrid) {
                 val p = cam.project(Vector3(0f, y, 0f))
-                val label = txt["amount", "%,.${max(0, -digits)}f".format(y)]
+                val label = I18n.Amount("%,.${max(0, -digits)}f".format(y))
                 textDrawings += { smallFont.draw(batch, label, viewport.screenWidth - 10f, p.y + r(22), 0f, Align.right, false) }
             }
             y += fineGridY

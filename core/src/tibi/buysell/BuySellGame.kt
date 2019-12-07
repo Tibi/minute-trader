@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
-import com.badlogic.gdx.utils.I18NBundle
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import tibi.buysell.BuySellGame.Duration.ONE
@@ -19,7 +18,6 @@ class BuySellGame : KtxGame<KtxScreen>() {
     val title: TextureRegion by lazy { skin.atlas.findRegion("title") }
     val highScores by lazy { Gdx.app.getPreferences("Minute Trader High Scores")!! }
     val prefs by lazy { Gdx.app.getPreferences("Minute Trader Preferences")!! }
-    val txt: I18NBundle by lazy { I18NBundle.createBundle(Gdx.files.internal("i18n/texts")) }
 
     enum class Duration(val minutes: Float, val description: String) {
         ONE(1f, "1 min"),
@@ -36,6 +34,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
         addScreen(PlayScreen(this))
         addScreen(HelpScreen(this))
         setScreen<MenuScreen>()
+//        play(ONE)
     }
 
     fun help() {

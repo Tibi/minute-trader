@@ -23,14 +23,14 @@ class Model {
     val volatility = 3f
 
     fun clear() {
-        value = 200f
+        value = 100f
         time = 0f
         points.clear()
         points.add(Vector2(time, value))
         buys.clear()
         sells.clear()
-        qty = 0
-        moneyLeft = START_AMOUNT
+        qty = 5
+        moneyLeft = START_AMOUNT - qty * value
         boughtValue = value
     }
 

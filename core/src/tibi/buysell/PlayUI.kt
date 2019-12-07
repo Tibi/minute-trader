@@ -10,11 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
-import ktx.i18n.get
 import ktx.scene2d.Scene2DSkin
 import ktx.scene2d.table
 import tibi.buysell.BuySellGame.Duration.ONE
 import tibi.buysell.BuySellGame.MyColors.*
+import tibi.buysell.I18n.*
 
 
 class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
@@ -22,13 +22,12 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
     val game = screen.game
     val model = game.model
     val skin = game.skin
-    val txt = game.txt
 
     val qtyLabel = Label("", skin, "big")
     val balanceLabel = Label("", skin, "big")
 
-    val sellButton = TextButton(txt["SELL"], skin).apply { pad(30f); onClick { model.sell() }}
-    val buyButton  = TextButton(txt["BUY"],  skin).apply { pad(30f); onClick { model.buy()  }}
+    val sellButton = TextButton(SELL.nls, skin).apply { pad(30f); onClick { model.sell() }}
+    val buyButton  = TextButton(BUY.nls,  skin).apply { pad(30f); onClick { model.buy()  }}
 
     var tutoDialog: Dialog? = null
     var tutoDialogComp: Label = qtyLabel
@@ -58,9 +57,10 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
         buyButton.color = if (model.canBuy()) RED_BUTTON.col else DISABLED_BUTTON.col
         sellButton.color = if (model.canSell()) GREEN_BUTTON.col else DISABLED_BUTTON.col
         qtyLabel.setText(model.qty)
-        balanceLabel.setText(txt["amount", model.moneyLeft.toInt()])
-        tutoDialog?.setPosition(tutoDialogComp.right + 20,
-                                tutoDialogComp.y + (tutoDialogComp.height - (tutoDialog?.height?:0f)) / 2)
+        balanceLabel.setText(Amount.nls(model.moneyLeft.toInt()))
+        val dialog = tutoDialog
+        dialog?.setPosition(tutoDialogComp.right + 20,
+                            tutoDialogComp.y + (tutoDialogComp.height - dialog.height) / 2)
     }
 
     override fun keyDown(key: Int): Boolean {
@@ -77,20 +77,17 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
 
     fun gameOver() {
         screen.paused = true
-        dialog(txt["GameOver"]) { game.gameFinished() }.apply {
+        dialog(GameOver.nls) { game.gameFinished() }.apply {
             background.minWidth = screen.screenWidth * .6f
             background.minHeight = screen.screenHeight * .6f
             val score = model.moneyLeft.toInt()
-            contentTable.add(txt["Score", score]).padTop(50f).row()
+            contentTable.add(Score.nls(score)).padTop(50f).row()
             when {
-                score > game.highScores.getInteger(ONE.name) -> text(txt["highScoreCongrats"])
-                score > START_AMOUNT -> text(txt["notBad"])
-                else -> text(txt["betterNextTime"])
+                score > game.highScores.getInteger(ONE.name) -> text(HighScoreCongrats.nls)
+                score > START_AMOUNT -> text(NotBad.nls)
+                else -> text(BetterNextTime.nls)
             }
             contentTable.row()
-            if (model.qty > 0) {
-                text(txt["notSold"])
-            }
             show(this@PlayUI)
         }
     }
@@ -99,10 +96,8 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
         if (game.prefs.getBoolean("tutoDone")) return
         screen.paused = true
         tutoDialogComp = qtyLabel
-        tutoDialog = dialog("") {
-            tuto2()
-        }.apply {
-            contentTable.add(txt["tuto1"])
+        tutoDialog = dialog("") { tuto2() }.apply {
+            contentTable.add(CoinsYouHave.nls)
             show(this@PlayUI)
         }
     }
@@ -114,7 +109,7 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
             screen.paused = false
             game.prefs.putBoolean("tutoDone", true)
         }.apply {
-            contentTable.add(txt["tuto2"])
+            contentTable.add(MoneyLeft.nls)
             show(this@PlayUI)
         }
     }
