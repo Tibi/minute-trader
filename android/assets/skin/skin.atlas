@@ -6,7 +6,7 @@ filter: Linear,Linear
 repeat: none
 buy-marker
   rotate: false
-  xy: 515, 1461
+  xy: 617, 1563
   size: 20, 30
   orig: 20, 30
   offset: 0, 0
@@ -34,14 +34,14 @@ penFine
   index: -1
 penThick
   rotate: false
-  xy: 703, 1684
+  xy: 1, 1
   size: 3, 3
   orig: 3, 3
   offset: 0, 0
   index: -1
 sell-marker
   rotate: false
-  xy: 617, 1563
+  xy: 703, 1657
   size: 20, 30
   orig: 20, 30
   offset: 0, 0
@@ -69,7 +69,7 @@ small
   index: -1
 button
   rotate: false
-  xy: 1, 1
+  xy: 515, 1441
   size: 50, 50
   split: 16, 17, 16, 17
   pad: 11, 12, 12, 13
@@ -83,5 +83,14 @@ window
   split: 49, 49, 49, 50
   pad: 49, 49, 48, 49
   orig: 100, 100
+  offset: 0, 0
+  index: -1
+window bulle
+  rotate: false
+  xy: 1, 6
+  size: 63, 45
+  split: 37, 20, 19, 20
+  pad: 32, 16, 18, 16
+  orig: 63, 45
   offset: 0, 0
   index: -1

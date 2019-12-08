@@ -45,7 +45,7 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
         paused = false
         Gdx.input.inputProcessor = ui
         Gdx.input.isCatchBackKey = true  // so PlayUI can catch the back key to return to the menu
-        ui.tuto()
+        ui.tutoQty()
     }
 
     override fun resize(width: Int, height: Int) {

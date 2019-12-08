@@ -50,9 +50,9 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
         })
     }
 
-    fun Dialog.setPosition(button: Actor) {
-        setPosition(button.x + button.width,
-                    button.y + (button.height - height) / 2)
+    fun Dialog.setPosition(actor: Actor) {
+        setPosition(actor.right + 20,
+                    actor.y - height + actor.height / 2)
     }
 
     override fun act(delta: Float) {
@@ -93,17 +93,17 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
         }
     }
 
-    fun tuto() {
+    fun tutoQty() {
         if (game.prefs.getBoolean("tutoDone")) return
         screen.paused = true
         tutoDialogComp = qtyLabel
-        tutoDialog = dialog("") { tuto2() }.apply {
+        tutoDialog = dialog("") { tutoMoney() }.apply {
             contentTable.add(CoinsYouHave.nls)
             show(this@PlayUI)
         }
     }
 
-    fun tuto2() {
+    fun tutoMoney() {
         tutoDialogComp = balanceLabel
         tutoDialog = dialog("") {
             tutoDialog = null
@@ -116,7 +116,7 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
     }
 
     /** Displays a dialog */
-    fun dialog(title: String, onClose: () -> Unit) = object : Dialog("", skin) {
+    fun dialog(title: String, onClose: () -> Unit) = object : Dialog("", skin, "bulle") {
         override fun remove(): Boolean {
             onClose()
             return super.remove()

@@ -4,20 +4,19 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.I18NBundle
 import com.badlogic.gdx.utils.I18NBundle.createBundle
 import ktx.i18n.BundleLine
-import java.util.*
 
 /**
  * I18n enum for KTX  https://github.com/libktx/ktx/tree/master/i18n
  */
 enum class I18n : BundleLine {
+    PLAY,
+    SELL,
     BUY,
     GameOver,
     HighScore,
     NoHighscore,
     Score,
-    SELL,
     SellFinish,
-    PLAY,
     HighScoreCongrats,
     NotBad,
     BetterNextTime,

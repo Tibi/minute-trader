@@ -65,5 +65,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 		titleFont: big
 		titleFontColor: dark_text
 	}
+	bulle: {
+		background: window bulle
+		titleFont: big
+		titleFontColor: dark_text
+	}
 }
 }
