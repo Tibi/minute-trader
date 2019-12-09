@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
 import ktx.app.KtxScreen
 import ktx.app.clearScreen
-import ktx.scene2d.Scene2DSkin
 import ktx.scene2d.label
 import ktx.scene2d.table
 
@@ -15,7 +14,7 @@ class HelpScreen(val game: BuySellGame) : KtxScreen {
 
     override fun show() {
         Gdx.input.inputProcessor = stage
-        Scene2DSkin.defaultSkin = game.skin
+
         stage.addActor(table {
             setFillParent(true)
             label("The goal of the game is to make money"); row()
@@ -25,7 +24,6 @@ class HelpScreen(val game: BuySellGame) : KtxScreen {
             row().height(100f)
             label("Buy low, sell high!")
         })
-
     }
 
     override fun render(delta: Float) {

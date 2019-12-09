@@ -72,8 +72,11 @@ class MenuStage(val game: BuySellGame) : Stage(FitViewport(1213f, 780f), game.ba
                     add(buttons[dur]).left()
                     add(labels[dur]).right()
                 }
+                // TODO I18n
+//                row()
+//                add(button("HELP") { game.help() })
                 row()
-                add(button("HELP") { game.help() })
+                add(button("High Scores") { game.setScreen<ScoreScreen>() })
             }).top()
         })
     }
