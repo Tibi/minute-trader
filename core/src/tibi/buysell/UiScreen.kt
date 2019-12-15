@@ -9,7 +9,9 @@ import ktx.app.clearScreen
 import tibi.buysell.BuySellGame.MyColors.BG
 
 /**
- * Base class for simple UI screens
+ * Base class for simple UI screens.
+ *
+ * Goes back to menu screen when clicked.
  */
 open class UiScreen(val game: BuySellGame): KtxScreen, InputAdapter() {
 

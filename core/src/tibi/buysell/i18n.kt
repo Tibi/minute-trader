@@ -28,6 +28,7 @@ enum class I18n : BundleLine {
         get() = i18nBundle
 
     companion object {
-        val i18nBundle: I18NBundle by lazy { createBundle(Gdx.files.internal("i18n/texts"), Locale.FRENCH) }
+        val i18nBundle: I18NBundle by lazy { createBundle(Gdx.files.internal("i18n/texts")) }
+                                                          //Locale.FRENCH) }
     }
 }
