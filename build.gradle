@@ -22,7 +22,7 @@ allprojects {
     version = '1.0'
 
     ext {
-        appName = "buy-sell"
+        appName = "minute-trader"
         gdxVersion = '1.9.10'
         roboVMVersion = '2.3.8'
         ktxVersion = '1.9.10-b2'
