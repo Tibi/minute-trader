@@ -1,7 +1,10 @@
 package tibi.buysell
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
@@ -19,24 +22,24 @@ class PlayScreen(val game: BuySellGame) : KtxScreen {
 
     val model = game.model
     val batch = game.batch
-    val bigFont  = game.skin.getFont("big")
-    val smallFont  = game.skin.getFont("small")
+    val bigFont  : BitmapFont = game.skin.getFont("big")
+    val smallFont: BitmapFont = game.skin.getFont("small")
 
     val viewport = StretchViewport(20f, 400f)  // 20" and 400 $ visible
-    val cam = viewport.camera
+    val cam: Camera = viewport.camera
     val ui = PlayUI(this)
 
     var paused = false
     var duration = 60f
 
-    val screenWidth get() = viewport.screenWidth.toFloat()
+    val screenWidth  get() = viewport.screenWidth.toFloat()
     val screenHeight get() = viewport.screenHeight.toFloat()
 
-    val gradient = game.skin.atlas.findRegion("gradient")
-    val penThick = game.skin.atlas.findRegion("penThick")
-    val penFine  = game.skin.atlas.findRegion("penFine")
-    val buyMarker = game.skin.atlas.findRegion("buy-marker")
-    val sellMarker = game.skin.atlas.findRegion("sell-marker")
+    val gradient  : AtlasRegion = game.skin.atlas.findRegion("gradient")
+    val penThick  : AtlasRegion = game.skin.atlas.findRegion("penThick")
+    val penFine   : AtlasRegion = game.skin.atlas.findRegion("penFine")
+    val buyMarker : AtlasRegion = game.skin.atlas.findRegion("buy-marker")
+    val sellMarker: AtlasRegion = game.skin.atlas.findRegion("sell-marker")
 
     override fun show() {
         resize(Gdx.graphics.width, Gdx.graphics.height)

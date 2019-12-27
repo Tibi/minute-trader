@@ -7,9 +7,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
+import ktx.async.KtxAsync
 import ktx.scene2d.Scene2DSkin
 import tibi.buysell.BuySellGame.Duration.ONE
 
+const val DREAM_LO_KEY = "UMgyw1KYek2U-ivo7_BXcA1qVnI7jAUkGdRo1LzTZizA"
 
 class BuySellGame : KtxGame<KtxScreen>() {
 
@@ -19,7 +21,6 @@ class BuySellGame : KtxGame<KtxScreen>() {
     val title: TextureRegion by lazy { skin.atlas.findRegion("title") }
     val highScores by lazy { Gdx.app.getPreferences("Minute Trader High Scores")!! }
     val prefs by lazy { Gdx.app.getPreferences("Minute Trader Preferences")!! }
-    val DREAM_LO_KEY = "UMgyw1KYek2U-ivo7_BXcA1qVnI7jAUkGdRo1LzTZizA"
     val leaderboard: Leaderboard by lazy { DreamLoLeaderboard(DREAM_LO_KEY) }
 
     enum class Duration(val minutes: Float, val description: String) {
@@ -34,6 +35,8 @@ class BuySellGame : KtxGame<KtxScreen>() {
 
     override fun create() {
         Scene2DSkin.defaultSkin = skin
+        KtxAsync.initiate()
+
         addScreen(MenuScreen(this))
         addScreen(PlayScreen(this))
         addScreen(HelpScreen(this))
@@ -59,6 +62,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
         if (score > lastScore) {
             highScores.putInteger(lastDuration.toString(), score)
             highScores.flush()
+            leaderboard.update(Leaderboard.Score(/*prefs.getString("username")?:*/"Tibi", 5000))
         }
         setScreen<MenuScreen>()
     }

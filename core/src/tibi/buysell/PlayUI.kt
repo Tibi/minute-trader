@@ -105,6 +105,7 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
             tutoDialog = null
             screen.paused = false
             game.prefs.putBoolean("tutoDone", true)
+            game.prefs.flush()
         }.apply {
             contentTable.add(MoneyLeft.nls)
             show(this@PlayUI)

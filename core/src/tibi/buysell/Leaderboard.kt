@@ -7,12 +7,12 @@ import java.util.*
  */
 interface Leaderboard {
 
-    data class Score(val name: String, val score: Int, val date: Date)
+    data class Score(val name: String, val score: Int, val date: Date = Date())
 
     fun get(name: String, processResult: (List<Score>) -> Unit)
     fun get(top: Int, processResult: (List<Score>) -> Unit)
     /** Returns new high score */
-    fun update(score: Score, processResult: (List<Score>) -> Unit)
+    fun update(score: Score, processResult: (List<Score>) -> Unit = { })
     fun delete(name: String)
     fun clearAll()
 
