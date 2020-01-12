@@ -59,7 +59,7 @@ class MenuStage(val game: BuySellGame) : Stage(FitViewport(1213f, 780f), game.ba
             top()
             pad(20f)
             setFillParent(true)
-            add(Image(game.logo).apply { setScaling(Scaling.fit) }).top()//.expand()
+            add(Image(game.logo).apply { setScaling(Scaling.fit) }).top().spaceRight(50f)
             add(Table().apply {
                 // debug()
                 top()
@@ -75,8 +75,8 @@ class MenuStage(val game: BuySellGame) : Stage(FitViewport(1213f, 780f), game.ba
                 // TODO I18n
 //                row()
 //                add(button("HELP") { game.help() })
-                row()
-                add(button("High Scores") { game.setScreen<ScoreScreen>() })
+//                row()
+//                add(button("High Scores") { game.setScreen<ScoreScreen>() })
             }).top()
         })
     }

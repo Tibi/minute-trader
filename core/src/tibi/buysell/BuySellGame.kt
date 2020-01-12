@@ -21,7 +21,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
     val title: TextureRegion by lazy { skin.atlas.findRegion("title") }
     val highScores by lazy { Gdx.app.getPreferences("Minute Trader High Scores")!! }
     val prefs by lazy { Gdx.app.getPreferences("Minute Trader Preferences")!! }
-    val leaderboard: Leaderboard by lazy { DreamLoLeaderboard(DREAM_LO_KEY) }
+//    val leaderboard: Leaderboard by lazy { DreamLoLeaderboard(DREAM_LO_KEY) }
 
     enum class Duration(val minutes: Float, val description: String) {
         ONE(1f, "1 min"),
@@ -40,7 +40,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
         addScreen(MenuScreen(this))
         addScreen(PlayScreen(this))
         addScreen(HelpScreen(this))
-        addScreen(ScoreScreen(this))
+//        addScreen(ScoreScreen(this))
         setScreen<MenuScreen>()
 //        play(ONE)
     }
@@ -62,7 +62,7 @@ class BuySellGame : KtxGame<KtxScreen>() {
         if (score > lastScore) {
             highScores.putInteger(lastDuration.toString(), score)
             highScores.flush()
-            leaderboard.update(Leaderboard.Score(/*prefs.getString("username")?:*/"Tibi", 5000))
+//            leaderboard.update(Leaderboard.Score(/*prefs.getString("username")?:*/"Tibi", 5000))
         }
         setScreen<MenuScreen>()
     }

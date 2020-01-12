@@ -20,10 +20,10 @@ class ScoreScreen(game: BuySellGame) : UiScreen(game) {
     override fun show() {
         super.show()
         scoreLabels.forEach { it.setText("") }
-        game.leaderboard.get(5) { scores ->
-            for ((i, score) in scores.withIndex()) {
-                scoreLabels[i].setText("${score.name} ${score.score}")
-            }
-        }
+//        game.leaderboard.get(5) { scores ->
+//            for ((i, score) in scores.withIndex()) {
+//                scoreLabels[i].setText("${score.name} ${score.score}")
+//            }
+//        }
     }
 }
