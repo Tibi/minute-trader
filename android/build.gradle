@@ -1,4 +1,10 @@
 android {
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            storeFile file('C:/Android/keystore/minute-trader.jks')
+        }
+    }
     buildToolsVersion "29.0.2"
     compileSdkVersion 29
     sourceSets {
@@ -14,17 +20,16 @@ android {
     }
     defaultConfig {
         applicationId "tibi.buysell"
-        versionCode 8
-        versionName "0.8"
+        versionCode 9
+        versionName "1.0"
         minSdkVersion 17
         targetSdkVersion 29
     }
-
     buildTypes {
         release {
             minifyEnabled true // Enables code shrinking for the release build type.
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            proguardFile 'proguard-project.txt'
+            proguardFile 'proguard-project.txt'
         }
     }
 }
@@ -56,13 +61,11 @@ task copyAndroidNatives {
         }
     }
 }
-
 tasks.whenTaskAdded { packageTask ->
     if (packageTask.name.contains("package")) {
         packageTask.dependsOn 'copyAndroidNatives'
     }
 }
-
 task run(type: Exec) {
     def path
     def localProperties = project.file("../local.properties")
