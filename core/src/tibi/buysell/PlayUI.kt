@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import ktx.actors.onClick
+import ktx.scene2d.scene2d
 import ktx.scene2d.table
 import tibi.buysell.BuySellGame.Duration.ONE
 import tibi.buysell.BuySellGame.MyColors.*
@@ -33,7 +34,7 @@ class PlayUI(val screen: PlayScreen) : Stage(ScreenViewport(), screen.batch) {
     var tutoDialogComp: Label = qtyLabel
 
     init {
-        addActor(table {
+        addActor(scene2d.table {
             setFillParent(true)
             pad(30f)
             top()

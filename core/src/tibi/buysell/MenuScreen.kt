@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import ktx.actors.onClick
 import ktx.app.KtxScreen
 import ktx.app.clearScreen
+import ktx.scene2d.scene2d
 import ktx.scene2d.table
 import tibi.buysell.BuySellGame.Duration.ONE
 import tibi.buysell.BuySellGame.Duration.THREE
@@ -54,7 +55,7 @@ class MenuStage(val game: BuySellGame) : Stage(FitViewport(1213f, 780f), game.ba
                                                         game.skin, "small", DARK_TEXT.col) }
 
     init {
-        addActor(table {
+        addActor(scene2d.table {
             // debug()
             top()
             pad(20f)
@@ -84,7 +85,7 @@ class MenuStage(val game: BuySellGame) : Stage(FitViewport(1213f, 780f), game.ba
     fun button(duration: BuySellGame.Duration) =
         button(PLAY.nls + " " + duration.description) { game.play(duration) }
 
-    fun button(text: String, action: () -> Unit) =
+    fun button(text: String, action: (TextButton) -> Unit) =
         TextButton(text, game.skin).apply {
             onClick(action)
             color = GREEN_BUTTON.col

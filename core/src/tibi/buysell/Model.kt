@@ -11,8 +11,8 @@ const val START_AMOUNT = 1_000f
 class Model {
 
     var value = 0f
-    val points = CircularFifoQueue<Vector2>(2000).apply { add(Vector2(time, value)) }
     var time = 0f
+    val points = CircularFifoQueue<Vector2>(2000).apply { add(Vector2(time, value)) }
     val buys = mutableListOf<Vector2>()
     val sells = mutableListOf<Vector2>()
 

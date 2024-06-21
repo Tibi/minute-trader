@@ -1,12 +1,12 @@
 android {
+    namespace = "tibi.buysell"
     signingConfigs {
         config {
             keyAlias 'key0'
             storeFile file('C:/Android/keystore/minute-trader.jks')
         }
     }
-    buildToolsVersion "29.0.2"
-    compileSdkVersion 29
+    compileSdkVersion 34
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -20,10 +20,10 @@ android {
     }
     defaultConfig {
         applicationId "tibi.buysell"
-        versionCode 9
+        versionCode 10
         versionName "1.0"
         minSdkVersion 17
-        targetSdkVersion 29
+        targetSdk 34
     }
     buildTypes {
         release {
@@ -32,23 +32,32 @@ android {
             proguardFile 'proguard-project.txt'
         }
     }
+    buildFeatures {
+        renderScript true
+        aidl true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 // called every time gradle gets executed, takes the native dependencies of
 // the natives configuration, and extracts them to the proper libs/ folders
 // so they get packed with the APK.
-task copyAndroidNatives {
+tasks.register('copyAndroidNatives') {
     doFirst {
-        file("libs/armeabi/").mkdirs()
         file("libs/armeabi-v7a/").mkdirs()
         file("libs/arm64-v8a/").mkdirs()
         file("libs/x86_64/").mkdirs()
         file("libs/x86/").mkdirs()
 
-        configurations.natives.files.each { jar ->
+        configurations.natives.copy().files.each { jar ->
             def outputDir = null
             if (jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
             if (jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
-            if (jar.name.endsWith("natives-armeabi.jar")) outputDir = file("libs/armeabi")
             if (jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
             if (jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
             if (outputDir != null) {
@@ -61,12 +70,12 @@ task copyAndroidNatives {
         }
     }
 }
-tasks.whenTaskAdded { packageTask ->
-    if (packageTask.name.contains("package")) {
-        packageTask.dependsOn 'copyAndroidNatives'
-    }
+
+tasks.matching { it.name.contains("merge") && it.name.contains("JniLibFolders") }.configureEach { packageTask ->
+    packageTask.dependsOn 'copyAndroidNatives'
 }
-task run(type: Exec) {
+
+tasks.register('run', Exec) {
     def path
     def localProperties = project.file("../local.properties")
     if (localProperties.exists()) {
@@ -85,5 +94,5 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'tibi.buysell/tibi.buysell.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.game/com.mygdx.game.AndroidLauncher'
 }

@@ -2,6 +2,7 @@ package tibi.buysell
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import ktx.scene2d.label
+import ktx.scene2d.scene2d
 import ktx.scene2d.table
 
 class ScoreScreen(game: BuySellGame) : UiScreen(game) {
@@ -9,7 +10,7 @@ class ScoreScreen(game: BuySellGame) : UiScreen(game) {
     val scoreLabels = List(5) { Label("", game.skin) }
 
     init {
-        stage.addActor(table {
+        stage.addActor(scene2d.table {
             setFillParent(true)
             label("High Scores", "big")  // TODO I18n
             add().height(100f).row()  // TODO there must be a simpler way to leave space!
